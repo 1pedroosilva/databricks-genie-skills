@@ -23,7 +23,6 @@ Documentei o processo de investigacao completo em [INVESTIGATION_LOG.md](INVESTI
 | `nomenclaturas` | DEFINIR | Convencoes de nomenclatura para assets novos |
 | `estrutura-notebooks` | CRIAR | Estrutura para notebooks novos do zero |
 | `resiliencia-operacional` | IMPLEMENTAR | Padroes de resiliencia em codigo novo |
-| `arquitetura-medalhao` | DECIDIR | Estrategias arquiteturais para pipelines novos |
 | `revisao-codigo-quatro-frentes` | REVISAR/AUDITAR | Corretude de codigo existente (4 dimensoes) |
 | `unity-catalog` | CRIAR | Schemas, tabelas e volumes no UC |
 | `protocolo-atualizacao` | ATUALIZAR | Documentacao apos mudancas de codigo |
@@ -32,7 +31,7 @@ Documentei o processo de investigacao completo em [INVESTIGATION_LOG.md](INVESTI
 Cada skill possui um verbo de acao unico e boundaries negativos explicitos para prevenir sobreposicao:
 
 ```
-DEFINIR ≠ CRIAR ≠ IMPLEMENTAR ≠ DECIDIR ≠ REVISAR ≠ ATUALIZAR
+DEFINIR ≠ CRIAR ≠ IMPLEMENTAR ≠ REVISAR ≠ ATUALIZAR
 ```
 
 ## Instalacao
@@ -43,7 +42,6 @@ DEFINIR ≠ CRIAR ≠ IMPLEMENTAR ≠ DECIDIR ≠ REVISAR ≠ ATUALIZAR
 ├── nomenclaturas/
 ├── estrutura-notebooks/
 ├── resiliencia-operacional/
-├── arquitetura-medalhao/
 ├── revisao-codigo-quatro-frentes/
 ├── unity-catalog/
 └── protocolo-atualizacao/
@@ -68,12 +66,7 @@ Genie: [carrega revisao-codigo-quatro-frentes]
        Revisa em 4 dimensoes: correcao, premissas ocultas, codigo morto, custo
 ```
 
-### Decisao Arquitetural
-```
-Usuario: "devo usar DELETE+APPEND ou MERGE para esta tabela silver?"
-Genie: [carrega arquitetura-medalhao]
-       Analisa trade-offs de idempotencia, reprocessamento, versionamento
-```
+
 
 ### Convencao de Nomenclatura
 ```
@@ -112,11 +105,11 @@ print(f"{len(description)}/1024 chars" if len(description) <= 1024 else "ACIMA D
 
 | Metrica | Status |
 |---------|--------|
-| Descriptions ASCII puro | 7/7 (100%) |
-| Boundaries negativos explicitos | 7/7 (100%) |
-| Verbos de acao unicos | 7/7 (100%) |
-| Tamanho < 1024 chars | 7/7 (100%) |
-| Triggering correto | 7/7 (100%) |
+| Descriptions ASCII puro | 6/6 (100%) |
+| Boundaries negativos explicitos | 6/6 (100%) |
+| Verbos de acao unicos | 6/6 (100%) |
+| Tamanho < 1024 chars | 6/6 (100%) |
+| Triggering correto | 6/6 (100%) |
 
 ## Documentacao
 
