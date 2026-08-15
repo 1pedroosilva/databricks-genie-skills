@@ -26,12 +26,13 @@ Documentei o processo de investigacao completo em [INVESTIGATION_LOG.md](INVESTI
 | `revisao-codigo-quatro-frentes` | REVISAR/AUDITAR | Corretude de codigo existente (4 dimensoes) |
 | `unity-catalog` | CRIAR | Schemas, tabelas e volumes no UC |
 | `protocolo-atualizacao` | ATUALIZAR | Documentacao apos mudancas de codigo |
+| `git-workflow` | COMMITAR | Divisao de commits, staging parcial, mensagens de commit |
 
 **Separacao de Responsabilidades:**  
 Cada skill possui um verbo de acao unico e boundaries negativos explicitos para prevenir sobreposicao:
 
 ```
-DEFINIR ≠ CRIAR ≠ IMPLEMENTAR ≠ REVISAR ≠ ATUALIZAR
+DEFINIR ≠ CRIAR ≠ IMPLEMENTAR ≠ REVISAR ≠ ATUALIZAR ≠ COMMITAR
 ```
 
 ## Instalacao
@@ -44,7 +45,8 @@ DEFINIR ≠ CRIAR ≠ IMPLEMENTAR ≠ REVISAR ≠ ATUALIZAR
 ├── resiliencia-operacional/
 ├── revisao-codigo-quatro-frentes/
 ├── unity-catalog/
-└── protocolo-atualizacao/
+├── protocolo-atualizacao/
+└── git-workflow/
 ```
 
 2. Aguarde 5-10 minutos para o registry do Genie Code indexar as skills
@@ -54,6 +56,7 @@ DEFINIR ≠ CRIAR ≠ IMPLEMENTAR ≠ REVISAR ≠ ATUALIZAR
 "revisar este notebook"                          -> triggera revisao-codigo-quatro-frentes
 "criar um notebook novo"                         -> triggera estrutura-notebooks
 "nomear esta tabela"                             -> triggera nomenclaturas
+"commitar estas mudancas"                        -> triggera git-workflow
 "quais skills pessoais estão no skill registry?" -> triggera e lista todas as skills
 ```
 
