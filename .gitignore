@@ -220,5 +220,8 @@ __marimo__/
 # Project internal documentation (não versionado)
 .project/
 
-# Backup files (não versionado)
+
+# Backups locais - histórico fica no Git
+_backup*/
 .backups/
+*.BASELINE_*
