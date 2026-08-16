@@ -1,6 +1,6 @@
 ﻿---
-name: revisao-codigo-quatro-frentes
-description: "Use APENAS ao REVISAR/AUDITAR corretude de codigo existente em 4 frentes -- (1) CORRECAO SEMANTICA: bugs de logica, alucinacao de API, divergencia comentario/codigo; (2) PREMISSAS OCULTAS: unicidade nao validada, cardinalidade de join assumida, nulos nao tratados, nao-determinismo, atomicidade nao garantida; (3) CODIGO MORTO: passos redundantes, abstractions prematuras; (4) CUSTO EVITAVEL: quebra de lazy evaluation, UDFs evitaveis, shuffles desnecessarios. NAO use para definir nomenclatura, estrutura de celulas, implementar padroes ou decisoes arquiteturais -- use outras skills para isso."
+name: revisao-código-quatro-frentes
+description: "Use APENAS ao REVISAR/AUDITAR corretude de código existente em 4 frentes -- (1) CORRECAO SEMANTICA: bugs de lógica, alucinação de API, divergência comentário/código; (2) PREMISSAS OCULTAS: unicidade não validada, cardinalidade de join assumida, nulos não tratados, não-determinismo, atomicidade não garantida; (3) código MORTO: passos redundantes, abstractions prematuras; (4) CUSTO EVITAVEL: quebra de lazy evaluation, UDFs evitáveis, shuffles desnecessários. não use para definir nomenclatura, estrutura de células, implementar padrões ou decisões arquiteturais -- use outras skills para isso."
 
 ---
 
@@ -27,17 +27,17 @@ PREMISSAS OCULTAS quase sempre tem efeito cascata em camadas downstream, e aplic
 correção sem o usuário decidir pode alterar dado já consumido por outra coisa.
 
 - Para cada achado, apresente: arquivo/célula, trecho atual, mudança proposta (trecho
-  corrigido), frente/severidade, e o impacto de aplicar aquilo (o que muda a jusante, se
-  algum histórico precisa ser reprocessado, se algum consumidor downstream depende do
-  comportamento atual mesmo que ele esteja errado).
+ corrigido), frente/severidade, e o impacto de aplicar aquilo (o que muda a jusante, se
+ algum histórico precisa ser reprocessado, se algum consumidor downstream depende do
+ comportamento atual mesmo que ele esteja errado).
 - Ordene o plano pela hierarquia de prioridade das quatro frentes (abaixo) — não pela
-  ordem em que os achados foram encontrados no código.
+ ordem em que os achados foram encontrados no código.
 - Só edite arquivos se o usuário aprovar explicitamente **quais** achados do plano quer
-  aplicar — nunca aplique "todos os achados" implicitamente, e nunca aplique um achado
-  que não estava no plano apresentado.
+ aplicar — nunca aplique "todos os achados" implicitamente, e nunca aplique um achado
+ que não estava no plano apresentado.
 - Se o usuário pedir a revisão mas não disser nada sobre aplicar mudanças, o output
-  esperado é só o relatório/plano — aplicar é uma ação separada, subsequente, que precisa
-  de pedido explícito.
+ esperado é só o relatório/plano — aplicar é uma ação separada, subsequente, que precisa
+ de pedido explícito.
 
 ## Ordem de prioridade — e por que ela importa
 
@@ -58,26 +58,26 @@ seguir esta hierarquia.
 Uma suspeita não é um achado. Antes de listar algo como problema:
 
 - **Se há dado real disponível (tabela, workspace, execução anterior), verifique contra
-  ele.** Uma hipótese de bug baseada só em leitura de código pode estar errada — o
-  jeito de descobrir é consultar o estado real (`SELECT` na tabela, `DESCRIBE`,
-  histórico de execuções), não presumir. Uma hipótese descartada por evidência real vale
-  tanto quanto um achado confirmado: registre as duas coisas separadamente ("o que
-  verifiquei e estava correto" vs. "o que confirmei que está quebrado").
+ ele.** Uma hipótese de bug baseada só em leitura de código pode estar errada — o
+ jeito de descobrir é consultar o estado real (`SELECT` na tabela, `DESCRIBE`,
+ histórico de execuções), não presumir. Uma hipótese descartada por evidência real vale
+ tanto quanto um achado confirmado: registre as duas coisas separadamente ("o que
+ verifiquei e estava correto" vs. "o que confirmei que está quebrado").
 - **Prefira o workspace/tabela ao vivo a qualquer cópia local ou memória de sessões
-  anteriores.** Notebooks Databricks mudam rápido; código exportado ontem pode já estar
-  desatualizado.
+ anteriores.** Notebooks Databricks mudam rápido; código exportado ontem pode já estar
+ desatualizado.
 - **Para cada achado, aponte o trecho exato, a frente, o que está errado e por quê** —
-  não basta dizer "isso pode ser um problema", diga qual é a premissa, o dado ou a
-  chamada que está errada e como isso se manifestaria.
+ não basta dizer "isso pode ser um problema", diga qual é a premissa, o dado ou a
+ chamada que está errada e como isso se manifestaria.
 - **Ao revisar múltiplos notebooks do mesmo projeto**, separe explicitamente os
-  problemas que se repetem em ≥2 notebooks (viram padrão) dos que aparecem uma vez só
-  (viram nota, não regra geral do projeto).
+ problemas que se repetem em ≥2 notebooks (viram padrão) dos que aparecem uma vez só
+ (viram nota, não regra geral do projeto).
 - **Se o notebook tem um "irmão"** (mesma estrutura, aplicada a uma fonte/tabela
-  diferente — o caso clássico é um notebook novo criado copiando um existente), faça
-  diff contra o irmão antes de aceitar o novo como correto. É assim que nasce o bug mais
-  comum de 1.3: uma constante ou nome que deveria ter sido criado/renomeado durante a
-  cópia e não foi — revisar o notebook novo isolado, sem comparar contra o original,
-  deixa esse tipo de erro passar despercebido.
+ diferente — o caso clássico é um notebook novo criado copiando um existente), faça
+ diff contra o irmão antes de aceitar o novo como correto. É assim que nasce o bug mais
+ comum de 1.3: uma constante ou nome que deveria ter sido criado/renomeado durante a
+ cópia e não foi — revisar o notebook novo isolado, sem comparar contra o original,
+ deixa esse tipo de erro passar despercebido.
 
 ---
 
@@ -90,11 +90,11 @@ amostra pequena, bateria com o que o código produz?
 
 ### 1.2 Lógica
 - Filtros, joins e agregações na ordem certa (filtrar antes de agregar quando possível;
-  um filtro aplicado depois de uma agregação pode filtrar o resultado errado).
+ um filtro aplicado depois de uma agregação pode filtrar o resultado errado).
 - Condição de janela (`Window.partitionBy`/`orderBy`) e granularidade da agregação
-  coerentes com o grain que o resultado final promete ter.
+ coerentes com o grain que o resultado final promete ter.
 - `distinct()` ou `dropDuplicates()` aplicado achando que remove duplicatas de negócio,
-  quando na verdade só remove linhas byte-a-byte idênticas.
+ quando na verdade só remove linhas byte-a-byte idênticas.
 
 ### 1.3 Alucinação de API
 Função, parâmetro ou assinatura que não existe na versão real da biblioteca em uso —
@@ -115,9 +115,9 @@ df_dedup = df.dropDuplicates(subset=["cnpj", "data"], keep="last")
 # não com um parâmetro que não existe.
 window_spec = Window.partitionBy("cnpj", "data").orderBy(col("versao").desc())
 df_dedup = (
-    df.withColumn("_rn", row_number().over(window_spec))
-      .filter(col("_rn") == 1)
-      .drop("_rn")
+ df.withColumn("_rn", row_number().over(window_spec))
+ .filter(col("_rn") == 1)
+ .drop("_rn")
 )
 ```
 
@@ -167,7 +167,7 @@ aspas é ao mesmo tempo um risco de correção (o valor `None` vira a string lit
 # ERRADO — se data_evento for None, o INSERT grava a string 'None'
 # numa coluna TIMESTAMP em vez de NULL; se algum valor tiver aspas, quebra a query.
 spark.sql(f"""
-    INSERT INTO controle (periodo, data_evento) VALUES ({periodo}, '{data_evento}')
+ INSERT INTO controle (periodo, data_evento) VALUES ({periodo}, '{data_evento}')
 """)
 ```
 
@@ -180,8 +180,8 @@ spark.sql(f"INSERT INTO controle (periodo, data_evento) VALUES ({periodo}, {valo
 
 # Melhor ainda: usar spark.sql com parameter markers, que trata None/aspas sozinho.
 spark.sql(
-    "INSERT INTO controle (periodo, data_evento) VALUES (:periodo, :data)",
-    args={"periodo": periodo, "data": data_evento},
+ "INSERT INTO controle (periodo, data_evento) VALUES (:periodo, :data)",
+ args={"periodo": periodo, "data": data_evento},
 )
 ```
 
@@ -261,7 +261,7 @@ como parte da chave natural:
 # ERRADO — a coluna de dimensão de período na partição faz cada valor dela
 # sobreviver como linha independente para a mesma chave_negocio+data_referencia+item.
 window_spec = Window.partitionBy(
-    "chave_negocio", "data_referencia", "codigo_item", "tipo_periodo"
+ "chave_negocio", "data_referencia", "codigo_item", "tipo_periodo"
 ).orderBy(col("_versao_ingestao").desc())
 ```
 
@@ -277,7 +277,7 @@ específico de `tipo_periodo` conta cada item em dobro.
 # à chave de dedup ou se deve ser filtrada antes dela.
 df_periodo_atual = df_bronze.filter(col("tipo_periodo") == "ATUAL")
 window_spec = Window.partitionBy(
-    "chave_negocio", "data_referencia", "codigo_item"
+ "chave_negocio", "data_referencia", "codigo_item"
 ).orderBy(col("_versao_ingestao").desc())
 ```
 
@@ -300,17 +300,17 @@ processado era compatível com o esperado.
 ```python
 # ERRADO — grava SUCCESS incondicionalmente
 df_silver.write.format("delta").mode("append").saveAsTable(tabela_destino)
-registrar_controle_sucesso(ano, ...)  # sem checar quantas linhas foram gravadas
+registrar_controle_sucesso(ano, ...) # sem checar quantas linhas foram gravadas
 ```
 
 ```python
 # CORRETO — valida volume antes de declarar sucesso
 count_registros = df_silver.count()
 if count_registros == 0:
-    raise ValueError(
-        f"Ano {ano}: 0 registros produzidos para {tabela_destino} — "
-        f"não gravar SUCCESS sobre um resultado vazio inesperado."
-    )
+ raise ValueError(
+ f"Ano {ano}: 0 registros produzidos para {tabela_destino} — "
+ f"não gravar SUCCESS sobre um resultado vazio inesperado."
+ )
 df_silver.write.format("delta").mode("append").saveAsTable(tabela_destino)
 registrar_controle_sucesso(ano, count_registros, ...)
 ```
@@ -361,14 +361,14 @@ um `import` de módulo algum dia.
 # ERRADO — depende do efeito colateral de `global PERIODOS_PROCESSAR` dentro
 # da função, chamada via %run no mesmo namespace.
 if PERIODOS_PROCESSAR is None:
-    inicializar_periodos_processar()
+ inicializar_periodos_processar()
 ```
 
 ```python
 # CORRETO — captura o retorno explicitamente; funciona independente de
 # %run vs import.
 if PERIODOS_PROCESSAR is None:
-    PERIODOS_PROCESSAR = inicializar_periodos_processar()
+ PERIODOS_PROCESSAR = inicializar_periodos_processar()
 ```
 
 ### 2.8 Atomicidade assumida em operações multi-passo
@@ -388,9 +388,9 @@ df_silver.write.format("delta").mode("append").saveAsTable("tabela")
 # CORRETO — replaceWhere faz a substituição como uma única transação
 # Delta atômica, para tabelas particionadas pela mesma coluna do filtro.
 df_silver.write.format("delta") \
-    .option("replaceWhere", f"ANO = {ano}") \
-    .mode("overwrite") \
-    .saveAsTable("tabela")
+ .option("replaceWhere", f"ANO = {ano}") \
+ .mode("overwrite") \
+ .saveAsTable("tabela")
 ```
 
 ### 2.9 Classificação de erro por exceção genérica
@@ -403,27 +403,27 @@ resposta, e o motivo verdadeiro nunca aparece no log.
 # ERRADO — timeout de rede, erro de parsing e 404 real são todos tratados
 # como "arquivo não existe".
 try:
-    req = urllib.request.Request(url, method="HEAD")
-    with urllib.request.urlopen(req, timeout=10) as response:
-        ...
+ req = urllib.request.Request(url, method="HEAD")
+ with urllib.request.urlopen(req, timeout=10) as response:
+ ...
 except Exception:
-    return (False, None, None)
+ return (False, None, None)
 ```
 
 ```python
 # CORRETO — diferencia o que é esperado (404) do que é uma falha real
 # que merece aparecer no log.
 try:
-    req = urllib.request.Request(url, method="HEAD")
-    with urllib.request.urlopen(req, timeout=10) as response:
-        ...
+ req = urllib.request.Request(url, method="HEAD")
+ with urllib.request.urlopen(req, timeout=10) as response:
+ ...
 except urllib.error.HTTPError as e:
-    if e.code == 404:
-        return (False, None, None)
-    raise
+ if e.code == 404:
+ return (False, None, None)
+ raise
 except urllib.error.URLError as e:
-    logger.warning(f"Falha de rede ao verificar {url}: {e}")
-    raise
+ logger.warning(f"Falha de rede ao verificar {url}: {e}")
+ raise
 ```
 
 ### 2.10 Não-determinismo em ordenação sem critério de desempate
@@ -443,7 +443,7 @@ window_spec = Window.partitionBy("chave").orderBy(col("versao").desc())
 # CORRETO — acrescenta uma coluna de desempate que garanta unicidade
 # (timestamp de ingestão com precisão suficiente, ou um id monotônico)
 window_spec = Window.partitionBy("chave").orderBy(
-    col("versao").desc(), col("_ingest_ts").desc(), col("_id").desc()
+ col("versao").desc(), col("_ingest_ts").desc(), col("_id").desc()
 )
 ```
 
@@ -463,12 +463,12 @@ anos = [int(a.strip()) for a in dbutils.widgets.get("anos_override").split(",")]
 # CORRETO — valida a entrada explicitamente antes de usar
 valor_bruto = dbutils.widgets.get("anos_override").strip()
 if not valor_bruto:
-    anos = []
+ anos = []
 else:
-    try:
-        anos = [int(a.strip()) for a in valor_bruto.split(",") if a.strip()]
-    except ValueError as e:
-        raise ValueError(f"Widget 'anos_override' malformado: '{valor_bruto}'") from e
+ try:
+ anos = [int(a.strip()) for a in valor_bruto.split(",") if a.strip()]
+ except ValueError as e:
+ raise ValueError(f"Widget 'anos_override' malformado: '{valor_bruto}'") from e
 ```
 
 ### 2.12 Timezone e determinismo temporal
@@ -482,7 +482,7 @@ externa.
 # ERRADO — compara um datetime vindo de uma fonte externa (geralmente
 # UTC) com um timestamp local sem garantir o mesmo fuso.
 if timestamp_fonte > timestamp_local:
-    ...
+ ...
 ```
 
 ```python
@@ -491,7 +491,7 @@ from datetime import timezone
 timestamp_fonte_utc = timestamp_fonte.astimezone(timezone.utc)
 timestamp_local_utc = timestamp_local.astimezone(timezone.utc)
 if timestamp_fonte_utc > timestamp_local_utc:
-    ...
+ ...
 ```
 
 ---
@@ -501,90 +501,90 @@ if timestamp_fonte_utc > timestamp_local_utc:
 Frente de subtração: aponte o que deve **sair**, não o que falta.
 
 - **Passo redundante ou resultado recalculado**: a mesma transformação computada mais de
-  uma vez no fluxo (sem cache) quando bastava computar uma vez e reaproveitar.
+ uma vez no fluxo (sem cache) quando bastava computar uma vez e reaproveitar.
 - **Abstração prematura**: função, classe ou bloco de configuração criado para algo
-  usado uma única vez, num único lugar, sem indício de que vai ganhar um segundo
-  consumidor.
+ usado uma única vez, num único lugar, sem indício de que vai ganhar um segundo
+ consumidor.
 - **Parâmetro morto**: argumento de função que existe na assinatura mas nunca é
-  referenciado no corpo — sinal de que a função foi generalizada para um caso que nunca
-  chegou a existir. Já apareceu em auditoria real como achado isolado (uma função
-  recebia um segundo parâmetro de "tipo" que nunca era lido no corpo) — trate como nota
-  a verificar, não como padrão automático de todo projeto.
+ referenciado no corpo — sinal de que a função foi generalizada para um caso que nunca
+ chegou a existir. Já apareceu em auditoria real como achado isolado (uma função
+ recebia um segundo parâmetro de "tipo" que nunca era lido no corpo) — trate como nota
+ a verificar, não como padrão automático de todo projeto.
 - **Reimplementação do que já existe nativo ou no próprio projeto**: função escrita do
-  zero para algo que uma função Spark/Databricks nativa já faz (ex.: reimplementar
-  dedup manual em vez de `dropDuplicates`, ou reimplementar merge incremental em vez de
-  `MERGE INTO`/`replaceWhere`).
+ zero para algo que uma função Spark/Databricks nativa já faz (ex.: reimplementar
+ dedup manual em vez de `dropDuplicates`, ou reimplementar merge incremental em vez de
+ `MERGE INTO`/`replaceWhere`).
 - **Persistência ou cache sem reuso que justifique**: `.cache()`/`.persist()` num
-  DataFrame usado uma única vez depois — custo de memória sem benefício, porque não há
-  segunda leitura para amortizar.
+ DataFrame usado uma única vez depois — custo de memória sem benefício, porque não há
+ segunda leitura para amortizar.
 
 ---
 
 ## FRENTE 4 — CUSTO
 
 - **Quebra de lazy evaluation por vaidade**: `count()`, `collect()`, `toPandas()` ou
-  `display()` no meio do fluxo só para conferir/logar, sem `.cache()`/`.persist()` antes
-  — isso força o Spark a computar a DAG inteira, e a ação seguinte (geralmente um
-  `.write()`) recomputa tudo de novo do zero.
+ `display()` no meio do fluxo só para conferir/logar, sem `.cache()`/`.persist()` antes
+ — isso força o Spark a computar a DAG inteira, e a ação seguinte (geralmente um
+ `.write()`) recomputa tudo de novo do zero.
 
-  **Padrão já confirmado em auditoria real, não é hipotético** — apareceu de forma
-  quase idêntica em múltiplos notebooks do mesmo projeto:
-  ```python
-  # ERRADO — computa a DAG inteira para imprimir uma contagem, e o
-  # .write() logo depois recomputa a mesma DAG do zero.
-  print(f"DataFrame Bronze criado: {df_bronze.count():,} registros")
-  df_bronze.write.format("delta").mode("append").saveAsTable(tabela)
-  ```
-  ```python
-  # CORRETO — cacheia antes de disparar a primeira ação, se o count()
-  # realmente precisa existir; ou melhor, tira o count() do caminho quente
-  # e usa métricas do próprio commit Delta (df_bronze.write... e depois
-  # ler numOutputRows do log de operação) se só serve para log.
-  df_bronze = df_bronze.cache()
-  print(f"DataFrame Bronze criado: {df_bronze.count():,} registros")
-  df_bronze.write.format("delta").mode("append").saveAsTable(tabela)
-  df_bronze.unpersist()
-  ```
+ **Padrão já confirmado em auditoria real, não é hipotético** — apareceu de forma
+ quase idêntica em múltiplos notebooks do mesmo projeto:
+ ```python
+ # ERRADO — computa a DAG inteira para imprimir uma contagem, e o
+ # .write() logo depois recomputa a mesma DAG do zero.
+ print(f"DataFrame Bronze criado: {df_bronze.count():,} registros")
+ df_bronze.write.format("delta").mode("append").saveAsTable(tabela)
+ ```
+ ```python
+ # CORRETO — cacheia antes de disparar a primeira ação, se o count()
+ # realmente precisa existir; ou melhor, tira o count() do caminho quente
+ # e usa métricas do próprio commit Delta (df_bronze.write... e depois
+ # ler numOutputRows do log de operação) se só serve para log.
+ df_bronze = df_bronze.cache()
+ print(f"DataFrame Bronze criado: {df_bronze.count():,} registros")
+ df_bronze.write.format("delta").mode("append").saveAsTable(tabela)
+ df_bronze.unpersist()
+ ```
 
 - **UDF Python onde existe função nativa do Spark**: UDFs quebram a otimização do
-  Catalyst e forçam serialização linha a linha entre JVM e Python. Antes de aceitar uma
-  UDF, pergunte se `pyspark.sql.functions` já cobre o caso.
+ Catalyst e forçam serialização linha a linha entre JVM e Python. Antes de aceitar uma
+ UDF, pergunte se `pyspark.sql.functions` já cobre o caso.
 
 - **`withColumn` em loop**: cada chamada de `withColumn` adiciona um nó ao plano lógico;
-  um loop Python chamando `withColumn` repetidamente para N colunas infla o plano de
-  forma desnecessária.
+ um loop Python chamando `withColumn` repetidamente para N colunas infla o plano de
+ forma desnecessária.
 
-  ```python
-  # ERRADO — N chamadas de withColumn em loop, N nós no plano lógico
-  for c in colunas_numericas:
-      df = df.withColumn(c, F.col(c).cast("double"))
-  ```
-  ```python
-  # CORRETO — um único select reescreve todas as colunas de uma vez
-  df = df.select(
-      *[F.col(c).cast("double").alias(c) if c in colunas_numericas else F.col(c)
-        for c in df.columns]
-  )
-  ```
+ ```python
+ # ERRADO — N chamadas de withColumn em loop, N nós no plano lógico
+ for c in colunas_numericas:
+ df = df.withColumn(c, F.col(c).cast("double"))
+ ```
+ ```python
+ # CORRETO — um único select reescreve todas as colunas de uma vez
+ df = df.select(
+ *[F.col(c).cast("double").alias(c) if c in colunas_numericas else F.col(c)
+ for c in df.columns]
+ )
+ ```
 
 - **Shuffle evitável**: `repartition()` sem necessidade antes de um `write` numa tabela
-  já particionada pela mesma coluna; `join` sem broadcast quando um dos lados é
-  claramente pequeno (tabela de dimensão, lookup, referência).
+ já particionada pela mesma coluna; `join` sem broadcast quando um dos lados é
+ claramente pequeno (tabela de dimensão, lookup, referência).
 
-  ```python
-  # ERRADO — join grande x pequeno sem broadcast, shuffle nos dois lados
-  df_fatos.join(df_dimensao_pequena, "chave")
-  ```
-  ```python
-  # CORRETO
-  from pyspark.sql.functions import broadcast
-  df_fatos.join(broadcast(df_dimensao_pequena), "chave")
-  ```
+ ```python
+ # ERRADO — join grande x pequeno sem broadcast, shuffle nos dois lados
+ df_fatos.join(df_dimensao_pequena, "chave")
+ ```
+ ```python
+ # CORRETO
+ from pyspark.sql.functions import broadcast
+ df_fatos.join(broadcast(df_dimensao_pequena), "chave")
+ ```
 
 - **Leitura sem projeção ou sem filtro empurrado para a fonte**: materializar
-  (`collect()`/`toPandas()`) uma tabela inteira para filtrar em Python quando o filtro
-  podia ser expresso em Spark e teria pushdown para a fonte (partition pruning numa
-  tabela particionada, predicate pushdown em Parquet/Delta).
+ (`collect()`/`toPandas()`) uma tabela inteira para filtrar em Python quando o filtro
+ podia ser expresso em Spark e teria pushdown para a fonte (partition pruning numa
+ tabela particionada, predicate pushdown em Parquet/Delta).
 
 ---
 
@@ -593,10 +593,10 @@ Frente de subtração: aponte o que deve **sair**, não o que falta.
 - Estrutura de célula e separação de responsabilidades por célula.
 - Nomenclatura de notebooks, tabelas e variáveis.
 - Retry/backoff, logging estruturado, checkpointing como padrão operacional em si (esta
-  skill entra nesse assunto só quando a resiliência mascara um erro — ver 1.3).
+ skill entra nesse assunto só quando a resiliência mascara um erro — ver 1.3).
 - Documentação e protocolo de atualização de docs.
 - Guardrails de schema (validação de colunas obrigatórias) em si — esta skill assume que
-  o guardrail existe e revisa o que acontece *depois* dele.
+ o guardrail existe e revisa o que acontece *depois* dele.
 
 Se o projeto tiver documentação própria cobrindo esses pontos, ela tem prioridade sobre
 qualquer suposição desta skill.

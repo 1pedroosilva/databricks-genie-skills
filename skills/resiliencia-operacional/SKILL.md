@@ -1,6 +1,6 @@
 ﻿---
 name: resiliencia-operacional
-description: Use APENAS ao IMPLEMENTAR padroes de resiliencia em codigo NOVO -- chamadas HTTP/API com retry logic, tratamento de erros por unidade de trabalho, logging estruturado, checkpointing, deteccao automatica de periodos pendentes. NAO use para revisar ou validar implementacoes de resiliencia em codigo existente.
+description: Use APENAS ao IMPLEMENTAR padrões de resiliencia em código NOVO -- chamadas HTTP/API com retry logic, tratamento de erros por unidade de trabalho, logging estruturado, checkpointing, deteccao automatica de periodos pendentes. não use para revisar ou validar implementacoes de resiliencia em código existente.
 
 ---
 
@@ -38,29 +38,29 @@ import time
 import random
 
 def retry_com_backoff(funcao, max_tentativas=3, backoff_inicial=1):
-    """
-    Retry com exponential backoff + jitter.
-    
-    Args:
-        funcao: Função a executar
-        max_tentativas: Máximo de tentativas
-        backoff_inicial: Tempo inicial de espera (segundos)
-    """
-    for tentativa in range(1, max_tentativas + 1):
-        try:
-            return funcao()
-        except Exception as e:
-            if tentativa == max_tentativas:
-                raise  # Última tentativa, propaga erro
-            
-            # Exponential backoff: 1s, 2s, 4s, 8s...
-            espera = backoff_inicial * (2 ** (tentativa - 1))
-            # Jitter: randomiza ±20% para evitar thundering herd
-            espera = espera * (0.8 + 0.4 * random.random())
-            
-            print(f"[RETRY] Tentativa {tentativa}/{max_tentativas} falhou: {e}")
-            print(f"[RETRY] Aguardando {espera:.1f}s antes de tentar novamente")
-            time.sleep(espera)
+ """
+ Retry com exponential backoff + jitter.
+ 
+ Args:
+ funcao: Função a executar
+ max_tentativas: Máximo de tentativas
+ backoff_inicial: Tempo inicial de espera (segundos)
+ """
+ for tentativa in range(1, max_tentativas + 1):
+ try:
+ return funcao()
+ except Exception as e:
+ if tentativa == max_tentativas:
+ raise # Última tentativa, propaga erro
+ 
+ # Exponential backoff: 1s, 2s, 4s, 8s...
+ espera = backoff_inicial * (2 ** (tentativa - 1))
+ # Jitter: randomiza ±20% para evitar thundering herd
+ espera = espera * (0.8 + 0.4 * random.random())
+ 
+ print(f"[RETRY] Tentativa {tentativa}/{max_tentativas} falhou: {e}")
+ print(f"[RETRY] Aguardando {espera:.1f}s antes de tentar novamente")
+ time.sleep(espera)
 ```
 
 **Por que jitter?** Se 100 jobs falharem simultaneamente e todos esperarem exatamente 2s, todos vão bater na API ao mesmo tempo de novo — criando um *thundering herd*. Jitter espalha as tentativas.
@@ -74,21 +74,21 @@ import requests
 import time
 
 def request_com_rate_limit(url, max_tentativas=5):
-    for tentativa in range(1, max_tentativas + 1):
-        response = requests.get(url)
-        
-        if response.status_code == 200:
-            return response
-        
-        if response.status_code == 429:
-            # Respeitar Retry-After se disponível
-            retry_after = int(response.headers.get('Retry-After', 60))
-            print(f"[RATE LIMIT] Aguardando {retry_after}s")
-            time.sleep(retry_after)
-            continue
-        
-        # Outros erros: backoff padrão
-        response.raise_for_status()
+ for tentativa in range(1, max_tentativas + 1):
+ response = requests.get(url)
+ 
+ if response.status_code == 200:
+ return response
+ 
+ if response.status_code == 429:
+ # Respeitar Retry-After se disponível
+ retry_after = int(response.headers.get('Retry-After', 60))
+ print(f"[RATE LIMIT] Aguardando {retry_after}s")
+ time.sleep(retry_after)
+ continue
+ 
+ # Outros erros: backoff padrão
+ response.raise_for_status()
 ```
 
 ---
@@ -99,37 +99,37 @@ def request_com_rate_limit(url, max_tentativas=5):
 
 **Antipadrão**:
 ```python
-# ❌ Processar 5 anos em um único bloco try/except
+# Processar 5 anos em um único bloco try/except
 try:
-    for ano in [2021, 2022, 2023, 2024, 2025]:
-        processar_ano(ano)  # Se 2022 falhar, TUDO falha
+ for ano in [2021, 2022, 2023, 2024, 2025]:
+ processar_ano(ano) # Se 2022 falhar, TUDO falha
 except Exception as e:
-    print(f"Erro: {e}")
-    # Perdeu todo o trabalho de 2021
+ print(f"Erro: {e}")
+ # Perdeu todo o trabalho de 2021
 ```
 
 **Padrão robusto**:
 ```python
-# ✅ Try/except POR ano — falha isolada
+# Try/except POR ano — falha isolada
 anos_sucesso = []
 anos_falha = []
 
 for ano in [2021, 2022, 2023, 2024, 2025]:
-    try:
-        processar_ano(ano)
-        anos_sucesso.append(ano)
-        print(f"✅ Ano {ano} processado com sucesso")
-    except Exception as e:
-        anos_falha.append((ano, str(e)))
-        print(f"❌ Ano {ano} falhou: {e}")
-        # Continua processando próximos anos
+ try:
+ processar_ano(ano)
+ anos_sucesso.append(ano)
+ print(f" Ano {ano} processado com sucesso")
+ except Exception as e:
+ anos_falha.append((ano, str(e)))
+ print(f" Ano {ano} falhou: {e}")
+ # Continua processando próximos anos
 
 # Relatório final
-print(f"\n📊 Resumo: {len(anos_sucesso)} sucessos, {len(anos_falha)} falhas")
+print(f"\n Resumo: {len(anos_sucesso)} sucessos, {len(anos_falha)} falhas")
 if anos_falha:
-    print("\n⚠️ Anos que falharam:")
-    for ano, erro in anos_falha:
-        print(f"  - {ano}: {erro}")
+ print("\n Anos que falharam:")
+ for ano, erro in anos_falha:
+ print(f" - {ano}: {erro}")
 ```
 
 **Ganho**: Se 2022 falha (arquivo corrompido), 2021/2023/2024/2025 são processados. Reprocessamento só precisa corrigir 2022.
@@ -150,28 +150,28 @@ from datetime import datetime
 
 # Configurar logger estruturado
 logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s | %(levelname)s | %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+ level=logging.INFO,
+ format='%(asctime)s | %(levelname)s | %(message)s',
+ datefmt='%Y-%m-%d %H:%M:%S'
 )
 logger = logging.getLogger(__name__)
 
 def processar_ano_com_log(ano):
-    inicio = time.time()
-    logger.info(f"[INÍCIO] Processando ano={ano}")
-    
-    try:
-        # Lógica de processamento
-        resultado = processar_ano(ano)
-        
-        duracao = time.time() - inicio
-        logger.info(f"[SUCESSO] ano={ano} | duração={duracao:.2f}s | registros={resultado['count']}")
-        return resultado
-        
-    except Exception as e:
-        duracao = time.time() - inicio
-        logger.error(f"[FALHA] ano={ano} | duração={duracao:.2f}s | erro={str(e)}")
-        raise
+ inicio = time.time()
+ logger.info(f"[INÍCIO] Processando ano={ano}")
+ 
+ try:
+ # Lógica de processamento
+ resultado = processar_ano(ano)
+ 
+ duracao = time.time() - inicio
+ logger.info(f"[SUCESSO] ano={ano} | duração={duracao:.2f}s | registros={resultado['count']}")
+ return resultado
+ 
+ except Exception as e:
+ duracao = time.time() - inicio
+ logger.error(f"[FALHA] ano={ano} | duração={duracao:.2f}s | erro={str(e)}")
+ raise
 ```
 
 **Benefício**: Log estruturado permite rastrear exatamente onde e por que falhou, com contexto suficiente para diagnosticar.
@@ -186,15 +186,15 @@ Para pipelines que processam múltiplos períodos/arquivos, manter tabela de con
 
 ```sql
 CREATE TABLE IF NOT EXISTS bronze.controle_ingestao (
-    fonte          STRING,
-    ano            INT,
-    status         STRING,  -- 'pendente', 'processando', 'sucesso', 'falha'
-    data_inicio    TIMESTAMP,
-    data_fim       TIMESTAMP,
-    tentativas     INT,
-    erro           STRING,
-    registros      BIGINT,
-    CONSTRAINT pk PRIMARY KEY (fonte, ano)
+ fonte STRING,
+ ano INT,
+ status STRING, -- 'pendente', 'processando', 'sucesso', 'falha'
+ data_inicio TIMESTAMP,
+ data_fim TIMESTAMP,
+ tentativas INT,
+ erro STRING,
+ registros BIGINT,
+ CONSTRAINT pk PRIMARY KEY (fonte, ano)
 )
 ```
 
@@ -204,75 +204,75 @@ CREATE TABLE IF NOT EXISTS bronze.controle_ingestao (
 from pyspark.sql.functions import current_timestamp, lit
 
 def processar_com_checkpoint(fonte, ano):
-    # 1. Marcar como 'processando'
-    spark.sql(f"""
-        MERGE INTO bronze.controle_ingestao t
-        USING (SELECT '{fonte}' as fonte, {ano} as ano) s
-        ON t.fonte = s.fonte AND t.ano = s.ano
-        WHEN MATCHED THEN UPDATE SET
-            status = 'processando',
-            data_inicio = current_timestamp(),
-            tentativas = t.tentativas + 1
-        WHEN NOT MATCHED THEN INSERT
-            (fonte, ano, status, data_inicio, tentativas)
-            VALUES ('{fonte}', {ano}, 'processando', current_timestamp(), 1)
-    """)
-    
-    try:
-        # 2. Processar
-        resultado = processar_ano(ano)
-        
-        # 3. Marcar como 'sucesso'
-        spark.sql(f"""
-            UPDATE bronze.controle_ingestao
-            SET status = 'sucesso',
-                data_fim = current_timestamp(),
-                registros = {resultado['count']},
-                erro = NULL
-            WHERE fonte = '{fonte}' AND ano = {ano}
-        """)
-        
-    except Exception as e:
-        # 4. Marcar como 'falha'
-        spark.sql(f"""
-            UPDATE bronze.controle_ingestao
-            SET status = 'falha',
-                data_fim = current_timestamp(),
-                erro = '{str(e).replace("'", "''")}'  -- Escape SQL
-            WHERE fonte = '{fonte}' AND ano = {ano}
-        """)
-        raise
+ # 1. Marcar como 'processando'
+ spark.sql(f"""
+ MERGE INTO bronze.controle_ingestao t
+ USING (SELECT '{fonte}' as fonte, {ano} as ano) s
+ ON t.fonte = s.fonte AND t.ano = s.ano
+ WHEN MATCHED THEN UPDATE SET
+ status = 'processando',
+ data_inicio = current_timestamp(),
+ tentativas = t.tentativas + 1
+ WHEN NOT MATCHED THEN INSERT
+ (fonte, ano, status, data_inicio, tentativas)
+ VALUES ('{fonte}', {ano}, 'processando', current_timestamp(), 1)
+ """)
+ 
+ try:
+ # 2. Processar
+ resultado = processar_ano(ano)
+ 
+ # 3. Marcar como 'sucesso'
+ spark.sql(f"""
+ UPDATE bronze.controle_ingestao
+ SET status = 'sucesso',
+ data_fim = current_timestamp(),
+ registros = {resultado['count']},
+ erro = NULL
+ WHERE fonte = '{fonte}' AND ano = {ano}
+ """)
+ 
+ except Exception as e:
+ # 4. Marcar como 'falha'
+ spark.sql(f"""
+ UPDATE bronze.controle_ingestao
+ SET status = 'falha',
+ data_fim = current_timestamp(),
+ erro = '{str(e).replace("'", "''")}' -- Escape SQL
+ WHERE fonte = '{fonte}' AND ano = {ano}
+ """)
+ raise
 ```
 
 ### 3.3 Detecção Inteligente de Períodos Pendentes
 
 ```python
 def get_anos_pendentes(fonte, janela_anos=5):
-    """
-    Retorna anos pendentes ou com falha, dentro da janela temporal.
-    """
-    ano_atual = datetime.now().year
-    ano_inicio = ano_atual - janela_anos + 1
-    
-    df_controle = spark.sql(f"""
-        SELECT ano, status, tentativas
-        FROM bronze.controle_ingestao
-        WHERE fonte = '{fonte}'
-          AND ano BETWEEN {ano_inicio} AND {ano_atual}
-    """)
-    
-    # Anos dentro da janela
-    anos_janela = set(range(ano_inicio, ano_atual + 1))
-    
-    # Anos já processados com sucesso
-    anos_sucesso = set(
-        row.ano for row in df_controle.filter("status = 'sucesso'").collect()
-    )
-    
-    # Anos pendentes = janela - sucesso
-    anos_pendentes = sorted(anos_janela - anos_sucesso)
-    
-    return anos_pendentes
+ """
+ Retorna anos pendentes ou com falha, dentro da janela temporal.
+ """
+ ano_atual = datetime.now().year
+ ano_inicio = ano_atual - janela_anos + 1
+ 
+ df_controle = spark.sql(f"""
+ SELECT ano, status, tentativas
+ FROM bronze.controle_ingestao
+ WHERE fonte = '{fonte}'
+ AND ano BETWEEN {ano_inicio} AND {ano_atual}
+ """)
+ 
+ # Anos dentro da janela
+ anos_janela = set(range(ano_inicio, ano_atual + 1))
+ 
+ # Anos já processados com sucesso
+ anos_sucesso = set(
+ row.ano for row in df_controle.filter("status = 'sucesso'").collect()
+ )
+ 
+ # Anos pendentes = janela - sucesso
+ anos_pendentes = sorted(anos_janela - anos_sucesso)
+ 
+ return anos_pendentes
 ```
 
 **Ganho**: Pipeline detecta automaticamente quais períodos faltam processar, sem hardcoding de listas.
@@ -289,43 +289,43 @@ def get_anos_pendentes(fonte, janela_anos=5):
 
 ```python
 def validar_prerequisitos(fonte, ano):
-    """
-    Valida que todos os pré-requisitos existem antes de processar.
-    Retorna (bool, mensagem_erro).
-    """
-    # 1. Arquivo na Landing Zone existe?
-    arquivo_path = f"/Volumes/cvm/landing/{fonte}/{ano}/arquivo_{ano}.zip"
-    try:
-        dbutils.fs.ls(arquivo_path)
-    except:
-        return False, f"Arquivo não encontrado: {arquivo_path}"
-    
-    # 2. Tabela de destino existe?
-    if not spark.catalog.tableExists(f"bronze.{fonte}"):
-        return False, f"Tabela bronze.{fonte} não existe"
-    
-    # 3. Tabela de controle existe?
-    if not spark.catalog.tableExists("bronze.controle_ingestao"):
-        return False, "Tabela de controle não existe"
-    
-    # 4. Não está sendo processado por outro job?
-    em_processamento = spark.sql(f"""
-        SELECT COUNT(*) as cnt
-        FROM bronze.controle_ingestao
-        WHERE fonte = '{fonte}' AND ano = {ano}
-          AND status = 'processando'
-          AND data_inicio > current_timestamp() - INTERVAL 2 HOURS
-    """).first().cnt
-    
-    if em_processamento > 0:
-        return False, f"Ano {ano} já está sendo processado por outro job"
-    
-    return True, None
+ """
+ Valida que todos os pré-requisitos existem antes de processar.
+ Retorna (bool, mensagem_erro).
+ """
+ # 1. Arquivo na Landing Zone existe?
+ arquivo_path = f"/Volumes/cvm/landing/{fonte}/{ano}/arquivo_{ano}.zip"
+ try:
+ dbutils.fs.ls(arquivo_path)
+ except:
+ return False, f"Arquivo não encontrado: {arquivo_path}"
+ 
+ # 2. Tabela de destino existe?
+ if not spark.catalog.tableExists(f"bronze.{fonte}"):
+ return False, f"Tabela bronze.{fonte} não existe"
+ 
+ # 3. Tabela de controle existe?
+ if not spark.catalog.tableExists("bronze.controle_ingestao"):
+ return False, "Tabela de controle não existe"
+ 
+ # 4. Não está sendo processado por outro job?
+ em_processamento = spark.sql(f"""
+ SELECT COUNT(*) as cnt
+ FROM bronze.controle_ingestao
+ WHERE fonte = '{fonte}' AND ano = {ano}
+ AND status = 'processando'
+ AND data_inicio > current_timestamp() - INTERVAL 2 HOURS
+ """).first().cnt
+ 
+ if em_processamento > 0:
+ return False, f"Ano {ano} já está sendo processado por outro job"
+ 
+ return True, None
 
 # Uso
 valido, erro = validar_prerequisitos('dfp_dre', 2023)
 if not valido:
-    raise RuntimeError(f"Pré-requisito não atendido: {erro}")
+ raise RuntimeError(f"Pré-requisito não atendido: {erro}")
 ```
 
 **Ganho**: Falha RÁPIDA e CLARA antes de gastar tempo/recursos.
@@ -340,12 +340,12 @@ if not valido:
 from datetime import datetime
 
 def get_janela_anos(janela_anos_relevante=5):
-    """
-    Retorna (ano_inicio, ano_fim) baseado na data atual.
-    """
-    ano_atual = datetime.now().year
-    ano_inicio = ano_atual - janela_anos_relevante + 1
-    return ano_inicio, ano_atual
+ """
+ Retorna (ano_inicio, ano_fim) baseado na data atual.
+ """
+ ano_atual = datetime.now().year
+ ano_inicio = ano_atual - janela_anos_relevante + 1
+ return ano_inicio, ano_atual
 
 # Uso
 ano_inicio, ano_fim = get_janela_anos(janela_anos_relevante=5)
@@ -360,10 +360,10 @@ print(f"Janela temporal: {ano_inicio} a {ano_fim}")
 ```python
 # 04_apoio/config_parametros.py
 PARAMETROS = {
-    "janela_anos_relevante": 5,
-    "max_tentativas_retry": 3,
-    "backoff_inicial_segundos": 2,
-    "timeout_http_segundos": 30,
+ "janela_anos_relevante": 5,
+ "max_tentativas_retry": 3,
+ "backoff_inicial_segundos": 2,
+ "timeout_http_segundos": 30,
 }
 
 # Uso no notebook
@@ -420,12 +420,12 @@ Cada célula de um notebook Databricks é compilada e executada **isoladamente**
 ```python
 # Célula N — inválido: try aberto sem fechamento na própria célula
 for ano in ANOS_PROCESSAR:
-    try:
-        df_raw = ler_dados(ano)
+ try:
+ df_raw = ler_dados(ano)
 ```
 ```python
 # Célula N+1 — inválido: retomar o corpo do try de outra célula
-        df_bronze = transformar(df_raw)
+ df_bronze = transformar(df_raw)
 ```
 
 ### 8.2 Padrão correto: funções por responsabilidade + 1 célula de orquestração resiliente
@@ -435,38 +435,38 @@ Mantém a separação de responsabilidades (cada etapa é uma função definida 
 ```python
 # Célula 6 — EXTRAÇÃO (função dedicada)
 def extrair(ano):
-    return ler_dados(ano)
+ return ler_dados(ano)
 ```
 
 ```python
 # Célula 7 — TRANSFORMAÇÃO (função dedicada)
 def transformar_dados(df_raw):
-    return transformar(df_raw)
+ return transformar(df_raw)
 ```
 
 ```python
 # Célula 8 — GRAVAÇÃO (função dedicada)
 def gravar_dados(df):
-    gravar(df)
+ gravar(df)
 ```
 
 ```python
 # Célula 9 — ORQUESTRAÇÃO RESILIENTE (única célula com o loop e o try/except)
 anos_sucesso, anos_falha = [], []
 for ano in ANOS_PROCESSAR:
-    try:
-        logger.info(f"[EXTRAÇÃO] Ano {ano}")
-        df_raw = extrair(ano)
+ try:
+ logger.info(f"[EXTRAÇÃO] Ano {ano}")
+ df_raw = extrair(ano)
 
-        logger.info(f"[TRANSFORMAÇÃO] Ano {ano}")
-        df_bronze = transformar_dados(df_raw)
+ logger.info(f"[TRANSFORMAÇÃO] Ano {ano}")
+ df_bronze = transformar_dados(df_raw)
 
-        logger.info(f"[GRAVAÇÃO] Ano {ano}")
-        gravar_dados(df_bronze)
-        anos_sucesso.append(ano)
-    except Exception as e:
-        anos_falha.append((ano, str(e)))
-        logger.error(f"[FALHA] {ano}: {e}")
+ logger.info(f"[GRAVAÇÃO] Ano {ano}")
+ gravar_dados(df_bronze)
+ anos_sucesso.append(ano)
+ except Exception as e:
+ anos_falha.append((ano, str(e)))
+ logger.error(f"[FALHA] {ano}: {e}")
 ```
 
 **Regra**: try/except e loop SEMPRE numa única célula (a de orquestração). As funções chamadas por ele é que ficam separadas por responsabilidade, cada uma na sua própria célula.

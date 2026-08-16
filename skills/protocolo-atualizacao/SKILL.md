@@ -1,6 +1,6 @@
 ﻿---
 name: protocolo-atualizacao
-description: Use sempre que uma mudanca de codigo ou arquitetura for feita -- determina quais documentacoes (README, arquitetura, dicionario de dados, evolucao do projeto) precisam ser atualizadas em conjunto. NAO use para decidir O QUE mudar no codigo ou na arquitetura -- esta skill so mapeia quais documentos precisam refletir uma mudanca ja decidida, nao participa da decisao tecnica em si.
+description: Use sempre que uma mudanca de código ou arquitetura for feita -- determina quais documentacoes (README, arquitetura, dicionario de dados, evolucao do projeto) precisam ser atualizadas em conjunto. não use para decidir O QUE mudar no código ou na arquitetura -- esta skill so mapeia quais documentos precisam refletir uma mudanca ja decidida, não participa da decisao técnica em si.
 
 ---
 
@@ -20,7 +20,7 @@ Ao final de qualquer sessão que implementou mudanças no projeto, o assistente 
 
 ---
 
-## ⚠️ ALERTA CRÍTICO PARA O ASSISTENTE
+## ALERTA CRÍTICO PARA O ASSISTENTE
 
 **REGRA INQUEBRAVEL**: Este arquivo DEVE ser lido ANTES de qualquer resposta sobre atualização de documentação.
 
@@ -36,9 +36,9 @@ Ao final de qualquer sessão que implementou mudanças no projeto, o assistente 
 ### Formato de Resposta Obrigatório:
 
 ```markdown
-## 📋 CHECKLIST DE DOCUMENTAÇÃO
+## CHECKLIST DE DOCUMENTAÇÃO
 
-Protocolo carregado: ✅
+Protocolo carregado: 
 
 ### Mudanças Identificadas:
 1. [mudança] - classificação: [tipo do protocolo]
@@ -51,10 +51,10 @@ Confirma que posso prosseguir?
 ```
 
 ### PROIBIDO:
-- ❌ Assumir quais arquivos atualizar sem consultar a matriz
-- ❌ Confiar em memória de sessões anteriores
-- ❌ Pular a leitura deste arquivo "porque já sei"
-- ❌ Listar arquivos antes de ler o protocolo
+- Assumir quais arquivos atualizar sem consultar a matriz
+- Confiar em memória de sessões anteriores
+- Pular a leitura deste arquivo "porque já sei"
+- Listar arquivos antes de ler o protocolo
 
 ### Por Que Esta Regra Existe:
 
@@ -67,7 +67,7 @@ O protocolo existe para TIRAR a carga do usuário e TORNAR o assistente sistemá
 
 ---
 
-## 🎯 Princípio DRY na Documentação
+## Princípio DRY na Documentação
 
 **Regra de Ouro**: Cada informação tem UMA ÚNICA localização autoritativa.
 
@@ -80,20 +80,20 @@ O protocolo existe para TIRAR a carga do usuário e TORNAR o assistente sistemá
 
 ---
 
-## 📋 Matriz de Impactos
+## Matriz de Impactos
 
-### ➕ Quando CRIAR/MODIFICAR NOTEBOOK
+### Quando CRIAR/MODIFICAR NOTEBOOK
 
 **Arquivos a atualizar:**
 - [ ] `README.md` → Seção "Estrutura do Projeto" (atualizar árvore de diretórios, se necessário)
-- [ ] `README.md` → Seção "Status Atual" (adicionar linha simples com ✅)
-- [ ] `00_documentacao/tecnica/arquitetura.md` → Seção "Pipeline Implementado" (adicionar à tabela da camada correspondente com detalhes técnicos)
+- [ ] `README.md` → Seção "Status Atual" (adicionar linha simples com )
+- [ ] `00_documentacao/técnica/arquitetura.md` → Seção "Pipeline Implementado" (adicionar à tabela da camada correspondente com detalhes técnicos)
 - [ ] `evolucao_projeto.md` → Novo registro de sessão (se houver decisão arquitetural ou evolução significativa)
 
 **Exemplo README.md (simples):**
 ```markdown
-- ✅ **Silver** - DRE transformada (notebook `201_cvm_dfp_dre.py`)
-  - Tabela: `proj_cvm_02_silver.201_dre_dfp`
+- **Silver** - DRE transformada (notebook `201_cvm_dfp_dre.py`)
+ - Tabela: `proj_cvm_02_silver.201_dre_dfp`
 ```
 
 **Exemplo arquitetura.md (detalhado):**
@@ -110,15 +110,15 @@ O protocolo existe para TIRAR a carga do usuário e TORNAR o assistente sistemá
 
 ---
 
-### 🗄️ Quando CRIAR SCHEMA Unity Catalog
+### Quando CRIAR SCHEMA Unity Catalog
 
 **Arquivos a atualizar:**
 - [ ] `README.md` → Seção "Status Atual" (marcar schema como criado, se necessário)
-- [ ] `00_documentacao/tecnica/arquitetura.md` → Seção da camada correspondente (documentar características, propósito, estratégias)
+- [ ] `00_documentacao/técnica/arquitetura.md` → Seção da camada correspondente (documentar características, propósito, estratégias)
 
 **Exemplo README.md:**
 ```markdown
-- ✅ Scripts DDL (000_ddl_create_tables.py + 001_ddl_controle_ingestao.py)
+- Scripts DDL (000_ddl_create_tables.py + 001_ddl_controle_ingestao.py)
 ```
 
 **Exemplo arquitetura.md:**
@@ -132,16 +132,16 @@ O protocolo existe para TIRAR a carga do usuário e TORNAR o assistente sistemá
 
 ---
 
-### 📊 Quando CRIAR TABELA Unity Catalog
+### Quando CRIAR TABELA Unity Catalog
 
 **Arquivos a atualizar:**
 - [ ] `README.md` → Seção "Status Atual" (adicionar linha simples)
-- [ ] `00_documentacao/tecnica/arquitetura.md` → Seção "Pipeline Implementado" (adicionar à tabela da camada + características técnicas)
+- [ ] `00_documentacao/técnica/arquitetura.md` → Seção "Pipeline Implementado" (adicionar à tabela da camada + características técnicas)
 
 **Exemplo README.md:**
 ```markdown
-- ✅ **Bronze** - DRE com versionamento (notebook `101_cvm_dfp_dre.py`)
-  - Tabela: `proj_cvm_01_bronze.101_dre_dfp`
+- **Bronze** - DRE com versionamento (notebook `101_cvm_dfp_dre.py`)
+ - Tabela: `proj_cvm_01_bronze.101_dre_dfp`
 ```
 
 **Exemplo arquitetura.md:**
@@ -155,18 +155,18 @@ O protocolo existe para TIRAR a carga do usuário e TORNAR o assistente sistemá
 
 ---
 
-### 🏗️ Quando TOMAR DECISÃO ARQUITETURAL
+### Quando TOMAR DECISÃO ARQUITETURAL
 
 **Arquivos a atualizar:**
 - [ ] `evolucao_projeto.md` → Novo registro completo com:
-  - Data da sessão
-  - Contexto que motivou a decisão
-  - Decisões técnicas tomadas
-  - Alternativas consideradas
-  - Justificativas
-  - Implementações realizadas
-  - Aprendizados (Key Insight)
-- [ ] `00_documentacao/tecnica/arquitetura.md` → Atualizar seções técnicas relevantes com a decisão implementada
+ - Data da sessão
+ - Contexto que motivou a decisão
+ - Decisões técnicas tomadas
+ - Alternativas consideradas
+ - Justificativas
+ - Implementações realizadas
+ - Aprendizados (Key Insight)
+- [ ] `00_documentacao/técnica/arquitetura.md` → Atualizar seções técnicas relevantes com a decisão implementada
 
 **Decisões arquiteturais incluem:**
 * Escolha de tecnologia (PySpark vs SQL, Delta vs Parquet, etc)
@@ -181,7 +181,7 @@ O protocolo existe para TIRAR a carga do usuário e TORNAR o assistente sistemá
 
 ---
 
-### 📁 Quando CRIAR/MODIFICAR PASTA
+### Quando CRIAR/MODIFICAR PASTA
 
 **Arquivos a atualizar:**
 - [ ] `README.md` do projeto → Seção "Estrutura do Projeto" (atualizar árvore de diretórios)
@@ -190,30 +190,30 @@ O protocolo existe para TIRAR a carga do usuário e TORNAR o assistente sistemá
 ```
 projeto_cvm_dados_financeiros/
 ├── 00_documentacao/
-│   ├── evolucao_projeto.md
-│   ├── tecnica/
-│   └── negocio/
+│ ├── evolucao_projeto.md
+│ ├── técnica/
+│ └── negocio/
 ├── 01_bronze/
-│   └── 101_cvm_dfp_dre.ipynb
+│ └── 101_cvm_dfp_dre.ipynb
 ```
 
 ---
 
-### 📝 Quando MUDAR PADRÃO/CONVENÇÃO
+### Quando MUDAR PADRÃO/CONVENÇÃO
 
 **Arquivos a atualizar:**
 - [ ] Arquivo de especificação relevante:
-  - `nomenclaturas/SKILL.md` - mudanças em naming
-  - `estrutura-notebooks/SKILL.md` - mudanças em estrutura de células
-  - `unity-catalog/SKILL.md` - mudanças em schemas/tabelas
-- [ ] `00_documentacao/tecnica/arquitetura.md` → Seção "Padrões de Desenvolvimento" (atualizar convenções, princípios, estruturas)
+ - `nomenclaturas/SKILL.md` - mudanças em naming
+ - `estrutura-notebooks/SKILL.md` - mudanças em estrutura de células
+ - `unity-catalog/SKILL.md` - mudanças em schemas/tabelas
+- [ ] `00_documentacao/técnica/arquitetura.md` → Seção "Padrões de Desenvolvimento" (atualizar convenções, princípios, estruturas)
 - [ ] `evolucao_projeto.md` → Justificativa da mudança de padrão (OBRIGATÓRIO - mudanças de padrão são decisões arquiteturais)
 
 **NUNCA**: Documentar convenções técnicas no README.md - elas pertencem a arquitetura.md
 
 ---
 
-### 📄 Quando CRIAR/MODIFICAR ARQUIVO DE DOCUMENTAÇÃO
+### Quando CRIAR/MODIFICAR ARQUIVO DE DOCUMENTAÇÃO
 
 **Arquivos a atualizar:**
 - [ ] `README.md` do projeto → Seção "Documentação" (adicionar referência ao novo arquivo)
@@ -225,17 +225,17 @@ projeto_cvm_dados_financeiros/
 
 ---
 
-### 🚀 Quando IMPLEMENTAR NOVA CAMADA (Bronze/Silver/Gold)
+### Quando IMPLEMENTAR NOVA CAMADA (Bronze/Silver/Gold)
 
 **Arquivos a atualizar:**
 - [ ] `README.md` → Seção "Status Atual" (adicionar linha simples de status)
-- [ ] `00_documentacao/tecnica/arquitetura.md` → Seção "Pipeline Implementado" (criar/atualizar subseção completa da camada com tabela de notebooks/tabelas e características técnicas)
+- [ ] `00_documentacao/técnica/arquitetura.md` → Seção "Pipeline Implementado" (criar/atualizar subseção completa da camada com tabela de notebooks/tabelas e características técnicas)
 - [ ] `evolucao_projeto.md` → Novo registro cronológico da implementação
 
 **Exemplo README.md:**
 ```markdown
-- ✅ **Silver** - DRE transformada (notebook `201_cvm_dfp_dre.py`)
-  - Tabela: `proj_cvm_02_silver.201_dre_dfp`
+- **Silver** - DRE transformada (notebook `201_cvm_dfp_dre.py`)
+ - Tabela: `proj_cvm_02_silver.201_dre_dfp`
 ```
 
 **Exemplo arquitetura.md:**
@@ -257,25 +257,25 @@ projeto_cvm_dados_financeiros/
 
 ---
 
-### 🔧 Quando EXPANDIR PARA NOVA FONTE DE DADOS
+### Quando EXPANDIR PARA NOVA FONTE DE DADOS
 
 **Arquivos a atualizar:**
 - [ ] `README.md` → Seção "Fontes de Dados" (adicionar nova demonstração à lista)
 - [ ] `README.md` → Seção "Status Atual" (adicionar linhas de pipeline de dados)
-- [ ] `00_documentacao/tecnica/arquitetura.md` → Seção "Pipeline Implementado" (adicionar notebooks/tabelas nas camadas com detalhes técnicos completos)
+- [ ] `00_documentacao/técnica/arquitetura.md` → Seção "Pipeline Implementado" (adicionar notebooks/tabelas nas camadas com detalhes técnicos completos)
 - [ ] `evolucao_projeto.md` → Novo registro cronológico com decisões de modelagem
 
 **Exemplo README.md:**
 ```markdown
 ### CVM - Demonstrações Financeiras Padronizadas (DFP)
 * **Demonstrações Implementadas**:
-  - DRE (Demonstração do Resultado do Exercício)
-  - BPA (Balanço Patrimonial Ativo)
-  - BPP (Balanço Patrimonial Passivo)
+ - DRE (Demonstração do Resultado do Exercício)
+ - BPA (Balanço Patrimonial Ativo)
+ - BPP (Balanço Patrimonial Passivo)
 
 **Pipeline de Dados:**
-- ✅ **Bronze** - BPP com versionamento (notebook `103_cvm_dfp_bpp.py`)
-  - Tabela: `proj_cvm_01_bronze.103_bpp_dfp`
+- **Bronze** - BPP com versionamento (notebook `103_cvm_dfp_bpp.py`)
+ - Tabela: `proj_cvm_01_bronze.103_bpp_dfp`
 ```
 
 **Exemplo arquitetura.md:**
@@ -288,7 +288,7 @@ projeto_cvm_dados_financeiros/
 
 ---
 
-## 🔄 Workflow Padrão de Fechamento de Sessão
+## Workflow Padrão de Fechamento de Sessão
 
 Ao final de cada sessão relevante, seguir este checklist:
 
@@ -302,48 +302,48 @@ Ao final de cada sessão relevante, seguir este checklist:
 
 ---
 
-## 💡 Exemplo de Uso Prático
+## Exemplo de Uso Prático
 
 **Cenário**: Usuário criou notebook `301_cvm_dfp_dre` na camada Gold
 
 **Assistente deve:**
 
 1. Atualizar `README.md` (SIMPLES):
-   - Seção "Estrutura do Projeto": adicionar `301_cvm_dfp_dre.py` em `03_gold/` (se necessário)
-   - Seção "Status Atual" → "Pipeline de Dados":
-     ```markdown
-     - ✅ **Gold** - KPIs DRE (notebook `301_cvm_dfp_dre.py`)
-       - Tabela: `proj_cvm_03_gold.301_kpis_dre`
-     ```
+ - Seção "Estrutura do Projeto": adicionar `301_cvm_dfp_dre.py` em `03_gold/` (se necessário)
+ - Seção "Status Atual" → "Pipeline de Dados":
+ ```markdown
+ - **Gold** - KPIs DRE (notebook `301_cvm_dfp_dre.py`)
+ - Tabela: `proj_cvm_03_gold.301_kpis_dre`
+ ```
 
-2. Atualizar `00_documentacao/tecnica/arquitetura.md` (DETALHADO):
-   - Seção "Pipeline Implementado" → Subseção "Camada Gold":
-     ```markdown
-     ### Camada Gold
-     
-     **Notebooks e Tabelas:**
-     
-     | Notebook | Tabela UC | Descrição |
-     | --- | --- | --- |
-     | `301_cvm_dfp_dre.py` | `proj_cvm_03_gold.301_kpis_dre` | KPIs financeiros DRE |
-     
-     **Características Técnicas:**
-     * **Agregações**: Margem líquida, EBITDA, ROE por empresa/período
-     * **Estratégia**: DELETE WHERE + APPEND (reprocessa períodos afetados)
-     * **Particionamento**: Por ano
-     * **Métricas calculadas**: [lista completa]
-     ```
+2. Atualizar `00_documentacao/técnica/arquitetura.md` (DETALHADO):
+ - Seção "Pipeline Implementado" → Subseção "Camada Gold":
+ ```markdown
+ ### Camada Gold
+ 
+ **Notebooks e Tabelas:**
+ 
+ | Notebook | Tabela UC | Descrição |
+ | --- | --- | --- |
+ | `301_cvm_dfp_dre.py` | `proj_cvm_03_gold.301_kpis_dre` | KPIs financeiros DRE |
+ 
+ **Características Técnicas:**
+ * **Agregações**: Margem líquida, EBITDA, ROE por empresa/período
+ * **Estratégia**: DELETE WHERE + APPEND (reprocessa períodos afetados)
+ * **Particionamento**: Por ano
+ * **Métricas calculadas**: [lista completa]
+ ```
 
 3. Atualizar `evolucao_projeto.md`:
-   - Nova entrada cronológica com data da sessão
-   - Contexto: por que implementar Gold agora?
-   - Decisões: quais métricas/KPIs, justificar escolhas de agregação
-   - Implementado: lista objetiva do que foi feito
-   - Key Insight: aprendizado não-óbvio
+ - Nova entrada cronológica com data da sessão
+ - Contexto: por que implementar Gold agora?
+ - Decisões: quais métricas/KPIs, justificar escolhas de agregação
+ - Implementado: lista objetiva do que foi feito
+ - Key Insight: aprendizado não-óbvio
 
 ---
 
-## 📌 Notas Importantes
+## Notas Importantes
 
 * **Princípio DRY é sagrado**: Cada informação técnica tem UMA ÚNICA localização - arquitetura.md
 * **Não confiar em memória**: Sempre carregar este arquivo explicitamente ao atualizar documentação

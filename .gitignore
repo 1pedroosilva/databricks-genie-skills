@@ -219,3 +219,6 @@ __marimo__/
 
 # Project internal documentation (não versionado)
 .project/
+
+# Backup files (não versionado)
+.backups/

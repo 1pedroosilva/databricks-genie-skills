@@ -1,6 +1,6 @@
 ﻿---
 name: estrutura-notebooks
-description: Use APENAS ao CRIAR notebooks NOVOS do zero -- ordem fixa de celulas iniciais (DOCUMENTACAO, CARREGAR CONFIGURACOES, INICIALIZAR ANOS A PROCESSAR, IMPORTS), separacao de responsabilidades por celula, formato de arquivo (.py vs .ipynb). NAO use para revisar, editar ou validar estrutura de notebooks existentes.
+description: Use APENAS ao CRIAR notebooks NOVOS do zero -- ordem fixa de células iniciais (DOCUMENTACAO, CARREGAR CONFIGURACOES, INICIALIZAR ANOS A PROCESSAR, IMPORTS), separacao de responsabilidades por celula, formato de arquivo (.py vs .ipynb). não use para revisar, editar ou validar estrutura de notebooks existentes.
 
 ---
 
@@ -58,8 +58,8 @@ description: Use APENAS ao CRIAR notebooks NOVOS do zero -- ordem fixa de celula
 * **PROIBIDO**: Usar caminho absoluto (`/Workspace/Users/...`) ou `open()` + `exec()`
 * **Motivo**: Caminhos absolutos quebram portabilidade entre workspaces/contas e expõem e-mail/usuário no código
 * **Exemplos**:
-  - Notebook em `01_bronze/` carregando `05_apoio/config_parametros.py`: `%run ../05_apoio/config_parametros`
-  - Notebook em `05_apoio/` carregando módulo na mesma pasta: `%run ./config_parametros`
+ - Notebook em `01_bronze/` carregando `05_apoio/config_parametros.py`: `%run ../05_apoio/config_parametros`
+ - Notebook em `05_apoio/` carregando módulo na mesma pasta: `%run ./config_parametros`
 
 ### Célula 3 - Inicializar Anos a Processar
 * **Tipo**: Código (Python/Scala/R)
@@ -85,13 +85,13 @@ Cada célula deve:
 * **Ter título em MAIÚSCULO**
 
 * **Seguir padrão de 2 linhas de cabeçalho**:
-  - Linha 1: `# df_[nome]: [descrição do que a célula faz]`
-  - Linha 2: `# [explicação técnica/de negócio do motivo/abordagem]`
+ - Linha 1: `# df_[nome]: [descrição do que a célula faz]`
+ - Linha 2: `# [explicação técnica/de negócio do motivo/abordagem]`
 
 * **Fluxo de dados**:
-  - Ler de um ou mais dataframes/tabelas
-  - Aplicar transformação
-  - Gerar um novo dataframe de saída
+ - Ler de um ou mais dataframes/tabelas
+ - Aplicar transformação
+ - Gerar um novo dataframe de saída
 
 * **Nomenclatura de saída**: `df_[descricao_autocontida]`
 
@@ -115,7 +115,7 @@ Cada célula deve:
 * O loop com `try/except` que chama essas funções fica **inteiro em uma única célula de orquestração** — não se abre em uma célula e fecha em outra
 * Isso preserva a separação de responsabilidades por célula E mantém o código executável
 
-💡 Padrão completo e exemplo em `resiliencia-operacional/SKILL.md`, seção 8.
+ Padrão completo e exemplo em `resiliencia-operacional/SKILL.md`, seção 8.
 
 ## Comentários e Documentação
 
@@ -125,4 +125,4 @@ Cada célula deve:
 
 ---
 
-💡 **Ao implementar mudanças, consulte `protocolo-atualizacao/SKILL.md` para atualizar documentações afetadas.**
+ **Ao implementar mudanças, consulte `protocolo-atualizacao/SKILL.md` para atualizar documentações afetadas.**
