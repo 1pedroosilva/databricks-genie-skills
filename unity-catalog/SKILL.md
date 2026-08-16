@@ -1,6 +1,6 @@
-﻿---
+---
 name: unity-catalog
-description: Use ao criar schemas, tabelas ou volumes no Unity Catalog -- padrões de nomenclatura UC, organizacao por camadas e projetos. não use para revisar schemas/tabelas existentes, nem para definir GRANTs, ownership ou controle de acesso -- esta skill cobre apenas nomenclatura e organizacao de assets NOVOS.
+description: Use ao criar schemas, tabelas ou volumes no Unity Catalog -- padrões de nomenclatura UC, organizacao por camadas e projetos. NÃO use para revisar schemas/tabelas existentes, nem para definir GRANTs, ownership ou controle de acesso -- esta skill cobre apenas nomenclatura e organizacao de assets NOVOS.
 
 ---
 
@@ -65,4 +65,4 @@ description: Use ao criar schemas, tabelas ou volumes no Unity Catalog -- padrõ
 
 ---
 
- **Ao implementar mudanças, consulte `protocolo-atualizacao/SKILL.md` para atualizar documentações afetadas.**
+**Ao implementar mudanças, consulte `protocolo-atualizacao/SKILL.md` para atualizar documentações afetadas.**

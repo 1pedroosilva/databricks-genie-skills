@@ -1,12 +1,12 @@
-﻿---
+---
 name: protocolo-atualizacao
-description: Use sempre que uma mudanca de código ou arquitetura for feita -- determina quais documentacoes (README, arquitetura, dicionario de dados, evolucao do projeto) precisam ser atualizadas em conjunto. não use para decidir O QUE mudar no código ou na arquitetura -- esta skill so mapeia quais documentos precisam refletir uma mudanca ja decidida, não participa da decisao técnica em si.
+description: Use sempre que uma mudança de código ou arquitetura for feita -- determina quais documentações (README, arquitetura, dicionario de dados, evolucao do projeto) precisam ser atualizadas em conjunto. NÃO use para decidir O QUE mudar no código ou na arquitetura -- esta skill so mapeia quais documentos precisam refletir uma mudança ja decidida, não participa da decisão técnica em si.
 
 ---
 
 # Protocolo de Atualização de Documentação
 
-**Versão:** 1.0.0 | **Data:** 2026-08-14 | **Autor:** Pedro O. Silva
+**Versão:** 1.1.0 | **Data:** 2026-08-16 | **Autor:** Pedro O. Silva
 
 ## Como Usar Este Arquivo
 
@@ -78,6 +78,10 @@ O protocolo existe para TIRAR a carga do usuário e TORNAR o assistente sistemá
 
 **NUNCA duplicar**: Detalhes técnicos (características de camadas, estratégias de gravação, convenções) vão APENAS em arquitetura.md.
 
+### Regra de Estado
+
+A documentação descreve o que está commitado no main, não o que existe no workspace. Implementado sem push não entra como implementado: vai para Próximos passos, sem checkmark. Nunca declarar contagem agregada de itens, porque ela quebra sozinha a cada mudança.
+
 ---
 
 ## Matriz de Impactos
@@ -87,7 +91,7 @@ O protocolo existe para TIRAR a carga do usuário e TORNAR o assistente sistemá
 **Arquivos a atualizar:**
 - [ ] `README.md` → Seção "Estrutura do Projeto" (atualizar árvore de diretórios, se necessário)
 - [ ] `README.md` → Seção "Status Atual" (adicionar linha simples com )
-- [ ] `00_documentacao/técnica/arquitetura.md` → Seção "Pipeline Implementado" (adicionar à tabela da camada correspondente com detalhes técnicos)
+- [ ] `00_documentacao/tecnica/arquitetura.md` → Seção "Pipeline Implementado" (adicionar à tabela da camada correspondente com detalhes técnicos)
 - [ ] `evolucao_projeto.md` → Novo registro de sessão (se houver decisão arquitetural ou evolução significativa)
 
 **Exemplo README.md (simples):**
@@ -114,7 +118,7 @@ O protocolo existe para TIRAR a carga do usuário e TORNAR o assistente sistemá
 
 **Arquivos a atualizar:**
 - [ ] `README.md` → Seção "Status Atual" (marcar schema como criado, se necessário)
-- [ ] `00_documentacao/técnica/arquitetura.md` → Seção da camada correspondente (documentar características, propósito, estratégias)
+- [ ] `00_documentacao/tecnica/arquitetura.md` → Seção da camada correspondente (documentar características, propósito, estratégias)
 
 **Exemplo README.md:**
 ```markdown
@@ -136,7 +140,7 @@ O protocolo existe para TIRAR a carga do usuário e TORNAR o assistente sistemá
 
 **Arquivos a atualizar:**
 - [ ] `README.md` → Seção "Status Atual" (adicionar linha simples)
-- [ ] `00_documentacao/técnica/arquitetura.md` → Seção "Pipeline Implementado" (adicionar à tabela da camada + características técnicas)
+- [ ] `00_documentacao/tecnica/arquitetura.md` → Seção "Pipeline Implementado" (adicionar à tabela da camada + características técnicas)
 
 **Exemplo README.md:**
 ```markdown
@@ -166,7 +170,7 @@ O protocolo existe para TIRAR a carga do usuário e TORNAR o assistente sistemá
  - Justificativas
  - Implementações realizadas
  - Aprendizados (Key Insight)
-- [ ] `00_documentacao/técnica/arquitetura.md` → Atualizar seções técnicas relevantes com a decisão implementada
+- [ ] `00_documentacao/tecnica/arquitetura.md` → Atualizar seções técnicas relevantes com a decisão implementada
 
 **Decisões arquiteturais incluem:**
 * Escolha de tecnologia (PySpark vs SQL, Delta vs Parquet, etc)
@@ -189,12 +193,12 @@ O protocolo existe para TIRAR a carga do usuário e TORNAR o assistente sistemá
 **Exemplo:**
 ```
 projeto_cvm_dados_financeiros/
-├── 00_documentacao/
-│ ├── evolucao_projeto.md
-│ ├── técnica/
-│ └── negocio/
-├── 01_bronze/
-│ └── 101_cvm_dfp_dre.ipynb
+ 00_documentacao/
+ evolucao_projeto.md
+ técnica/
+ negocio/
+ 01_bronze/
+ 101_cvm_dfp_dre.ipynb
 ```
 
 ---
@@ -206,7 +210,7 @@ projeto_cvm_dados_financeiros/
  - `nomenclaturas/SKILL.md` - mudanças em naming
  - `estrutura-notebooks/SKILL.md` - mudanças em estrutura de células
  - `unity-catalog/SKILL.md` - mudanças em schemas/tabelas
-- [ ] `00_documentacao/técnica/arquitetura.md` → Seção "Padrões de Desenvolvimento" (atualizar convenções, princípios, estruturas)
+- [ ] `00_documentacao/tecnica/arquitetura.md` → Seção "Padrões de Desenvolvimento" (atualizar convenções, princípios, estruturas)
 - [ ] `evolucao_projeto.md` → Justificativa da mudança de padrão (OBRIGATÓRIO - mudanças de padrão são decisões arquiteturais)
 
 **NUNCA**: Documentar convenções técnicas no README.md - elas pertencem a arquitetura.md
@@ -229,7 +233,7 @@ projeto_cvm_dados_financeiros/
 
 **Arquivos a atualizar:**
 - [ ] `README.md` → Seção "Status Atual" (adicionar linha simples de status)
-- [ ] `00_documentacao/técnica/arquitetura.md` → Seção "Pipeline Implementado" (criar/atualizar subseção completa da camada com tabela de notebooks/tabelas e características técnicas)
+- [ ] `00_documentacao/tecnica/arquitetura.md` → Seção "Pipeline Implementado" (criar/atualizar subseção completa da camada com tabela de notebooks/tabelas e características técnicas)
 - [ ] `evolucao_projeto.md` → Novo registro cronológico da implementação
 
 **Exemplo README.md:**
@@ -257,12 +261,33 @@ projeto_cvm_dados_financeiros/
 
 ---
 
+### Quando REMOVER ou RENOMEAR
+
+**Arquivos a atualizar:**
+
+**Pasta renomeada:**
+- [ ] Todos os `.md` do projeto → Varrer buscando o nome antigo e substituir
+- [ ] `README.md` → Seção "Estrutura do Projeto" (atualizar árvore de diretórios)
+
+**Notebook, tabela ou schema removido:**
+- [ ] `README.md` → Remover referências na árvore e no status atual
+- [ ] `00_documentacao/tecnica/arquitetura.md` → Remover da seção correspondente
+- [ ] `evolucao_projeto.md` → Registrar o motivo da remoção
+
+**Skill removida ou consolidada:**
+- [ ] Remover de toda lista, tabela ou bloco de instalação que a enumere
+- [ ] Atualizar referências cruzadas em outras skills
+
+**Regra geral:** Remoção é decisão arquitetural e sempre gera registro em evolucao_projeto.md, nunca só um delete silencioso.
+
+---
+
 ### Quando EXPANDIR PARA NOVA FONTE DE DADOS
 
 **Arquivos a atualizar:**
 - [ ] `README.md` → Seção "Fontes de Dados" (adicionar nova demonstração à lista)
 - [ ] `README.md` → Seção "Status Atual" (adicionar linhas de pipeline de dados)
-- [ ] `00_documentacao/técnica/arquitetura.md` → Seção "Pipeline Implementado" (adicionar notebooks/tabelas nas camadas com detalhes técnicos completos)
+- [ ] `00_documentacao/tecnica/arquitetura.md` → Seção "Pipeline Implementado" (adicionar notebooks/tabelas nas camadas com detalhes técnicos completos)
 - [ ] `evolucao_projeto.md` → Novo registro cronológico com decisões de modelagem
 
 **Exemplo README.md:**
@@ -302,7 +327,32 @@ Ao final de cada sessão relevante, seguir este checklist:
 
 ---
 
-## Exemplo de Uso Prático
+## Verificação de Consistência
+
+### Acionamento
+
+Dois modos:
+1. **Automático**: Último passo do Workflow de Fechamento de Sessão
+2. **Sob demanda**: Quando o usuário pedir revisão sem ter havido mudança
+
+### Checklist de Verificação
+
+1. Todo caminho de arquivo ou pasta citado na documentação existe no repositório
+2. Todo notebook, tabela e schema citado existe
+3. Toda lista ou tabela que enumera assets bate com o filesystem (nada a mais, nada a menos)
+4. Nenhum nome antigo sobreviveu a renomeações
+5. Nenhum link relativo aponta para arquivo inexistente ou para caminho coberto pelo .gitignore
+6. Nenhuma contagem agregada
+7. Nenhum detalhe técnico duplicado entre README.md e arquitetura.md (o README só referencia)
+8. Nada descrito no presente que ainda não exista
+
+### Saída Obrigatória
+
+Lista de inconsistências encontradas, cada uma com arquivo, linha e correção proposta, apresentada ao usuário antes de qualquer edição.
+
+---
+
+## * Exemplo de Uso Prático
 
 **Cenário**: Usuário criou notebook `301_cvm_dfp_dre` na camada Gold
 
@@ -316,7 +366,7 @@ Ao final de cada sessão relevante, seguir este checklist:
  - Tabela: `proj_cvm_03_gold.301_kpis_dre`
  ```
 
-2. Atualizar `00_documentacao/técnica/arquitetura.md` (DETALHADO):
+2. Atualizar `00_documentacao/tecnica/arquitetura.md` (DETALHADO):
  - Seção "Pipeline Implementado" → Subseção "Camada Gold":
  ```markdown
  ### Camada Gold

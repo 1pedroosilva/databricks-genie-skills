@@ -1,6 +1,6 @@
-﻿---
+---
 name: estrutura-notebooks
-description: Use APENAS ao CRIAR notebooks NOVOS do zero -- ordem fixa de células iniciais (DOCUMENTACAO, CARREGAR CONFIGURACOES, INICIALIZAR ANOS A PROCESSAR, IMPORTS), separacao de responsabilidades por celula, formato de arquivo (.py vs .ipynb). não use para revisar, editar ou validar estrutura de notebooks existentes.
+description: Use APENAS ao CRIAR notebooks NOVOS do zero -- ordem fixa de células iniciais (DOCUMENTACAO, CARREGAR CONFIGURACOES, INICIALIZAR ANOS A PROCESSAR, IMPORTS), separacao de responsabilidades por celula, formato de arquivo (.py vs .ipynb). NÃO use para revisar, editar ou validar estrutura de notebooks existentes.
 
 ---
 
@@ -115,7 +115,7 @@ Cada célula deve:
 * O loop com `try/except` que chama essas funções fica **inteiro em uma única célula de orquestração** — não se abre em uma célula e fecha em outra
 * Isso preserva a separação de responsabilidades por célula E mantém o código executável
 
- Padrão completo e exemplo em `resiliencia-operacional/SKILL.md`, seção 8.
+* Padrão completo e exemplo em `resiliencia-operacional/SKILL.md`, seção 8.
 
 ## Comentários e Documentação
 
@@ -125,4 +125,4 @@ Cada célula deve:
 
 ---
 
- **Ao implementar mudanças, consulte `protocolo-atualizacao/SKILL.md` para atualizar documentações afetadas.**
+**Ao implementar mudanças, consulte `protocolo-atualizacao/SKILL.md` para atualizar documentações afetadas.**

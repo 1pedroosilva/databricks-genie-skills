@@ -1,6 +1,6 @@
-﻿---
+---
 name: nomenclaturas
-description: Use APENAS ao DEFINIR nomes para assets NOVOS -- notebooks, tabelas, DataFrames, variáveis, pastas. Convenções de numeração (001_, 103_), princípio DRY, padrões de caixa (snake_case, PascalCase). não use para revisar ou validar nomenclatura de código existente.
+description: Use APENAS ao DEFINIR nomes para assets NOVOS -- notebooks, tabelas, DataFrames, variáveis, pastas. Convenções de numeração (001_, 103_), princípio DRY, padrões de caixa (snake_case, PascalCase). NÃO use para revisar ou validar nomenclatura de código existente.
 
 ---
 
@@ -88,4 +88,4 @@ description: Use APENAS ao DEFINIR nomes para assets NOVOS -- notebooks, tabelas
 
 ---
 
- **Ao implementar mudanças, consulte `protocolo-atualizacao/SKILL.md` para atualizar documentações afetadas.**
+**Ao implementar mudanças, consulte `protocolo-atualizacao/SKILL.md` para atualizar documentações afetadas.**
