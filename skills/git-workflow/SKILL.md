@@ -1,16 +1,16 @@
 ---
 name: git-workflow
-description: Use APENAS ao COMMITAR mudancas no Git -- divisao de commits, staging parcial, mensagens de commit. Criterio tecnico para separacao (bisect/revert/review), staging com git add -p para arquivos mistos, evitar edicao manual de patches, sem tag BREAKING CHANGE em projetos pessoais, tom neutro. NAO use para operacoes Git gerais (status, checkout, pull, merge, conflitos) -- a skill global "git" cobre isso.
+description: Use APENAS ao fazer COMMIT ou COMMITAR mudancas no Git -- divisao de commits por escopo tecnico (bisect/revert/review), staging parcial (git add -p), mensagens de commit tom neutro. não use para operacoes Git gerais (status, checkout, pull, merge, conflitos) -- a skill global git cobre isso.
 
 ---
 
-# Git Workflow - Padroes de Commit e Versionamento
+# Git Workflow - padrões de Commit e Versionamento
 
 **Versao:** 1.0.0 | **Data:** 2026-08-15 | **Autor:** Pedro O. Silva
 
 ## Principios Gerais
 
-* **Criterio tecnico > criterio estetico**: Decisoes sobre divisao de commits baseadas em facilidade de bisect/revert/review, nao em "como parece melhor no historico"
+* **Criterio tecnico > criterio estetico**: decisões sobre divisao de commits baseadas em facilidade de bisect/revert/review, não em "como parece melhor no historico"
 * **Tom neutro**: Mensagens de commit diretas ao ponto, sem linguagem de alerta/urgencia (sem emojis, "CRITICO", "decisao fundamental")
 * **Pragmatismo**: Evitar complexidade desnecessaria (ex: edicao manual de patches) quando alternativas simples existem
 
@@ -22,9 +22,9 @@ Dividir em commits separados quando as mudancas pertencem a **escopos tecnicos d
 
 * **Escopo diferente**: Mudancas em repositorios/projetos diferentes (ex: reestruturacao interna vs extracao para repo externo)
 * **Revert independente**: Possibilidade de reverter uma mudanca sem afetar a outra (ex: adicionar feature vs refactor de estrutura)
-* **Review separado**: Mudancas que um revisor analisaria em contextos mentais diferentes (ex: logica de negocio vs infraestrutura)
+* **Review separado**: Mudancas que um revisor analisaria em contextos mentais diferentes (ex: lógica de negocio vs infraestrutura)
 
-### Quando NAO Dividir
+### Quando não Dividir
 
 * Mudancas que fazem parte do mesmo escopo tecnico (ex: adicionar funcao + seus testes)
 * Mudancas que dependem umas das outras para funcionar (ex: renomear funcao + atualizar chamadas)
@@ -54,7 +54,7 @@ git add -p arquivo.md
 **CRITICO:** Edicao manual de patches (`e`) pode travar o workflow.
 
 **Alternativa pragmatica:**
-* Se `s` (split) nao funcionar, **nao usar `e`**
+* Se `s` (split) não funcionar, **não usar `e`**
 * Deixar o arquivo inteiro de fora do primeiro commit
 * Adicionar o arquivo completo no segundo commit via `git add` normal
 
@@ -92,9 +92,9 @@ git add -p arquivo.md
 
 **Exemplo BOM:**
 ```
-refactor: Reorganiza pastas por ordem logica e adiciona pipeline BPP
+refactor: Reorganiza pastas por ordem lógica e adiciona pipeline BPP
 
-Reestrutura pastas para refletir sequencia do fluxo de dados:
+Reestrutura pastas para refletir sequência do fluxo de dados:
 * 04_apoio → 05_apoio (infraestrutura vem apos analises)
 * Cria 04_analises_exploratorias (preparacao para EDA)
 ```
@@ -110,11 +110,11 @@ Decisao fundamental que transforma o projeto...
 
 **BREAKING CHANGE:**
 * **Usar APENAS** quando ha quebra de contrato com consumidores externos (APIs publicas, bibliotecas compartilhadas)
-* **NAO usar** em projetos de portfolio pessoal, refactorings internos ou reorganizacoes de estrutura
+* **não usar** em projetos de portfolio pessoal, refactorings internos ou reorganizacoes de estrutura
 
-**Quando NAO usar:**
+**Quando não usar:**
 * Reorganizacao de pastas em projeto pessoal
-* Extracao de codigo para outro repo (nao ha consumidor externo)
+* Extracao de código para outro repo (não ha consumidor externo)
 * Refactoring de arquitetura interna
 
 ## Referencias Git
@@ -129,19 +129,19 @@ Refs: https://github.com/usuario/projeto
 
 **Validar ANTES de commitar:**
 * Repositorio existe e esta acessivel (HTTP 200)
-* Link nao quebrado permanentemente no historico
+* Link não quebrado permanentemente no historico
 
-### Decisao: Incluir ou Nao
+### Decisao: Incluir ou não
 
 * **Incluir**: Quando o commit depende de contexto externo necessario para entender a mudanca
 * **Omitir**: Quando a referencia e opcional ou o commit e autocontido
 
 ## Checklist Pre-Commit
 
-1. [ ] Commits divididos por escopo tecnico (nao estetico)?
+1. [ ] Commits divididos por escopo tecnico (não estetico)?
 2. [ ] Staging parcial necessario? Se sim, `git add -p` funciona ou precisa de alternativa?
 3. [ ] Mensagem de commit factual, tom neutro, sem dramatizacao?
-4. [ ] Tag `BREAKING CHANGE` removida se nao houver consumidor externo?
+4. [ ] Tag `BREAKING CHANGE` removida se não houver consumidor externo?
 5. [ ] Referencias externas validadas (repos existem, links funcionam)?
 6. [ ] Documentacao atualizada reflete as mudancas comitadas?
 
