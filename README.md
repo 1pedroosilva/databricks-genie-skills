@@ -2,6 +2,20 @@
 
 User Skills para o Databricks Genie Code. Projeto de troubleshooting técnico: como fazer o Skill Registry realmente carregar skills customizadas.
 
+## Atualizações Recentes (2026-08-16)
+
+**Novas Skills:**
+* ✓ **skill-patterns** — Meta-skill para criação de skills novas (estrutura YAML, checklist 11 itens, verificação DRY, semantic versioning)
+* ✓ **padrao-escrita** — Padronização de escrita técnica em documentação (tom neutro, estrutura, terminologia)
+
+**Consolidação:**
+* ✗ **resiliencia-operacional** removida como skill isolada → conteúdo absorvido por **guardrails-pipelines**
+* Razão: Resiliência operacional (retry, checkpointing, logging) é um tipo de guardrail; melhor coesão em skill única
+
+**Total:** 11 skills ativas | 100% conformidade com padrões de qualidade
+
+---
+
 ## O Problema
 
 User Skills são extensões do Genie Code que você cria no seu workspace (`/Users/<email>/.assistant/skills/`). A documentação oficial explica o formato (YAML frontmatter + Markdown), mas não explica como o Registry decide **qual skill carregar** quando você faz uma pergunta.
@@ -37,18 +51,20 @@ Protocolo completo (3 testes, evidências visuais, timing) documentado em `.back
 | Skill | Verbo de Ação | Propósito |
 |-------|---------------|-----------|
 | `nomenclaturas` | DEFINIR | Convenções de nomenclatura para assets novos |
-| `estrutura-notebooks` | CRIAR | Estrutura para notebooks novos do zero |
-| `resiliencia-operacional` | IMPLEMENTAR | Padrões de resiliência em código novo |
+| `estrutura-notebooks` | CRIAR (notebooks) | Estrutura para notebooks novos do zero |
+| `skill-patterns` | CRIAR (skills) | Padrões para criação de skills novas |
 | `revisao-codigo-quatro-frentes` | REVISAR/AUDITAR | Corretude de código existente (4 dimensões) |
-| `unity-catalog` | CRIAR | Schemas, tabelas e volumes no UC |
+| `unity-catalog` | CRIAR (UC assets) | Schemas, tabelas e volumes no UC |
 | `protocolo-atualizacao` | ATUALIZAR | Documentação após mudanças de código |
 | `git-workflow` | COMMITAR | Divisão de commits, staging parcial, mensagens de commit |
+| `padrao-escrita` | PADRONIZAR | Escrita técnica em documentação |
+| `guardrails-pipelines` | IMPLEMENTAR | Validações e resiliência em pipelines |
 
 **Separação de Responsabilidades:**  
 Cada skill possui um verbo de ação único e boundaries negativos explícitos para prevenir sobreposição:
 
 ```
-DEFINIR ≠ CRIAR ≠ IMPLEMENTAR ≠ REVISAR ≠ ATUALIZAR ≠ COMMITAR
+DEFINIR ≠ CRIAR ≠ REVISAR ≠ ATUALIZAR ≠ COMMITAR ≠ PADRONIZAR ≠ IMPLEMENTAR
 ```
 
 ## Instalação
