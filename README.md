@@ -1,41 +1,57 @@
 ﻿# Skills Personalizadas para Databricks Genie Code
 
-User Skills para o Databricks Genie Code. Projeto de investigacao tecnica sobre como fazer o Skill Registry realmente carregar skills customizadas.
+User Skills para o Databricks Genie Code. Projeto de troubleshooting técnico: como fazer o Skill Registry realmente carregar skills customizadas.
 
 ## O Problema
 
-User Skills sao extensoes do Genie Code que voce cria no seu workspace (`/Users/<email>/.assistant/skills/`). A documentacao oficial explica o formato (YAML frontmatter + Markdown), mas nao explica como o Registry decide **qual skill carregar** quando voce faz uma pergunta.
+User Skills são extensões do Genie Code que você cria no seu workspace (`/Users/<email>/.assistant/skills/`). A documentação oficial explica o formato (YAML frontmatter + Markdown), mas não explica como o Registry decide **qual skill carregar** quando você faz uma pergunta.
 
-Criei skills seguindo a doc e elas simplesmente nao triggavam. Existiam no workspace, mas o Genie Code nunca as usava. Depois de testar varias hipoteses, descobri 3 coisas que a doc nao deixa explicito:
+Criei skills seguindo a doc e elas simplesmente não triggavam. Existiam no workspace, mas o Genie Code nunca as usava. Depois de investigar, formulei 3 hipóteses sobre requisitos não documentados.
 
-1. **O matcher e sensivel a encoding** - Caracteres fora do ASCII basico (acentos, ç, etc) no campo `description` quebram o matching. Skill fica invisivel.
+## Testes
 
-2. **Boundaries negativos importam** - Se sua description nao diz explicitamente o que ela NAO faz, queries ambiguas triggam multiplas skills ao mesmo tempo (nenhuma carrega direito).
+Antes de publicar, testei cada hipótese:
 
-3. **Verbos de acao ajudam especificidade** - Uma skill de "revisar codigo" e outra de "criar codigo novo" precisam de verbos diferentes na description (REVISAR vs CRIAR), senao competem.
+**Teste 1 (ASCII obrigatório):** Adicionei 28 caracteres acentuados na description  
+**Resultado:** Skill triggou normalmente. Hipótese errada.
 
-Documentei o processo de investigacao completo em [INVESTIGATION_LOG.md](INVESTIGATION_LOG.md) - problema, hipoteses testadas, causa raiz, solucao.
+**Teste 2 (Boundaries negativos obrigatórios):** Removi "NÃO use para..."  
+**Resultado:** Apenas skill correta triggou, sem false-positives. Hipótese errada.
+
+**Teste 3 (Verbo imperativo obrigatório):** Removi "Use APENAS ao" do início  
+**Resultado:** Skill triggou normalmente. Hipótese errada.
+
+### Descoberta
+
+**O sistema de triggering é mais robusto que eu pensava:**
+- Suporta UTF-8 completo (acentos funcionam)
+- Compreensão semântica sofisticada (não é keyword matching simples)
+- Formato flexível (reconhece intent sem estrutura rígida)
+
+**Lição:** Observar padrões em skills funcionais não prova causalidade. Testar é fundamental.
+
+Protocolo completo (3 testes, evidências visuais, timing) documentado em `.backups/protocolo_teste_empirico.md`.
 
 ## Skills
 
-| Skill | Verbo de Acao | Proposito |
+| Skill | Verbo de Ação | Propósito |
 |-------|---------------|-----------|
-| `nomenclaturas` | DEFINIR | Convencoes de nomenclatura para assets novos |
+| `nomenclaturas` | DEFINIR | Convenções de nomenclatura para assets novos |
 | `estrutura-notebooks` | CRIAR | Estrutura para notebooks novos do zero |
-| `resiliencia-operacional` | IMPLEMENTAR | Padroes de resiliencia em codigo novo |
-| `revisao-codigo-quatro-frentes` | REVISAR/AUDITAR | Corretude de codigo existente (4 dimensoes) |
+| `resiliencia-operacional` | IMPLEMENTAR | Padrões de resiliência em código novo |
+| `revisao-codigo-quatro-frentes` | REVISAR/AUDITAR | Corretude de código existente (4 dimensões) |
 | `unity-catalog` | CRIAR | Schemas, tabelas e volumes no UC |
-| `protocolo-atualizacao` | ATUALIZAR | Documentacao apos mudancas de codigo |
-| `git-workflow` | COMMITAR | Divisao de commits, staging parcial, mensagens de commit |
+| `protocolo-atualizacao` | ATUALIZAR | Documentação após mudanças de código |
+| `git-workflow` | COMMITAR | Divisão de commits, staging parcial, mensagens de commit |
 
-**Separacao de Responsabilidades:**  
-Cada skill possui um verbo de acao unico e boundaries negativos explicitos para prevenir sobreposicao:
+**Separação de Responsabilidades:**  
+Cada skill possui um verbo de ação único e boundaries negativos explícitos para prevenir sobreposição:
 
 ```
 DEFINIR ≠ CRIAR ≠ IMPLEMENTAR ≠ REVISAR ≠ ATUALIZAR ≠ COMMITAR
 ```
 
-## Instalacao
+## Instalação
 
 1. Copie as pastas de skills para seu workspace Databricks:
 ```
@@ -56,76 +72,69 @@ DEFINIR ≠ CRIAR ≠ IMPLEMENTAR ≠ REVISAR ≠ ATUALIZAR ≠ COMMITAR
 "revisar este notebook"                          -> triggera revisao-codigo-quatro-frentes
 "criar um notebook novo"                         -> triggera estrutura-notebooks
 "nomear esta tabela"                             -> triggera nomenclaturas
-"commitar estas mudancas"                        -> triggera git-workflow
+"commitar estas mudanças"                        -> triggera git-workflow
 "quais skills pessoais estão no skill registry?" -> triggera e lista todas as skills
 ```
 
 ## Exemplos de Uso
 
-### Revisao de Codigo
+### Revisão de Código
 ```
-Usuario: "revisar este notebook antes de producao"
+Usuário: "revisar este notebook antes de produção"
 Genie: [carrega revisao-codigo-quatro-frentes]
-       Revisa em 4 dimensoes: correcao, premissas ocultas, codigo morto, custo
+       Revisa em 4 dimensões: correção, premissas ocultas, código morto, custo
 ```
 
-
-
-### Convencao de Nomenclatura
+### Convenção de Nomenclatura
 ```
-Usuario: "nomear este notebook bronze de dados CVM"
+Usuário: "nomear este notebook bronze de dados CVM"
 Genie: [carrega nomenclaturas]
-       Sugere: 001_bronze_cvm_raw (segue numeracao + DRY + snake_case)
+       Sugere: 001_bronze_cvm_raw (segue numeração + DRY + snake_case)
 ```
 
-## Principios de Design
+## Princípios de Design
 
-Estas skills seguem principios rigorosos de design aprendidos atraves de investigacao tecnica:
+Estas skills seguem princípios de clareza e organização:
 
-1. **Verbo de Acao Unico** - Cada skill tem um verbo (DEFINIR, CRIAR, IMPLEMENTAR, DECIDIR, REVISAR, ATUALIZAR)
-2. **Boundaries Negativos Explicitos** - Cada description especifica o que ela NAO faz ("NAO use para...")
-3. **ASCII Puro** - Todas as descriptions usam ASCII puro (sem acentos, caracteres especiais)
-4. **Especificidade Maxima** - Clara sobre QUANDO triggar e quando NAO triggar
+1. **Verbo de Ação Distinto** - Cada skill tem um verbo claro (DEFINIR, CRIAR, IMPLEMENTAR, REVISAR, ATUALIZAR, COMMITAR) para facilitar entendimento humano da separação de responsabilidades
+2. **Boundaries Negativos Explícitos** - Cada description especifica o que ela NÃO faz ("NÃO use para...") como boa prática de documentação (testes mostraram que não são tecnicamente obrigatórios, mas ajudam clareza)
+3. **Especificidade Máxima** - Clara sobre QUANDO triggar e quando NÃO triggar
 
-**Por Que Isso Importa:**  
-Sem boundaries explicitos, queries como "revisar este notebook" podem triggar 4-5 skills parcialmente relacionadas em vez da skill correta. Veja [INVESTIGATION_LOG.md](INVESTIGATION_LOG.md) para a investigacao tecnica completa.
+**Nota:**  
+Testes (documentados em `.backups/protocolo_teste_empirico.md`) mostraram que o sistema de triggering é mais robusto que eu pensava inicialmente. Requisitos como "ASCII puro obrigatório" ou "boundaries negativos tecnicamente necessários" foram testados e refutados. Esses padrões permanecem como boas práticas de clareza, não requisitos técnicos.
 
-## Scripts de Validacao
+## Scripts de Validação
 
-### Verificar Conformidade ASCII
+### Verificar Limite de Tamanho da Description
 ```python
 description = "sua description aqui"
-non_ascii = [char for char in description if ord(char) > 127]
-print(f"Non-ASCII: {len(non_ascii)}" if non_ascii else "OK")
-```
-
-### Verificar Limite de Tamanho
-```python
 print(f"{len(description)}/1024 chars" if len(description) <= 1024 else "ACIMA DO LIMITE")
 ```
 
-## Metricas de Qualidade
+## Métricas de Qualidade
 
-| Metrica | Status |
+| Métrica | Status |
 |---------|--------|
-| Descriptions ASCII puro | 6/6 (100%) |
-| Boundaries negativos explicitos | 6/6 (100%) |
-| Verbos de acao unicos | 6/6 (100%) |
-| Tamanho < 1024 chars | 6/6 (100%) |
-| Triggering correto | 6/6 (100%) |
+| Boundaries negativos explícitos (clareza) | 7/7 (100%) |
+| Verbos de ação distintos (organização) | 6/7 (86%) |
+| Tamanho < 1024 chars | 7/7 (100%) |
+| Triggering correto | 7/7 (100%) |
+| Testes (3 hipóteses testadas) | 3/3 (100%) |
 
-## Documentacao
+## Documentação
 
-* **[INVESTIGATION_LOG.md](INVESTIGATION_LOG.md)** - Investigacao tecnica completa: descoberta do problema, teste de hipoteses, analise de causa raiz, e licoes aprendidas
-* **Skills Individuais** - Cada `SKILL.md` contem orientacao especifica do dominio (portugues, padroes de implementacao detalhados)
+* **[investigation_log.md](investigation_log.md)** - Investigação técnica inicial e hipóteses formuladas
+* **[.backups/protocolo_teste_empirico.md](.backups/protocolo_teste_empirico.md)** - Protocolo de testes (3 testes isolados, evidências visuais, resultados)
+* **[lessons_learned.md](lessons_learned.md)** - Lições sobre testar hipóteses antes de publicar conclusões técnicas
+* **Skills Individuais** - Cada `SKILL.md` contém orientação específica do domínio (português, padrões de implementação detalhados)
 
-## Referencias
+## Referências
 
-### Documentacao Databricks
-* [User Skills (Databricks)](https://docs.databricks.com/en/generative-ai/agent-framework/user-skills.html)
-* [Create User Skills (Databricks)](https://docs.databricks.com/en/generative-ai/agent-framework/create-user-skills.html)
+### Documentação Databricks
+* [Extend Genie Code with agent skills (Databricks)](https://docs.databricks.com/aws/en/genie-code/skills)
+* [Agent skills for AI coding assistants (Databricks)](https://docs.databricks.com/aws/en/agent-skills/)
 
-### Especificacao Agent Skills
+### Especificação Agent Skills
 * [Agent Skills Specification](https://agentskills.io/specification.md)
 * [Best Practices for Skill Creators](https://agentskills.io/skill-creation/best-practices.md)
 * [Optimizing Descriptions](https://agentskills.io/skill-creation/optimizing-descriptions.md)
@@ -134,23 +143,23 @@ print(f"{len(description)}/1024 chars" if len(description) <= 1024 else "ACIMA D
 
 - **Databricks**: Serverless Compute, Unity Catalog, Delta Lake, Databricks Repos
 - **Linguagens**: Python (PySpark), SQL (Databricks SQL)
-- **Padroes**: Medallion architecture, idempotencia, retry com backoff, checkpointing
+- **Padrões**: Medallion architecture, idempotência, retry com backoff, checkpointing
 
 ## Contribuindo
 
-Projeto de portfolio demonstrando investigacao tecnica e analise de causa raiz.
+Projeto de portfólio demonstrando investigação técnica e análise de causa raiz.
 
-Este projeto foi desenvolvido com apoio do Genie Code e do Claude Code. Os padroes documentados -- estrategias de gravacao, antipadroes de resiliencia, achados da skill de revisao de codigo -- vem de uma auditoria real feita no workspace: consulta a tabelas, comparacao entre notebooks, e ao menos uma hipotese de bug descartada depois de checar os dados. O processo completo esta documentado em `INVESTIGATION_LOG.md`.
+Este projeto foi desenvolvido com apoio do Genie Code e do Claude Code. Os padrões documentados -- estratégias de gravação, antipadrões de resiliência, achados da skill de revisão de código -- vêm de uma auditoria real feita no workspace: consulta a tabelas, comparação entre notebooks, e ao menos uma hipótese de bug descartada depois de checar os dados. O processo completo está documentado em `investigation_log.md`.
 
 **Autor:** Pedro Silva  
-**Contexto:** Transicao - Analista de Dados → Engenheiro de Dados  
+**Contexto:** Transição - Analista de Dados → Engenheiro de Dados  
 **Ambiente:** Databricks (AWS, Serverless, Unity Catalog)
 
-## Licenca
+## Licença
 
-Licenca MIT - Veja arquivo LICENSE para detalhes
+Licença MIT - Veja arquivo LICENSE para detalhes
 
 ---
 
-**Ultima atualizacao:** 2026-08-14  
-**Versao:** 1.0.0
+**Última atualização:** 2026-08-15  
+**Versão:** 1.0.0
