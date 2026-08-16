@@ -80,7 +80,9 @@ O protocolo existe para TIRAR a carga do usuário e TORNAR o assistente sistemá
 
 ### Regra de Estado
 
-A documentação descreve o que está commitado no main, não o que existe no workspace. Implementado sem push não entra como implementado: vai para Próximos passos, sem checkmark. Nunca declarar contagem agregada de itens, porque ela quebra sozinha a cada mudança.
+A documentação descreve o que está commitado no main, não o que existe no workspace. Implementado sem push não entra como implementado: vai para Próximos passos, sem marcação visual de status (status se expressa em palavras: implementado, pendente, removido). Nunca declarar contagem agregada de itens, porque ela quebra sozinha a cada mudança.
+
+**Nota terminológica**: Checkboxes de tarefa (`[ ]`) são permitidos como marcadores estruturais em listas de ações a executar. Checkmarks visuais (✓ ✅ ❌) para indicar status são proibidos - status se expressa em palavras.
 
 ---
 
@@ -313,6 +315,42 @@ projeto_cvm_dados_financeiros/
 
 ---
 
+### Quando MUDAR MÉTODO DE INSTALAÇÃO OU DEPLOY
+
+**Arquivos a atualizar:**
+- [ ] `README.md` → Seção "Como Usar" ou "Instalação" ou "Setup" (atualizar instruções completas de instalação/deploy)
+- [ ] `00_documentacao/tecnica/arquitetura.md` → Seção "Ambiente e Dependências" (atualizar requisitos técnicos, **se houver impacto arquitetural e se o arquivo existir no projeto**)
+- [ ] `evolucao_projeto.md` → Novo registro cronológico (mudança de método é decisão arquitetural - registrar contexto, alternativas consideradas, justificativa)
+
+**Escopo**: Mudanças em como alguém instala, consome ou executa o projeto.
+
+**Exemplos de mudança de método:**
+* Migração de execução manual → Databricks Jobs
+* Migração de scripts ad-hoc → Declarative Pipelines
+* Mudança de estrutura de deploy (notebooks soltos → DAB bundles)
+* Mudança de método de instalação de dependências (%pip install → cluster library)
+* Mudança de entrypoint (script principal renomeado ou movido)
+* Mudança de interface de consumo (API REST → SDK Python)
+
+**Exemplo concreto (caso real — neste repositório de skills):**
+
+**Contexto**: O método de instalação das skills mudou de cópia manual para montagem de Git folder.
+
+**README.md atualizado**:
+```markdown
+## Instalação
+
+### Via Git Folder (método atual)
+1. No Databricks Repos, clone este repositório como Git folder
+2. Monte o Git folder no caminho `/Users/<seu-usuario>/.assistant/skills/`
+3. As skills (pastas na raiz do repositório) serão automaticamente detectadas pelo Genie Code
+
+```
+
+**Nota**: Os arquivos específicos a atualizar (README.md, seções, estrutura de exemplo) variam conforme a estrutura e propósito de cada projeto. Adapte o exemplo acima ao contexto do projeto em questão.
+
+---
+
 ## Workflow Padrão de Fechamento de Sessão
 
 Ao final de cada sessão relevante, seguir este checklist:
@@ -344,7 +382,9 @@ Dois modos:
 5. Nenhum link relativo aponta para arquivo inexistente ou para caminho coberto pelo .gitignore
 6. Nenhuma contagem agregada
 7. Nenhum detalhe técnico duplicado entre README.md e arquitetura.md (o README só referencia)
-8. Nada descrito no presente que ainda não exista
+8. Nenhum emoji, checkmark ou ícone de status usado em qualquer lugar
+9. Nenhuma formatação usada para indicar recência ou status (checkmarks, negritos seletivos, seções de "últimas atualizações")
+10. Nada descrito no presente que ainda não exista
 
 ### Saída Obrigatória
 
