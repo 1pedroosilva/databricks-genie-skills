@@ -1,95 +1,253 @@
 ---
 name: padrao-escrita
 description: Use APENAS ao ESCREVER documentacoes tecnicas (README, arquitetura, evolucao, celulas MD de notebooks, comentarios de codigo). Define tom sobrio e tecnico, verbos no presente, proibe emojis/icones, estabelece nivel de registro por tipo de documento. NAO use para revisar codigo funcional, criar assets, ou decisoes arquiteturais.
-version: 1.0.0
-updated: 2025-01-30
+
 ---
 
 # Padrão de Escrita Técnica
 
-Esta skill define o padrão de escrita para TODAS as documentações e conteúdos textuais produzidos.
+**Versão:** 1.1.0 | **Data:** 2026-08-16 | **Autor:** Pedro O. Silva
+
+## Escopo
+
+**APLICA-SE A**: Conteúdo versionado — arquivos que entram no Git do projeto:
+* Documentação (README, arquitetura, evolução, dicionário de dados)
+* Células markdown de notebooks
+* Comentários de código
+* Mensagens de commit
+
+**NÃO SE APLICA**: Respostas do assistente na conversa com o usuário.
+
+---
 
 ## Princípios Fundamentais
 
-**Tom e registro**:
-- Sóbrio, técnico, factual
-- Sem marketês, sem entusiasmo artificial
-- Sem jargões desnecessários ou buzzwords
-- Português correto com acentuação completa
-- Objetivo e direto ao ponto
-- **Verbos no presente**: Descrever o que o sistema/código faz, não contar o que foi feito. "Implementa", "carrega", "transforma" — não "implementei", "carreguei"
+### Tom e Registro
 
-**Formatação**:
-- **PROIBIDO**: Emojis, ícones coloridos (✨ 🚀 📊 ✅ ❌ 💡 etc)
-- Use negrito apenas para ênfase técnica necessária
-- Use itálico raramente, apenas para termos estrangeiros ou conceitos
-- Listas: claras, sem floreios
+* **Sóbrio, técnico, factual** — sem marketês, sem entusiasmo artificial
+* **Sem jargões desnecessários** ou buzzwords
+* **Português correto** com acentuação completa
+* **Objetivo e direto** ao ponto
+* **Verbos no presente**: Descrever o que o sistema/código faz, não contar o que foi feito
+  - ✅ CORRETO: "Implementa", "carrega", "transforma"
+  - ❌ ERRADO: "implementei", "carreguei", "fizemos"
 
-**Estrutura**:
-- Parágrafos curtos e informativos
-- Seções com títulos descritivos (não criativos)
-- Hierarquia clara (H2 para seções principais, H3 para subseções)
-- Sem repetições ou redundâncias
+### Formatação
+
+#### PROIBIDO em Conteúdo Versionado
+
+* **Emojis**: ✨ 🚀 📊 💡 🎯 ⚡ etc.
+* **Checkmarks e ícones de status**: ✓ ✅ ❌ ⚠️ ⏳ 🔴 🟡 🟢 etc.
+* **Setas decorativas**: ➜ ➔ → ⇒ etc.
+* **Símbolos decorativos**: ★ ☆ etc.
+* **Status se expressa em palavras**: implementado, pendente, removido, em desenvolvimento
+
+#### Uso Correto de Formatação
+
+* **Negrito**: Apenas para ênfase técnica necessária (termos-chave, nomes de conceitos). NUNCA para ênfase emocional ou dramatização
+* **Itálico**: Raramente, apenas para termos estrangeiros ou conceitos em introdução
+* **Listas**: Claras, sem floreios. Use markdown padrão (`-` ou `*` para bullets, checkboxes `[ ]` apenas para tarefas acionáveis)
+
+### Estrutura
+
+* Parágrafos curtos e informativos
+* Seções com títulos descritivos (não criativos)
+* Hierarquia clara (H2 para seções principais, H3 para subseções)
+* Sem repetições ou redundâncias
+
+---
+
+## Regras de Recência e Versionamento
+
+### Proibições
+
+**PROIBIDO usar elementos visuais ou formatação para indicar recência**:
+* Checkmarks
+* Negritos seletivos
+* Seções de "últimas atualizações"
+* Badges
+* Cores
+* Qualquer marcador visual não pode ser usado para inferir qual versão é mais recente
+
+### Como Determinar Recência
+
+**Recência se determina por**:
+1. Campo de versão declarado
+2. Diff de conteúdo no Git
+3. Histórico de commits
+
+### Exceções Válidas
+
+**Versionamento explícito permitido em**:
+* Campo de versão e data no cabeçalho YAML de skills (obrigatório para rastreabilidade)
+* Documento cronológico dedicado (`evolucao_projeto.md`) - é o lugar certo para histórico
+
+**README não é changelog**: Não incluir seções de "atualizações recentes", "última modificação", "histórico de mudanças" ou datas de última atualização em arquivos README de projeto. O histórico está no Git.
+
+### Métricas e Resultados
+
+Nenhuma métrica ou resultado de teste entra na documentação sem que:
+1. O teste que a produziu tenha sido executado
+2. Data de execução esteja registrada
+3. Método de cálculo esteja documentado
 
 ## Níveis de Registro por Tipo de Documento
 
 ### README.md (Projeto)
-- **Objetivo**: Apresentar o projeto de forma profissional e direta
-- **Tom**: Técnico-informativo, acessível sem ser infantil
-- **Exemplo BOM**: "Pipeline de ingestão e transformação de dados financeiros da CVM. Arquitetura medalhão com camadas bronze, silver e gold."
-- **Exemplo RUIM**: "🚀 Projeto incrível que traz os dados da CVM de forma automatizada! ✨"
+
+**Objetivo**: Apresentar o projeto de forma profissional e direta.
+
+**Tom**: Técnico-informativo, acessível sem ser infantil.
+
+**Exemplo BOM**:
+```markdown
+Pipeline de ingestão e transformação de dados financeiros da CVM. 
+Arquitetura medalhão com camadas bronze, silver e gold.
+```
+
+**Exemplo RUIM**:
+```markdown
+🚀 Projeto incrível que traz os dados da CVM de forma automatizada! ✨
+```
 
 ### Documentação Técnica (arquitetura.md, dicionario_dados.md)
-- **Objetivo**: Especificar implementação com precisão
-- **Tom**: Técnico-descritivo, sem ambiguidade
-- **Estrutura**: Definições → Implementação → Considerações
-- **Exemplo BOM**: "Tabela `silver_balanco_patrimonial`: dados consolidados do balanço patrimonial. Chave: (`cd_cvm`, `dt_refer`, `versao`). Estratégia de gravação: `replaceWhere` por `dt_refer`."
-- **Exemplo RUIM**: "Essa tabela guarda as informações dos balanços de forma organizada e limpa! 📊"
+
+**Objetivo**: Especificar implementação com precisão.
+
+**Tom**: Técnico-descritivo, sem ambiguidade.
+
+**Estrutura**: Definições → Implementação → Considerações
+
+**Exemplo BOM**:
+```markdown
+Tabela `silver_balanco_patrimonial`: dados consolidados do balanço patrimonial. 
+Chave: (`cd_cvm`, `dt_refer`, `versao`). 
+Estratégia de gravação: `replaceWhere` por `dt_refer`.
+```
+
+**Exemplo RUIM**:
+```markdown
+Essa tabela guarda as informações dos balanços de forma organizada e limpa! 📊
+```
 
 ### Evolução de Projeto (evolucao_projeto.md)
-- **Objetivo**: Registrar decisões e contexto para referência futura
-- **Tom**: Analítico-reflexivo, factual
-- **Estrutura**: Contexto → Decisão → Implementação → Resultado/Insight
-- **Exemplo BOM**: "Identificado problema de duplicação ao usar `append` sem controle de versão. Decisão: migrar para `replaceWhere` com partição por `dt_refer`. Resultado: eliminação de duplicatas, reprocessamento mais rápido."
-- **Exemplo RUIM**: "Tivemos um problema chato com duplicatas. Depois de muito pensar, escolhemos uma solução melhor! 💡"
+
+**Objetivo**: Registrar decisões e contexto para referência futura.
+
+**Tom**: Analítico-reflexivo, factual.
+
+**Estrutura**: Contexto → Decisão → Implementação → Resultado/Insight
+
+**Exemplo BOM**:
+```markdown
+Identificado problema de duplicação ao usar `append` sem controle de versão. 
+Decisão: migrar para `replaceWhere` com partição por `dt_refer`. 
+Resultado: eliminação de duplicatas, reprocessamento mais rápido.
+```
+
+**Exemplo RUIM**:
+```markdown
+Tivemos um problema chato com duplicatas. Depois de muito pensar, 
+escolhemos uma solução melhor! 💡
+```
 
 ### Células Markdown em Notebooks
-- **Objetivo**: Documentar propósito e lógica do código
-- **Tom**: Técnico-explicativo, conciso
-- **Formato**: Título da célula como header, descrição breve se necessário
-- **Exemplo BOM**: "## Carregar configurações\nCarrega dicionário de parâmetros do arquivo JSON. Fallback para valores default se arquivo não existir."
-- **Exemplo RUIM**: "## 🎯 Vamos carregar as configs!\nAqui a gente pega todas as configurações necessárias para rodar o notebook..."
+
+**Objetivo**: Documentar propósito e lógica do código.
+
+**Tom**: Técnico-explicativo, conciso.
+
+**Formato**: Título da célula como header, descrição breve se necessário.
+
+**Exemplo BOM**:
+```markdown
+## Carregar configurações
+
+Carrega dicionário de parâmetros do arquivo JSON. Fallback para valores 
+default se arquivo não existir.
+```
+
+**Exemplo RUIM**:
+```markdown
+## 🎯 Vamos carregar as configs!
+
+Aqui a gente pega todas as configurações necessárias para rodar o notebook...
+```
 
 ### Comentários de Código
-- **Objetivo**: Explicar o POR QUÊ, não o O QUÊ (código já mostra o que faz)
-- **Tom**: Técnico-justificativo, mínimo necessário
-- **Exemplo BOM**: `# Mantém apenas versão mais recente para evitar duplicação no join downstream`
-- **Exemplo RUIM**: `# Aqui a gente filtra os dados para pegar só a versão mais nova`
 
-## Checklist Antes de Finalizar Qualquer Texto
+**Objetivo**: Explicar o POR QUÊ, não o O QUÊ (código já mostra o que faz).
 
-1. ❌ Contém emojis ou ícones? → Remover todos
-2. ❌ Contém palavras sem acentuação? → Corrigir para português correto
-3. ❌ Tom empolgado/marketeiro? → Neutralizar para técnico-factual
-4. ❌ Jargões desnecessários? → Simplificar sem perder precisão
-5. ❌ Repetições ou redundâncias? → Eliminar
-6. ✓ Transmite a informação necessária de forma clara e direta? → OK para publicar
+**Tom**: Técnico-justificativo, mínimo necessário.
 
-## Exemplos de Transformação
+**Exemplo BOM**:
+```python
+# Mantém apenas versão mais recente para evitar duplicação no join downstream
+```
 
-**ANTES**: "🚀 Incrível pipeline de dados que automatiza todo o processo de ingestão da CVM! Usa as melhores práticas do mercado com arquitetura medalhão. ✨"
-
-**DEPOIS**: "Pipeline de ingestão automática de dados da CVM. Implementa arquitetura medalhão (bronze/silver/gold) com estratégias diferenciadas de gravação por camada."
+**Exemplo RUIM**:
+```python
+# Aqui a gente filtra os dados para pegar só a versão mais nova
+```
 
 ---
 
-**ANTES**: "# Passo 1: Configuracao\nNessa etapa a gente le o arquivo de config pra pegar os parametros necessarios pro notebook funcionar direitinho."
+## Checklist Antes de Finalizar Qualquer Texto
 
-**DEPOIS**: "## Carregar Configurações\nLê parâmetros do arquivo JSON. Configura caminhos de tabelas, períodos de processamento e estratégias de gravação."
+Antes de publicar qualquer documentação, verificar:
+
+1. **Contém emojis, checkmarks, ícones de status ou símbolos decorativos?** → Remover todos, substituir por palavras
+2. **Contém palavras sem acentuação?** → Corrigir para português correto
+3. **Tom empolgado/marketeiro?** → Neutralizar para técnico-factual
+4. **Usa negrito para ênfase emocional em vez de técnica?** → Remover ou substituir
+5. **Jargões desnecessários?** → Simplificar sem perder precisão
+6. **Repetições ou redundâncias?** → Eliminar
+7. **Usa elementos visuais para indicar recência ou status?** → Remover, adicionar campo de versão explícito se necessário
+8. **Usa formatação para indicar recência em README?** → Remover (histórico está no Git; exceção para cabeçalho de skill ou `evolucao_projeto.md`)
+9. **Métricas ou resultados sem data, método ou teste executado?** → Remover ou documentar origem
+10. **Transmite a informação necessária de forma clara e direta?** → OK para publicar
+
+---
+
+## Exemplos de Transformação
+
+### Exemplo 1: README.md
+
+**ANTES**:
+```markdown
+🚀 Incrível pipeline de dados que automatiza todo o processo de ingestão da CVM! 
+Usa as melhores práticas do mercado com arquitetura medalhão. ✨
+```
+
+**DEPOIS**:
+```markdown
+Pipeline de ingestão automática de dados da CVM. Implementa arquitetura 
+medalhão (bronze/silver/gold) com estratégias diferenciadas de gravação por camada.
+```
+
+### Exemplo 2: Célula de Notebook
+
+**ANTES**:
+```markdown
+# Passo 1: Configuracao
+
+Nessa etapa a gente le o arquivo de config pra pegar os parametros 
+necessarios pro notebook funcionar direitinho.
+```
+
+**DEPOIS**:
+```markdown
+## Carregar Configurações
+
+Lê parâmetros do arquivo JSON. Configura caminhos de tabelas, períodos 
+de processamento e estratégias de gravação.
+```
+
+---
 
 ## Aplicação
 
-- Carregar esta skill ANTES de criar ou editar qualquer documentação
-- Aplicar os princípios sem precisar mencionar a skill ao usuário
-- Se o texto produzido violar estes padrões, revisar antes de apresentar
-- O usuário deve receber documentação já no padrão correto
+* Carregar esta skill ANTES de criar ou editar qualquer documentação
+* Aplicar os princípios sem precisar mencionar a skill ao usuário
+* Se o texto produzido violar estes padrões, revisar antes de apresentar
+* O usuário deve receber documentação já no padrão correto
