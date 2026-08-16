@@ -1,12 +1,18 @@
-﻿---
+---
 name: arquitetura-medalhao
 description: Use APENAS ao DECIDIR estrategia arquitetural para pipelines NOVOS -- escolher entre DELETE+APPEND vs replaceWhere vs MERGE, definir estrategia de reprocessamento e idempotencia, decidir versionamento de regras, avaliar Jobs vs Declarative Pipelines. NAO use para revisar ou validar implementacoes Bronze/Silver/Gold existentes.
-version: 1.0.0
-date: 2026-08-14
-owner: Pedro O. Silva
+
 ---
 
-# Arquitetura Medalhão — Análise Arquitetural
+# Arquitetura Medalhão
+
+**Versão:** 1.0.0 | **Data:** 2026-08-16 | **Autor:** Pedro O. Silva
+
+## Quando Usar Esta Skill
+
+Carregar ao tomar decisões arquiteturais para pipelines NOVOS de dados: escolher entre estratégias de gravação (DELETE+APPEND, replaceWhere, MERGE), definir abordagem de reprocessamento e idempotência, decidir versionamento de regras de negócio, ou avaliar entre Jobs procedurais e Declarative Pipelines. NÃO usar para revisar ou validar implementações existentes de Bronze/Silver/Gold — esta skill orienta decisões de arquitetura, não auditoria de código.
+
+---
 
 ## 1. O problema que a arquitetura resolve
 

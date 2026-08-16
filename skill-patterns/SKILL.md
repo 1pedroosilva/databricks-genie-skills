@@ -1,13 +1,12 @@
 ---
 name: skill-patterns
 description: Use APENAS ao CRIAR skills novas para Databricks Genie Code. Define estrutura obrigatoria (YAML frontmatter + Markdown), padroes de description (verbo de acao unico, boundaries negativos explicitos, < 1024 chars), separacao de responsabilidades e checklist de qualidade. NAO use para editar skills existentes (use readAssetById primeiro), criar outros tipos de assets (notebooks, tabelas, arquivos), ou responder perguntas sobre como skills funcionam (esse conteudo ja esta carregado).
-version: 1.2.0
-updated: 2026-08-16
+
 ---
 
-# Padroes para Criacao de Skills
+# Padrões para Criação de Skills
 
-Esta skill define como criar skills novas para Databricks Genie Code seguindo padroes de qualidade e separacao de responsabilidades.
+**Versão:** 1.2.0 | **Data:** 2026-08-16 | **Autor:** Pedro O. Silva
 
 ## Quando Usar Esta Skill
 

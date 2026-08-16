@@ -1,27 +1,18 @@
 ---
 name: escolha-sql-pyspark
 description: Use ao decidir entre escrever uma transformacao em SQL ou PySpark.
-version: 1.0.0
-date: 2026-08-12
-owner: Pedro O. Silva
----
 
----
-skill_name: escolha-sql-pyspark
-display_name: Escolha entre SQL e PySpark
-version: 1.0.0
-author: Pedro Silva
-last_updated: 2026-08-14
-description: |
-  Critérios de decisão para escolher entre SQL e PySpark em transformações
-  de dados no Databricks.
-tags:
-  - sql
-  - pyspark
-  - decision-framework
 ---
 
 # Escolha entre SQL e PySpark
+
+**Versão:** 1.0.0 | **Data:** 2026-08-16 | **Autor:** Pedro O. Silva
+
+## Quando Usar Esta Skill
+
+Carregar ao decidir entre escrever uma transformação em SQL ou PySpark. Ambas as linguagens compilam para o mesmo motor Spark no Databricks, mas cada uma tem casos de uso onde se destaca.
+
+---
 
 ## Quando Preferir SQL
 
