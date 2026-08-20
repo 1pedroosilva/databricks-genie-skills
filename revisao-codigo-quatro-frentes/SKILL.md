@@ -1,12 +1,12 @@
 ---
 name: revisao-codigo-quatro-frentes
-description: "Use APENAS ao REVISAR/AUDITAR corretude de código existente em 4 frentes -- (1) CORRECAO SEMANTICA: bugs de lógica, alucinação de API, divergência comentário/código; (2) PREMISSAS OCULTAS: unicidade não validada, cardinalidade de join assumida, nulos não tratados, não-determinismo, atomicidade não garantida; (3) CODIGO MORTO: passos redundantes, abstractions prematuras; (4) CUSTO EVITAVEL: quebra de lazy evaluation, UDFs evitáveis, shuffles desnecessários. NÃO use para definir nomenclatura, estrutura de células, implementar padrões ou decisões arquiteturais -- use outras skills para isso."
+description: Use ao revisar, validar, auditar, avaliar ou checar corretude de codigo existente em 4 frentes -- (1) CORRECAO SEMANTICA - bugs de logica, alucinacao de API, divergencia comentario/codigo; (2) PREMISSAS OCULTAS - unicidade nao validada, cardinalidade de join assumida, nulos nao tratados, nao-determinismo, atomicidade nao garantida; (3) CODIGO MORTO - passos redundantes, abstractions prematuras; (4) CUSTO EVITAVEL - quebra de lazy evaluation, UDFs evitaveis, shuffles desnecessarios. NAO use para definir nomenclatura, estrutura de celulas, implementar padroes ou decisoes arquiteturais -- use outras skills para isso.
 
 ---
 
 # Revisão de Código — Quatro Frentes
 
-**Versão:** 1.0.0 | **Data:** 2026-08-14 | **Autor:** Pedro O. Silva
+**Versão:** 1.1.4 | **Data:** 2026-08-19 | **Domínio:** code-quality | **Autor:** Pedro O. Silva
 
 ## Propósito
 

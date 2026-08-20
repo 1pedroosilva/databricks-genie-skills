@@ -1,12 +1,12 @@
 ---
 name: estrutura-notebooks
-description: Use APENAS ao CRIAR notebooks NOVOS do zero -- ordem fixa de células iniciais (DOCUMENTACAO, CARREGAR CONFIGURACOES, INICIALIZAR ANOS A PROCESSAR, IMPORTS), separacao de responsabilidades por celula, formato de arquivo (.py vs .ipynb). NÃO use para revisar, editar ou validar estrutura de notebooks existentes.
+description: Use ao criar, desenvolver, estruturar ou montar notebooks NOVOS do zero -- ordem fixa de celulas iniciais (DOCUMENTACAO, CARREGAR CONFIGURACOES, INICIALIZAR ANOS A PROCESSAR, IMPORTS), separacao de responsabilidades por celula, formato de arquivo (.py vs .ipynb). NAO use para revisar, editar ou validar estrutura de notebooks existentes.
 
 ---
 
 # Estrutura de Notebooks
 
-**Versão:** 1.0.0 | **Data:** 2026-08-14 | **Autor:** Pedro O. Silva
+**Versão:** 1.0.4 | **Data:** 2026-08-18 | **Domínio:** code-structure | **Autor:** Pedro O. Silva
 
 ## Formato de Arquivo
 
@@ -93,7 +93,7 @@ Cada célula deve:
  - Aplicar transformação
  - Gerar um novo dataframe de saída
 
-* **Nomenclatura de saída**: `df_[descricao_autocontida]`
+* **Nomenclatura de saída**: CARREGUE a skill nomenclaturas para regras de nomenclatura de DataFrames
 
 ## Separação de Responsabilidades
 
@@ -115,13 +115,11 @@ Cada célula deve:
 * O loop com `try/except` que chama essas funções fica **inteiro em uma única célula de orquestração** — não se abre em uma célula e fecha em outra
 * Isso preserva a separação de responsabilidades por célula E mantém o código executável
 
-* Padrão completo e exemplo em `resiliencia-operacional/SKILL.md`, seção 8.
+* Padrão completo e exemplo: CARREGUE a skill guardrails-pipelines, seção 3 (Resiliência Operacional).
 
 ## Comentários e Documentação
 
-* **Comentários balanceados**: Comentários devem estar "na medida" - nem excessivos, nem escassos
-* **Linguagem de negócio**: Preferir linguagem de negócio em vez de jargão técnico desnecessário
-* **Foco no "porquê"**: Comentar o "porquê" mais do que o "como" quando o código é autoexplicativo
+* **Orientação sobre comentários**: CARREGUE a skill padrao-escrita para orientação sobre como escrever comentários de código (tom, estrutura, foco no porquê, exemplos)
 
 ---
 

@@ -1,12 +1,12 @@
 ---
 name: guardrails-pipelines
-description: Use ao IMPLEMENTAR ou REVISAR guardrails em pipelines de dados em notebooks de qualquer camada (bronze, silver, gold). Cobre validacoes de qualidade, integridade estrutural, reconciliacao quantitativa e resiliencia operacional. NAO use para decisoes arquiteturais gerais ou revisao de codigo sem foco em guardrails.
+description: Use ao implementar, adicionar, criar, revisar ou validar guardrails em pipelines de dados em notebooks de qualquer camada (bronze, silver, gold). Cobre validacoes de qualidade, integridade estrutural, reconciliacao quantitativa e resiliencia operacional. NAO use para decisoes arquiteturais gerais ou revisao de codigo sem foco em guardrails.
 
 ---
 
 # Guardrails em Pipelines de Dados
 
-**Versão:** 1.0.0 | **Data:** 2025-01-30 | **Autor:** Pedro O. Silva
+**Versão:** 1.0.1 | **Data:** 2026-08-18 | **Domínio:** code-quality | **Autor:** Pedro O. Silva
 
 ## Princípio Fundador
 

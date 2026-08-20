@@ -1,12 +1,12 @@
 ---
 name: protocolo-atualizacao
-description: Use sempre que uma mudança de código ou arquitetura for feita -- determina quais documentações (README, arquitetura, dicionario de dados, evolucao do projeto) precisam ser atualizadas em conjunto. NÃO use para decidir O QUE mudar no código ou na arquitetura -- esta skill so mapeia quais documentos precisam refletir uma mudança ja decidida, não participa da decisão técnica em si.
+description: Use ao mapear, identificar, determinar ou sincronizar documentacoes apos mudancas de codigo ou arquitetura -- mapeia quais documentacoes (README, arquitetura, dicionario de dados, evolucao do projeto) precisam ser atualizadas em conjunto. NAO use para decidir O QUE mudar no codigo ou na arquitetura -- esta skill so mapeia quais documentos precisam refletir uma mudanca ja decidida, nao participa da decisao tecnica em si.
 
 ---
 
 # Protocolo de Atualização de Documentação
 
-**Versão:** 1.1.0 | **Data:** 2026-08-16 | **Autor:** Pedro O. Silva
+**Versão:** 1.2.3 | **Data:** 2026-08-18 | **Domínio:** documentation | **Autor:** Pedro O. Silva
 
 ## Como Usar Este Arquivo
 
@@ -81,8 +81,6 @@ O protocolo existe para TIRAR a carga do usuário e TORNAR o assistente sistemá
 ### Regra de Estado
 
 A documentação descreve o que está commitado no main, não o que existe no workspace. Implementado sem push não entra como implementado: vai para Próximos passos, sem marcação visual de status (status se expressa em palavras: implementado, pendente, removido). Nunca declarar contagem agregada de itens, porque ela quebra sozinha a cada mudança.
-
-**Nota terminológica**: Checkboxes de tarefa (`[ ]`) são permitidos como marcadores estruturais em listas de ações a executar. Checkmarks visuais (✓ ✅ ❌) para indicar status são proibidos - status se expressa em palavras.
 
 ---
 

@@ -1,12 +1,12 @@
 ---
 name: padrao-escrita
-description: Use APENAS ao ESCREVER documentacoes tecnicas (README, arquitetura, evolucao, celulas MD de notebooks, comentarios de codigo). Define tom sobrio e tecnico, verbos no presente, proibe emojis/icones, estabelece nivel de registro por tipo de documento. NAO use para revisar codigo funcional, criar assets, ou decisoes arquiteturais.
+description: Use ao escrever, redigir, elaborar ou documentar documentacoes tecnicas (README, arquitetura, evolucao, celulas MD de notebooks, comentarios de codigo). Define tom sobrio e tecnico, verbos no presente, proibe emojis/icones, estabelece nivel de registro por tipo de documento. NAO use para revisar codigo funcional, criar assets, ou decisoes arquiteturais.
 
 ---
 
 # Padrão de Escrita Técnica
 
-**Versão:** 1.1.0 | **Data:** 2026-08-16 | **Autor:** Pedro O. Silva
+**Versão:** 1.0.1 | **Data:** 2026-08-18 | **Domínio:** documentation | **Autor:** Pedro O. Silva
 
 ## Escopo
 
@@ -29,24 +29,27 @@ description: Use APENAS ao ESCREVER documentacoes tecnicas (README, arquitetura,
 * **Português correto** com acentuação completa
 * **Objetivo e direto** ao ponto
 * **Verbos no presente**: Descrever o que o sistema/código faz, não contar o que foi feito
-  - ✅ CORRETO: "Implementa", "carrega", "transforma"
-  - ❌ ERRADO: "implementei", "carreguei", "fizemos"
+  - ✓ Correto: "Implementa", "carrega", "transforma"
+  - ✗ Errado: "implementei", "carreguei", "fizemos"
 
 ### Formatação
 
 #### PROIBIDO em Conteúdo Versionado
 
 * **Emojis**: ✨ 🚀 📊 💡 🎯 ⚡ etc.
-* **Checkmarks e ícones de status**: ✓ ✅ ❌ ⚠️ ⏳ 🔴 🟡 🟢 etc.
-* **Setas decorativas**: ➜ ➔ → ⇒ etc.
+* **Ícones de status coloridos**: ✅ ❌ ⚠️ ⏳ 🔴 🟡 🟢 etc.
 * **Símbolos decorativos**: ★ ☆ etc.
-* **Status se expressa em palavras**: implementado, pendente, removido, em desenvolvimento
+* **Setas como marcador ornamental** no início de linha, no lugar de bullet
+* **Status expresso por símbolo** em vez de palavra: implementado, pendente, removido, em desenvolvimento
 
 #### Uso Correto de Formatação
 
 * **Negrito**: Apenas para ênfase técnica necessária (termos-chave, nomes de conceitos). NUNCA para ênfase emocional ou dramatização
 * **Itálico**: Raramente, apenas para termos estrangeiros ou conceitos em introdução
 * **Listas**: Claras, sem floreios. Use markdown padrão (`-` ou `*` para bullets, checkboxes `[ ]` apenas para tarefas acionáveis)
+* **Marcadores monocromáticos** (✓ ✗): permitidos
+* **Setas** (→): permitidas como operador de relação ou fluxo (bronze → silver → gold)
+* **Estrutura de markdown**: separadores horizontais (---), headings, negrito em rótulo de definição, tabelas, blocos de código e listas são estrutura, não decoração, e não devem ser removidos
 
 ### Estrutura
 
@@ -62,7 +65,7 @@ description: Use APENAS ao ESCREVER documentacoes tecnicas (README, arquitetura,
 ### Proibições
 
 **PROIBIDO usar elementos visuais ou formatação para indicar recência**:
-* Checkmarks
+* Ícones coloridos
 * Negritos seletivos
 * Seções de "últimas atualizações"
 * Badges
@@ -196,7 +199,7 @@ Aqui a gente pega todas as configurações necessárias para rodar o notebook...
 
 Antes de publicar qualquer documentação, verificar:
 
-1. **Contém emojis, checkmarks, ícones de status ou símbolos decorativos?** → Remover todos, substituir por palavras
+1. **Contém emojis, ícones coloridos ou símbolos decorativos?** → Remover todos, substituir por palavras. Ver a lista em PROIBIDO em Conteúdo Versionado.
 2. **Contém palavras sem acentuação?** → Corrigir para português correto
 3. **Tom empolgado/marketeiro?** → Neutralizar para técnico-factual
 4. **Usa negrito para ênfase emocional em vez de técnica?** → Remover ou substituir

@@ -1,12 +1,12 @@
 ---
 name: escolha-sql-pyspark
-description: Use ao decidir entre escrever uma transformacao em SQL ou PySpark.
+description: Use ao decidir, escolher, avaliar ou definir entre escrever uma transformacao em SQL ou PySpark. Criterios de decisao baseados em complexidade, performance, manutencao. NAO use para implementar codigo SQL ou PySpark -- esta skill cobre apenas a DECISAO da linguagem.
 
 ---
 
 # Escolha entre SQL e PySpark
 
-**Versão:** 1.0.0 | **Data:** 2026-08-16 | **Autor:** Pedro O. Silva
+**Versão:** 1.0.3 | **Data:** 2026-08-18 | **Domínio:** architecture | **Autor:** Pedro O. Silva
 
 ## Quando Usar Esta Skill
 

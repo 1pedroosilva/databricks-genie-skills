@@ -1,12 +1,12 @@
 ---
 name: nomenclaturas
-description: Use APENAS ao DEFINIR nomes para assets NOVOS -- notebooks, tabelas, DataFrames, variáveis, pastas. Convenções de numeração (001_, 103_), princípio DRY, padrões de caixa (snake_case, PascalCase). NÃO use para revisar ou validar nomenclatura de código existente.
+description: Use ao definir, nomear, escolher, estabelecer ou criar nomes para assets NOVOS -- notebooks, tabelas, DataFrames, variaveis, pastas. Convencoes de numeracao (001_, 103_), principio DRY, padroes de caixa (snake_case, PascalCase). NAO use para revisar ou validar nomenclatura de codigo existente.
 
 ---
 
 # Nomenclatura e Convenções
 
-**Versão:** 1.0.0 | **Data:** 2026-08-14 | **Autor:** Pedro O. Silva
+**Versão:** 1.0.4 | **Data:** 2026-08-18 | **Domínio:** naming | **Autor:** Pedro O. Silva
 
 ## Princípios Gerais
 
@@ -14,7 +14,7 @@ description: Use APENAS ao DEFINIR nomes para assets NOVOS -- notebooks, tabelas
 
 * **Convenção de caixa**: 
  - Preferência por letras minúsculas em toda nomenclatura (pastas, arquivos, variáveis, tabelas)
- - **EXCEÇÃO**: Títulos de células devem estar sempre em MAIÚSCULO
+ - **Títulos de células**: CARREGUE a skill estrutura-notebooks para regras de formatação de títulos de células
 
 ## Notebooks
 

@@ -1,12 +1,12 @@
 ---
 name: git-workflow
-description: Use APENAS ao fazer COMMIT ou COMMITAR mudanças no Git -- quando o estado é commitável, divisão de commits por escopo técnico (bisect/revert/review), staging parcial (git add -p), o que nunca entra no commit, mensagens de commit tom neutro, amend. NÃO use para operações Git gerais (status, checkout, pull, merge, conflitos) -- a skill global git cobre isso.
+description: Use ao commitar, gravar, registrar ou fazer commit de mudancas no Git -- quando o estado e commitavel, divisao de commits por escopo tecnico (bisect/revert/review), staging parcial (git add -p), o que nunca entra no commit, mensagens de commit tom neutro, amend. NAO use para operacoes Git gerais (status, checkout, pull, merge, conflitos) -- a skill global git cobre isso.
 
 ---
 
 # Git Workflow - Padrões de Commit e Versionamento
 
-**Versão:** 1.1.0 | **Data:** 2026-08-16 | **Autor:** Pedro O. Silva
+**Versão:** 1.3.3 | **Data:** 2026-08-18 | **Domínio:** version-control | **Autor:** Pedro O. Silva
 
 ## Princípios Gerais
 
@@ -262,6 +262,25 @@ Refs: https://github.com/usuario/projeto
 
 * **Incluir**: Quando o commit depende de contexto externo necessário para entender a mudança
 * **Omitir**: Quando a referência é opcional ou o commit é autocontido
+
+## Protocolo de Aprovação para Push
+
+Antes de executar qualquer operação que publique commits para repositório remoto (`git push`, `git commit --push`, `runGit({operation: "commit_and_push"})`):
+
+1. **Apresentar resumo completo**:
+   * Commits que serão publicados (SHA, mensagens)
+   * Arquivos alterados em cada commit
+   * Branch de destino
+
+2. **Aguardar autorização expressa do usuário**:
+   * Frases que autorizam: "pode fazer push", "autorizado", "ok para publicar", "pode enviar"
+   * Frases ambíguas: "parece bom", "ok" (sem mencionar push) → PERGUNTAR novamente
+
+3. **Só executar push após autorização explícita**
+
+4. **Se houver dúvida** sobre se a operação envolve push, PERGUNTAR antes de executar
+
+**Razão:** Push publica histórico permanentemente. Revertê-lo exige `push --force`, que é perigoso em ambientes colaborativos.
 
 ## Checklist Pré-Commit
 

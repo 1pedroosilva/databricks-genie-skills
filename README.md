@@ -43,6 +43,7 @@ Protocolo completo (3 testes, evidências visuais, timing) documentado em [docs/
 | Skill | Verbo de Ação | Propósito |
 |-------|---------------|-----------|
 | `arquitetura-medalhao` | DECIDIR | Estratégia arquitetural para pipelines novos |
+| `ciclo-eda-validacao` | ORGANIZAR | Ciclo de descoberta e verificação em projetos de dados |
 | `escolha-sql-pyspark` | DECIDIR | Entre SQL ou PySpark para transformações |
 | `estrutura-notebooks` | CRIAR (notebooks) | Estrutura para notebooks novos do zero |
 | `git-workflow` | COMMITAR | Divisão de commits, staging parcial, mensagens de commit |
@@ -58,7 +59,7 @@ Protocolo completo (3 testes, evidências visuais, timing) documentado em [docs/
 Cada skill possui um verbo de ação único e boundaries negativos explícitos para prevenir sobreposição:
 
 ```
-DEFINIR ≠ CRIAR ≠ REVISAR ≠ ATUALIZAR ≠ COMMITAR ≠ PADRONIZAR ≠ IMPLEMENTAR ≠ DECIDIR
+DEFINIR ≠ CRIAR ≠ REVISAR ≠ ATUALIZAR ≠ COMMITAR ≠ PADRONIZAR ≠ IMPLEMENTAR ≠ DECIDIR ≠ ORGANIZAR
 ```
 
 ---
@@ -119,7 +120,7 @@ Genie: [carrega nomenclaturas]
 
 Estas skills seguem princípios de clareza e organização:
 
-1. **Verbo de Ação Distinto** - Cada skill tem um verbo claro (DEFINIR, CRIAR, IMPLEMENTAR, REVISAR, ATUALIZAR, COMMITAR, DECIDIR) para facilitar entendimento humano da separação de responsabilidades
+1. **Verbo de Ação Distinto** - Cada skill tem um verbo claro (DEFINIR, CRIAR, IMPLEMENTAR, REVISAR, ATUALIZAR, COMMITAR, DECIDIR, ORGANIZAR) para facilitar entendimento humano da separação de responsabilidades
 2. **Boundaries Negativos Explícitos** - Cada description especifica o que ela NÃO faz ("NÃO use para...") como boa prática de documentação (testes mostraram que não são tecnicamente obrigatórios, mas ajudam clareza)
 3. **Especificidade Máxima** - Clara sobre QUANDO triggar e quando NÃO triggar
 
