@@ -1,380 +1,125 @@
 ---
 name: skill-patterns
-description: Use ao criar, desenvolver, elaborar ou definir skills novas para Databricks Genie Code. Define estrutura obrigatoria (YAML frontmatter + Markdown + domain), padroes de description (vocabulario rico com sinonimos, boundaries negativos explicitos, contexto detalhado, < 1024 chars ASCII), checklist de qualidade e organizacao por dominios. NAO use para editar skills existentes (use readAssetById primeiro), criar outros tipos de assets (notebooks, tabelas, arquivos), ou responder perguntas sobre como skills funcionam.
-
----
-
-# Padrões para Criação de Skills
-
-**Versão:** 1.3.2 | **Data:** 2026-08-19 | **Domínio:** workflow | **Autor:** Pedro O. Silva
-
-## Quando Usar Esta Skill
-
-**USAR** ao criar uma skill nova do zero (usuario solicita criacao de skill ou assistente identifica necessidade de nova skill).
-
-**NAO USAR** para:
-- Editar skills existentes (carregar a skill existente com readAssetById primeiro)
-- Criar notebooks, tabelas, arquivos ou outros assets (usar skills especificas)
-- Responder perguntas conceituais sobre skills (esse conteudo ja esta no contexto)
-
-## Estrutura Obrigatoria de SKILL.md
-
-### YAML Frontmatter
-
-Dois campos obrigatorios:
-
-```yaml
----
-name: skill-name-kebab-case
-description: Use ao [acao/tarefa com sinonimos naturais] [contexto especifico rico]. [O que a skill cobre em detalhe]. NAO use para [boundaries negativos explicitos].
----
-```
-
-**CRITICO - Metadados FORA do YAML:** Os campos `version`, `updated`, `domain` e `author` NAO vao no YAML frontmatter. Eles existem APENAS no corpo Markdown, na linha logo apos o titulo:
-
-```markdown
-# Titulo da Skill
-
-**Versao:** 1.0.0 | **Data:** YYYY-MM-DD | **Dominio:** [categoria] | **Autor:** Nome
-```
-
-**Regras para `name`:**
-- Kebab-case (minusculas, hifens)
-- Descritivo e unico
-- Alinhado com o dominio tematico da skill
-
-**Regras para `description`:**
-- **< 1024 caracteres** (limite tecnico)
-- **ASCII puro** (design preference, mantido para consistencia visual)
-- **Vocabulario rico com sinonimos naturais** - use multiplas palavras-chave para o mesmo conceito (ex: "revisar, validar, auditar, avaliar" em vez de apenas "revisar")
-- **Boundaries negativos explicitos** ("NAO use para...")
-- **Especificidade maxima** sobre quando triggar vs quando nao triggar
-- **Contexto especifico detalhado** - descrever o QUE, QUANDO e ONDE a skill se aplica
-- **CRITICO - Sintaxe YAML segura**: NUNCA usar `: ` (dois-pontos seguido de espaco) no meio do texto da description. Em YAML, esse padrao e ambiguo e quebra o parser (interpretado como inicio de nova chave). Use separadores alternativos: `--`, `-`, `->`, `;` ou envolva toda a description em aspas duplas.
-- Formato sugerido: `Use ao [acao com sinonimos] [contexto especifico rico]. [Detalhes]. NAO use para [boundaries].`
-
-### Corpo Markdown
-
-- Secoes claras com headings H2/H3
-- Instrucoes ao agente, nao ao usuario final
-- Exemplos concretos (comandos, codigo, expected output)
-- Paragrafos curtos e acionaveis
-- Sem emojis ou icones
-
-## Dominios e Separacao de Responsabilidades
-
-Cada skill deve pertencer a um dominio unico para prevenir sobreposicao. Use o campo `domain` para organizar skills tematicamente:
-
-| Domain | Skill Existente | Escopo |
-|--------|----------------|--------|
-| naming | nomenclaturas | Convencoes de nomenclatura para assets novos |
-| code-structure | estrutura-notebooks | Estrutura e organizacao de notebooks novos |
-| data-modeling | unity-catalog | Schemas, tabelas, volumes no Unity Catalog |
-| workflow | skill-patterns | Criacao e manutencao de skills do Genie Code |
-| code-quality | revisao-codigo-quatro-frentes | Revisao de corretude de codigo existente |
-| code-quality | guardrails-pipelines | Implementacao de validacoes em pipelines |
-| documentation | protocolo-atualizacao | Mapeamento de docs apos mudancas |
-| documentation | padrao-escrita | Padroes de escrita tecnica |
-| version-control | git-workflow | Commits, staging, mensagens de commit |
-| architecture | arquitetura-medalhao | Decisoes estrategicas de pipeline |
-| architecture | escolha-sql-pyspark | Decisao entre SQL e PySpark |
-| project-management | ciclo-eda-validacao | Organizacao de EDA e validacoes |
-
-**Principio DRY:** Cada dominio pode ter multiplas skills, desde que seus escopos sejam claramente distintos e nao-sobrepostos. Desambiguacao acontece via description rica (vocabulario amplo) + boundaries negativos claros.
-
-## Boundaries Negativos Explicitos
-
-Cada skill deve especificar o que ela **NAO faz** para evitar false-positives:
-
-**Exemplo BOM:**
-```
-NAO use para revisar ou validar nomenclatura de codigo existente.
-```
-
-**Exemplo RUIM:**
-```
-(sem boundaries negativos)
-```
-
-**Nota Tecnica:** Testes empiricos mostraram que boundaries negativos nao sao tecnicamente obrigatorios para triggering correto, mas sao **boas praticas de clareza** para humanos e agentes.
-
-## Checklist de Qualidade para Skill Nova
-
-Antes de criar a skill, validar:
-
-1. [ ] **Verificacao DRY - Skills globais**: Consultou skills globais (readSkillFile) para confirmar que topico nao esta coberto?
-2. [ ] **Verificacao DRY - User skills**: Listou user skills existentes (.assistant/skills/) para confirmar que nao ha duplicacao?
-3. [ ] **Conformidade oficial**: Usou docSearch para validar contra documentacao oficial da Databricks?
-4. [ ] **Description < 1024 chars**?
-5. [ ] **Description em ASCII puro** (sem acentos)?
-6. [ ] **Description com vocabulario rico** (sinonimos naturais para a tarefa principal)?
-7. [ ] **Boundaries negativos explicitos** na description?
-8. [ ] **Contexto especifico detalhado** na description (QUE, QUANDO, ONDE)?
-9. [ ] **Domain definido** e alinhado com tabela de dominios existentes?
-10. [ ] **Formato YAML frontmatter limpo** (apenas name e description, SEM version/updated/domain)?
-11. [ ] **Corpo Markdown acionavel** (instrucoes ao agente, exemplos concretos)?
-12. [ ] **Separacao clara** de outras skills do mesmo dominio (sem sobreposicao de escopo)?
-
-## Metricas de Qualidade (Target)
-
-| Metrica | Target |
-|---------|--------|
-| Description < 1024 chars | 100% |
-| ASCII puro | 100% |
-| Vocabulario rico (sinonimos) | 100% |
-| Boundaries negativos explicitos | 100% |
-| Domain definido | 100% |
-| Triggering correto | 100% |
-
-## Verificacao DRY e Sobreposicao
-
-**CRITICO**: Antes de criar qualquer skill nova, validar que nao ha duplicacao com skills existentes.
-
-### Regra de Decisao
-
-**Consultar skills globais** (usar `readSkillFile`):
-- Se skill global JA COBRE o topico completamente → NAO criar user skill, usar a global
-- Se skill global cobre PARTE do topico → User skill deve COMPLEMENTAR (adicionar preferencias especificas do usuario), NUNCA REDEFINIR conhecimento da global
-- Se skill global NAO EXISTE para o topico → OK criar user skill
-
-**Consultar user skills existentes** (listar `.assistant/skills/`):
-- Se user skill JA EXISTE com escopo identico → EDITAR skill existente (usar editAsset), NAO criar nova
-- Se user skill tem verbo identico mas escopo disjunto → OK criar, garantir boundaries claros na description
-- Se nenhuma user skill cobre o topico → OK criar
-
-**Validar documentacao oficial** (usar `docSearch`):
-- Buscar orientacoes oficiais da Databricks sobre o topico
-- Garantir que skill segue padroes atualizados (nao obsoletos)
-- Se documentacao contradiz conteudo proposto → CORRIGIR antes de criar
-
-### Exemplo de Verificacao Completa
-
-**Usuario pede**: "Criar skill sobre estrutura de notebooks"
-
-**Passo A - Skills globais**:
-```
-readSkillFile("skills/skill-authoring/SKILL.md")
-```
-Resultado: Skill global cobre formato YAML + Markdown de skills, NAO cobre estrutura de notebooks → Topico nao duplicado
-
-**Passo B - User skills**:
-```python
-import os
-skills = [d for d in os.listdir("/Users/1pedro.osilva@gmail.com/.assistant/skills/") 
-          if os.path.isdir(os.path.join("/Users/1pedro.osilva@gmail.com/.assistant/skills/", d))]
-```
-Resultado: Encontra `estrutura-notebooks/` JA EXISTE → EDITAR, nao criar nova
-
-**Passo C - Documentacao oficial**:
-```
-docSearch("Databricks notebook best practices")
-```
-Resultado: Validar que skill proposta alinha com recomendacoes oficiais
-
-**Decisao final**: EDITAR `estrutura-notebooks`, NAO criar skill nova.
-
-## Procedimento de Criacao
-
-### Passo 1: Definir Domain e Escopo
-
-- Identificar o dominio tematico (naming, code-quality, architecture, etc)
-- Verificar se ja existe skill no mesmo dominio
-- Se sim, garantir que escopos sao claramente distintos e nao-sobrepostos
-- Documentar escopo especifico da nova skill com boundaries negativos
-- Adicionar campo `domain` ao frontmatter
-
-### Passo 2: Escrever Description
-
-- Comecar com `Use ao [acao com sinonimos naturais] [contexto especifico rico]`
-- Incluir multiplas palavras-chave/sinonimos para a tarefa principal
-- Adicionar contexto detalhado: QUE, QUANDO, ONDE (1-3 frases)
-- Adicionar boundaries negativos explicitos (`NAO use para...`)
-- Validar tamanho < 1024 chars
-- Converter caracteres acentuados para ASCII
-
-### Passo 3: Estruturar Corpo Markdown
-
-- Secao "Quando Usar Esta Skill" (casos de uso positivos e negativos)
-- Secoes de orientacao tecnica (procedimentos, padroes, checklist)
-- Exemplos concretos (BOM vs RUIM)
-- Evitar emojis, icones, tom marketeiro
-
-### Passo 4: Validar com Checklist
-
-- Executar checklist de qualidade (13 itens acima, incluindo verificacao DRY)
-- Corrigir falhas antes de criar o arquivo
-
-### Passo 5: Criar Arquivo
-
-- Path: `.assistant/skills/[skill-name]/SKILL.md`
-- Usar `createAsset` (assetType: "file")
-- Incluir metadados na linha apos titulo do corpo: **Versao:** 1.0.0 | **Data:** [data] | **Dominio:** [categoria] | **Autor:** Nome
-- Nao criar pastas adicionais sem autorizacao
-
-## Exemplo Completo
-
-### SKILL.md de Referencia (skill-patterns)
-
-```yaml
----
-name: skill-patterns
-description: Use ao criar, desenvolver, elaborar ou definir skills novas para Databricks Genie Code. Define estrutura obrigatoria (YAML frontmatter + Markdown + domain), padroes de description (vocabulario rico com sinonimos, boundaries negativos explicitos, contexto detalhado, < 1024 chars ASCII), checklist de qualidade e organizacao por dominios. NAO use para editar skills existentes, criar outros tipos de assets, ou responder perguntas sobre como skills funcionam.
+description: Use ao criar, desenvolver, elaborar, estruturar, editar, revisar ou auditar skills (novas ou existentes) para o Genie Code contra o padrao de qualidade aqui definido -- cobre validacao de description (dominio de atuacao, colisao com skills nativas da plataforma como notebooks, Unity Catalog, dashboards, pipelines e MLflow), checklist de qualidade, verificacao de duplicidade (DRY) contra skills globais e locais, e organizacao de conteudo entre SKILL.md e references/. NAO use para criar outros tipos de asset (notebooks, tabelas, jobs, pipelines), ou tirar duvidas conceituais sobre como skills funcionam em geral.
 ---
 
 # Padroes para Criacao de Skills
 
-**Versao:** 1.0.0 | **Data:** 2026-08-16 | **Dominio:** workflow | **Autor:** Pedro O. Silva
+**Versao:** 2.1.0 | **Data:** 2026-08-20 | **Dominio:** workflow | **Autor:** Pedro O. Silva
 
-[corpo markdown acionavel]
+## Quando Usar Esta Skill
+
+**USAR** ao criar, editar ou revisar uma skill (nova ou existente) — usuario pede explicitamente ou o agente identifica a necessidade durante a conversa.
+
+**NAO USAR** para:
+- Criar notebooks, tabelas, jobs ou outros assets → usar a skill especifica daquele asset
+- Responder perguntas conceituais sobre skills → esse conteudo ja esta no contexto do agente
+
+## Principios (Orientacao)
+
+Estas ideias guiam toda decisao tomada no procedimento abaixo — leia antes de executar.
+
+1. **Cabecalho YAML minimo.** So `name` e `description` sao campos oficialmente obrigatorios. O Genie Code, na pratica observada, e mais rigido que a especificacao geral do formato: campos extras no YAML (mesmo os opcionais previstos pela especificacao, como um mapa de metadados) tendem a tirar a skill do registry. Por isso, quaisquer outros dados (versao, data, dominio, autor) vao no corpo Markdown, nunca no YAML. Ver `references/troubleshooting-registry.md`.
+2. **Orientacao separada de execucao.** O corpo da skill deve deixar claro o que e principio (o "porque", estavel, raramente muda) e o que e procedimento (o "como", passo a passo, o agente executa na ordem).
+3. **DRY antes de criar.** Nunca criar uma skill sem antes checar se uma skill global ja cobre o topico, se uma user skill ja existente cobre o mesmo escopo, e se o dominio pretendido colide com uma skill nativa da plataforma.
+4. **Enxugamento por padrao.** O `SKILL.md` carrega inteiro no contexto assim que a skill e ativada — diferente do `name`/`description`, que ficam sempre carregados para todas as skills. Conteudo extenso (tabelas de referencia, exemplos longos, troubleshooting) deve morar em `references/`, carregado sob demanda apenas quando o agente precisar.
+
+## Fluxo de Decisao (Execucao)
+
+```
+PEDIDO DE SKILL NOVA
+        |
+        v
+[1] DRY - skill global ja cobre o topico?
+        |-- SIM, cobre tudo --------------> usar a skill global (FIM)
+        |-- PARCIAL ------------------------> user skill deve complementar, nunca redefinir
+        |-- NAO cobre
+        v
+[2] DRY - ja existe user skill com escopo identico?
+        |-- SIM -----------------------------> EDITAR a existente, nao criar nova (FIM)
+        |-- NAO
+        v
+[3] Validar dominio e colisao com skills nativas
+    (ver references/dominios-e-colisoes.md)
+        |-- colide -----------------------------> ajustar escopo ou redirecionar (FIM)
+        |-- livre
+        v
+[4] Escrever description
+    (rica em sinonimos, ASCII, < 1024 chars, boundaries negativos)
+        |
+        v
+[5] Estruturar corpo: Principios (orientacao) + Procedimento (execucao)
+        |
+        v
+[6] Decidir o que fica em SKILL.md vs references/
+        |
+        v
+[7] Rodar checklist de qualidade
+    (ver references/checklist-qualidade.md)
+        |
+        v
+[8] Criar SKILL.md (+ references/ se necessario)
 ```
 
-**Validacao:**
-- Tamanho: 485 chars (< 1024 ✓)
-- ASCII puro: ✓
-- Vocabulario rico: "CRIAR skills novas" ✓
-- Boundaries negativos: ✓
-- Domain: workflow ✓
-- Versionamento: ✓
-- DRY: Complementa skill-authoring global (nao duplica) ✓
+## Procedimento Detalhado (Execucao)
 
-## Integracao com Skill de Autoria (skill-authoring)
+### Passo 1-2: Verificacao DRY
 
-A skill global `skill-authoring` da Databricks define formato basico e procedimento de criacao.
+Consultar, nesta ordem: skills globais da plataforma, depois as user skills em `.assistant/skills/`. Regra de decisao completa e exemplo passo a passo em `references/exemplo-completo.md`.
 
-**Divisao de responsabilidades:**
-- `skill-authoring` (global): Formato YAML + Markdown, procedimento generico de criacao
-- `skill-patterns` (user skill): Padroes especificos do usuario (verbos unicos, boundaries, checklist de qualidade, metricas)
+### Passo 3: Dominio e Colisao com Skills Nativas
 
-**Carregar ambas** ao criar skill nova: skill-authoring para formato, skill-patterns para padroes de qualidade.
+O Genie Code ja vem com skills nativas para notebooks, exploracao no Unity Catalog, dashboards, pipelines e MLflow. Uma skill nova nao pode ocupar o mesmo escopo dessas sem diferenciacao clara. Tabela completa de dominios existentes e criterio de nao-sobreposicao em `references/dominios-e-colisoes.md`.
 
-## Atualizacao de Skills Existentes
+### Passo 4: Escrever a Description
 
-Quando atualizar uma skill existente, incrementar `version` seguindo semantic versioning:
+Formato sugerido:
 
-**MAJOR (X.0.0)**: Mudanca breaking
-- Altera triggering (muda verbo de acao ou escopo principal)
-- Remove funcionalidade documentada
-- Muda boundaries de forma incompativel
-
-**MINOR (x.Y.0)**: Adiciona funcionalidade
-- Novos exemplos ou secoes
-- Expansao de escopo compativel (nao breaking)
-- Melhora de orientacoes existentes
-
-**PATCH (x.y.Z)**: Correcoes
-- Typos ou erros de formatacao
-- Clareza de texto (sem mudanca de comportamento)
-- Exemplos melhores (mesma funcionalidade)
-
-**Sempre sincronizar** campo **Data:** com a nova **Versao:** na linha de metadados do corpo Markdown.
-
-**Exemplo** (linha **Versao:** no corpo):
-- Skill em **Versao:** 1.2.3
-- Adicionar nova secao de troubleshooting → **Versao:** 1.3.0 | **Data:** 2026-08-20
-- Corrigir typo → **Versao:** 1.2.4 | **Data:** 2026-08-20
-- Mudar dominio ou description de forma incompativel (breaking) → **Versao:** 2.0.0 | **Data:** 2026-08-20
-
-Esses campos existem na linha de metadados do corpo Markdown, NAO no YAML frontmatter.
-
-## Troubleshooting: Skills Nao Reconhecidas pelo Registry
-
-### Sintomas
-
-Skill existe em `.assistant/skills/[skill-name]/SKILL.md` mas nao aparece no registry do sistema ao tentar carregar com `readSkillFile`.
-
-### Causas Identificadas
-
-**1. Comentarios no YAML frontmatter**
-
-```yaml
----
-# Este comentario quebra o parsing  ❌
-name: minha-skill
-description: ...
----
+```
+Use ao [acao com sinonimos naturais] [contexto especifico: QUE, QUANDO, ONDE]. [Detalhe do que a skill cobre]. NAO use para [boundaries negativos explicitos].
 ```
 
-**Solucao:** Remover TODOS os comentarios do YAML. Formato limpo (apenas name e description):
+Regras:
+- **< 1024 caracteres**
+- **ASCII puro** (sem acentos) — preferencia de consistencia visual, nao e regra tecnica do parser
+- **Vocabulario rico**: varias palavras para a mesma acao (ex.: "revisar, validar, auditar, avaliar")
+- **Boundaries negativos explicitos**: "NAO use para..."
+- **Sintaxe YAML segura**: nunca usar `: ` (dois-pontos + espaco) no meio do texto da description — quebra o parser YAML. Usar `--`, `-`, `->` ou `;`.
 
-```yaml
----
-name: minha-skill
-description: ...
----
-```
+### Passo 5: Estruturar o Corpo
 
-Metadados de versao vao na linha **Versao:** do corpo Markdown, nao no YAML.
+- `# Titulo`
+- Linha de metadados: `**Versao:** x.y.z | **Data:** YYYY-MM-DD | **Dominio:** categoria | **Autor:** Nome`
+- `## Quando Usar Esta Skill` (positivo e negativo)
+- `## Principios` (orientacao — o porque, estavel)
+- `## Procedimento` ou `## Fluxo de Decisao` (execucao — o como, passo a passo)
+- Exemplos concretos, sem emojis, sem tom de marketing
 
-**2. Campos extras ou nao-reconhecidos no YAML**
+### Passo 6: Decidir SKILL.md vs references/
 
-```yaml
----
-name: minha-skill
-description: ...
-author: Pedro Silva  ❌ (campo nao-reconhecido)
-category: data-engineering  ❌ (campo nao-reconhecido)
----
-```
+Regra pratica: se uma secao so e consultada em uma minoria dos casos de uso da skill (troubleshooting, tabela de dados auxiliares, exemplo longo, historico de versoes), ela vai para `references/nome-do-topico.md` e o `SKILL.md` so aponta para o arquivo com um link relativo. O que fica no `SKILL.md`: principios, fluxo de decisao resumido, e o passo a passo minimo para executar a tarefa mais comum.
 
-**Solucao:** Manter APENAS os 2 campos oficiais: `name`, `description`.
+### Passo 7: Checklist de Qualidade
 
-**3. Description sem verbo de acao no inicio**
+Rodar checklist completo antes de criar o arquivo. Ver `references/checklist-qualidade.md`.
 
-```yaml
-description: Esta skill ajuda na criacao de notebooks. Use quando precisar criar notebooks novos.  ❌
-```
+### Passo 8: Criar o Arquivo
 
-**Solucao:** Action-first phrasing:
+- Caminho: `.assistant/skills/[skill-name]/SKILL.md` (+ `references/` se aplicavel)
+- Nao criar pastas adicionais sem necessidade concreta
+- Ao atualizar skill existente, seguir semantic versioning — ver `references/versionamento.md`
 
-```yaml
-description: Use APENAS ao CRIAR notebooks novos do zero. Define estrutura de celulas iniciais. NAO use para editar notebooks existentes.  ✓
-```
+## Referencias
 
-**4. Description sem boundaries negativos**
-
-```yaml
-description: Use APENAS ao CRIAR notebooks novos do zero. Define estrutura de celulas iniciais.  ⚠️ (falta boundaries)
-```
-
-**Solucao:** Adicionar boundaries explicitos:
-
-```yaml
-description: Use APENAS ao CRIAR notebooks novos do zero. Define estrutura de celulas iniciais. NAO use para editar notebooks existentes ou revisar estrutura de notebooks prontos.  ✓
-```
-
-### Diagnostico Rapido
-
-**Passo 1:** Tentar carregar a skill com `readSkillFile("skills/[skill-name]/SKILL.md")`
-
-**Passo 2:** Se erro ou nao reconhecida, abrir SKILL.md e verificar:
-1. Comentarios no YAML? → Remover
-2. Campos alem de name/description/version/updated/domain? → Remover
-3. Description tem vocabulario rico (sinonimos)? → Enriquecer
-4. Description tem boundaries negativos? → Adicionar
-5. Description tem contexto especifico detalhado? → Expandir
-
-**Passo 3:** Salvar e tentar carregar novamente. Skill deve aparecer no registry.
-
-### Validacao Empirica Planejada
-
-Experimento a realizar:
-1. Escolher skill funcional (ex: nomenclaturas)
-2. Adicionar comentario no YAML
-3. Verificar se desaparece do registry
-4. Remover comentario
-5. Confirmar reaparecimento
-
-**Objetivo:** Validar empiricamente que comentarios no YAML sao causa raiz.
-
----
+- `references/dominios-e-colisoes.md` — tabela de dominios, colisao com skills nativas, principio DRY
+- `references/checklist-qualidade.md` — checklist completo + metricas alvo
+- `references/versionamento.md` — regras de semantic versioning para atualizar skills
+- `references/troubleshooting-registry.md` — skill some do registry: causas confirmadas vs. em investigacao
+- `references/exemplo-completo.md` — exemplo passo a passo de verificacao DRY e validacao de uma skill nova
 
 ## Aplicacao
 
-- Carregar esta skill ANTES de criar qualquer skill nova
-- SEMPRE executar Verificacao DRY (consultar skills globais, user skills, documentacao oficial)
-- Aplicar checklist de qualidade (13 itens) sem mencionar a skill ao usuario
-- Se skill proposta violar padroes OU duplicar skill existente:
-  - Corrigir violacoes antes de criar, OU
-  - Redirecionar para editar skill existente, OU
-  - Orientar usuario a usar skill global em vez de criar user skill
-- Usuario deve receber skill ja validada e no padrao correto
+- Carregar esta skill antes de criar, editar ou revisar qualquer skill
+- Sempre rodar a verificacao DRY (passos 1-2) antes de qualquer outra etapa
+- Se a skill proposta violar padroes ou duplicar uma existente: corrigir antes de criar, redirecionar para edicao da existente, ou orientar o uso da skill global
+- Skills que vao gerar mudancas em arquivos de outros projetos (fora do proprio `.assistant/skills/`) devem propor a mudanca ao usuario antes de aplicar, nunca aplicar de forma autonoma
