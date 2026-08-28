@@ -1,12 +1,11 @@
 ---
 name: padrao-escrita
-description: Use ao escrever, redigir, elaborar ou documentar documentacoes tecnicas (README, arquitetura, evolucao, celulas MD de notebooks, comentarios de codigo). Define tom sobrio e tecnico, verbos no presente, proibe emojis/icones, estabelece nivel de registro por tipo de documento. NAO use para revisar codigo funcional, criar assets, ou decisoes arquiteturais.
-
+description: Use ao escrever, redigir, elaborar, documentar, revisar, reescrever ou auditar documentacoes tecnicas versionadas, incluindo README, arquitetura, evolucao, celulas Markdown de notebooks, comentarios de codigo e mensagens de commit. Define tom, registro, idioma e uso de formatacao. NAO use para revisar codigo funcional, criar assets ou tomar decisoes arquiteturais.
 ---
 
 # Padrão de Escrita Técnica
 
-**Versão:** 1.0.1 | **Data:** 2026-08-18 | **Domínio:** documentation | **Autor:** Pedro O. Silva
+**Versão:** 1.1.0 | **Data:** 2026-08-26 | **Domínio:** documentation | **Autor:** Pedro O. Silva
 
 ## Escopo
 
@@ -15,6 +14,8 @@ description: Use ao escrever, redigir, elaborar ou documentar documentacoes tecn
 * Células markdown de notebooks
 * Comentários de código
 * Mensagens de commit
+
+Aplica-se tanto à criação quanto à revisão, reescrita e auditoria desses conteúdos.
 
 **NÃO SE APLICA**: Respostas do assistente na conversa com o usuário.
 
@@ -28,7 +29,7 @@ description: Use ao escrever, redigir, elaborar ou documentar documentacoes tecn
 * **Sem jargões desnecessários** ou buzzwords
 * **Português correto** com acentuação completa
 * **Objetivo e direto** ao ponto
-* **Verbos no presente**: Descrever o que o sistema/código faz, não contar o que foi feito
+* **Verbos no presente** ao descrever o que o sistema ou código faz, não ao contar o que foi feito
   - ✓ Correto: "Implementa", "carrega", "transforma"
   - ✗ Errado: "implementei", "carreguei", "fizemos"
 
@@ -49,7 +50,7 @@ description: Use ao escrever, redigir, elaborar ou documentar documentacoes tecn
 * **Listas**: Claras, sem floreios. Use markdown padrão (`-` ou `*` para bullets, checkboxes `[ ]` apenas para tarefas acionáveis)
 * **Marcadores monocromáticos** (✓ ✗): permitidos
 * **Setas** (→): permitidas como operador de relação ou fluxo (bronze → silver → gold)
-* **Estrutura de markdown**: separadores horizontais (---), headings, negrito em rótulo de definição, tabelas, blocos de código e listas são estrutura, não decoração, e não devem ser removidos
+* **Estrutura de markdown**: separadores horizontais (`---`), headings, negrito em rótulo de definição, tabelas, blocos de código e listas são estrutura, não decoração, e não devem ser removidos
 
 ### Estrutura
 
@@ -57,6 +58,7 @@ description: Use ao escrever, redigir, elaborar ou documentar documentacoes tecn
 * Seções com títulos descritivos (não criativos)
 * Hierarquia clara (H2 para seções principais, H3 para subseções)
 * Sem repetições ou redundâncias
+* Não impor tabela, árvore, Mermaid ou separador quando a informação não precisar deles
 
 ---
 
@@ -82,7 +84,7 @@ description: Use ao escrever, redigir, elaborar ou documentar documentacoes tecn
 ### Exceções Válidas
 
 **Versionamento explícito permitido em**:
-* Campo de versão e data no cabeçalho YAML de skills (obrigatório para rastreabilidade)
+* Campo de versão e data no cabeçalho YAML de skills, quando usado pelo padrão do ambiente
 * Documento cronológico dedicado (`evolucao_projeto.md`) - é o lugar certo para histórico
 
 **README não é changelog**: Não incluir seções de "atualizações recentes", "última modificação", "histórico de mudanças" ou datas de última atualização em arquivos README de projeto. O histórico está no Git.
@@ -94,6 +96,8 @@ Nenhuma métrica ou resultado de teste entra na documentação sem que:
 2. Data de execução esteja registrada
 3. Método de cálculo esteja documentado
 
+---
+
 ## Níveis de Registro por Tipo de Documento
 
 ### README.md (Projeto)
@@ -104,7 +108,7 @@ Nenhuma métrica ou resultado de teste entra na documentação sem que:
 
 **Exemplo BOM**:
 ```markdown
-Pipeline de ingestão e transformação de dados financeiros da CVM. 
+Pipeline de ingestão e transformação de dados financeiros da CVM.
 Arquitetura medalhão com camadas bronze, silver e gold.
 ```
 
@@ -123,8 +127,8 @@ Arquitetura medalhão com camadas bronze, silver e gold.
 
 **Exemplo BOM**:
 ```markdown
-Tabela `silver_balanco_patrimonial`: dados consolidados do balanço patrimonial. 
-Chave: (`cd_cvm`, `dt_refer`, `versao`). 
+Tabela `silver_balanco_patrimonial`: dados consolidados do balanço patrimonial.
+Chave: (`cd_cvm`, `dt_refer`, `versao`).
 Estratégia de gravação: `replaceWhere` por `dt_refer`.
 ```
 
@@ -143,14 +147,14 @@ Essa tabela guarda as informações dos balanços de forma organizada e limpa! �
 
 **Exemplo BOM**:
 ```markdown
-Identificado problema de duplicação ao usar `append` sem controle de versão. 
-Decisão: migrar para `replaceWhere` com partição por `dt_refer`. 
+Identificado problema de duplicação ao usar `append` sem controle de versão.
+Decisão: migrar para `replaceWhere` com partição por `dt_refer`.
 Resultado: eliminação de duplicatas, reprocessamento mais rápido.
 ```
 
 **Exemplo RUIM**:
 ```markdown
-Tivemos um problema chato com duplicatas. Depois de muito pensar, 
+Tivemos um problema chato com duplicatas. Depois de muito pensar,
 escolhemos uma solução melhor! 💡
 ```
 
@@ -166,7 +170,7 @@ escolhemos uma solução melhor! 💡
 ```markdown
 ## Carregar configurações
 
-Carrega dicionário de parâmetros do arquivo JSON. Fallback para valores 
+Carrega dicionário de parâmetros do arquivo JSON. Fallback para valores
 default se arquivo não existir.
 ```
 
@@ -197,7 +201,7 @@ Aqui a gente pega todas as configurações necessárias para rodar o notebook...
 
 ## Checklist Antes de Finalizar Qualquer Texto
 
-Antes de publicar qualquer documentação, verificar:
+Antes de publicar ou entregar qualquer documentação nova ou revisada, verificar:
 
 1. **Contém emojis, ícones coloridos ou símbolos decorativos?** → Remover todos, substituir por palavras. Ver a lista em PROIBIDO em Conteúdo Versionado.
 2. **Contém palavras sem acentuação?** → Corrigir para português correto
@@ -210,47 +214,9 @@ Antes de publicar qualquer documentação, verificar:
 9. **Métricas ou resultados sem data, método ou teste executado?** → Remover ou documentar origem
 10. **Transmite a informação necessária de forma clara e direta?** → OK para publicar
 
----
-
-## Exemplos de Transformação
-
-### Exemplo 1: README.md
-
-**ANTES**:
-```markdown
-🚀 Incrível pipeline de dados que automatiza todo o processo de ingestão da CVM! 
-Usa as melhores práticas do mercado com arquitetura medalhão. ✨
-```
-
-**DEPOIS**:
-```markdown
-Pipeline de ingestão automática de dados da CVM. Implementa arquitetura 
-medalhão (bronze/silver/gold) com estratégias diferenciadas de gravação por camada.
-```
-
-### Exemplo 2: Célula de Notebook
-
-**ANTES**:
-```markdown
-# Passo 1: Configuracao
-
-Nessa etapa a gente le o arquivo de config pra pegar os parametros 
-necessarios pro notebook funcionar direitinho.
-```
-
-**DEPOIS**:
-```markdown
-## Carregar Configurações
-
-Lê parâmetros do arquivo JSON. Configura caminhos de tabelas, períodos 
-de processamento e estratégias de gravação.
-```
-
----
-
 ## Aplicação
 
-* Carregar esta skill ANTES de criar ou editar qualquer documentação
+* Carregar esta skill ANTES de criar, editar, revisar, reescrever ou auditar qualquer documentação
 * Aplicar os princípios sem precisar mencionar a skill ao usuário
 * Se o texto produzido violar estes padrões, revisar antes de apresentar
 * O usuário deve receber documentação já no padrão correto
