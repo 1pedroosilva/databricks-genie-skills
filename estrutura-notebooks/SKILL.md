@@ -1,16 +1,15 @@
 ---
 name: estrutura-notebooks
-description: Use ao criar, desenvolver, estruturar ou montar notebooks NOVOS do zero -- ordem fixa de celulas iniciais (DOCUMENTACAO, CARREGAR CONFIGURACOES, INICIALIZAR ANOS A PROCESSAR, IMPORTS), separacao de responsabilidades por celula, formato de arquivo (.py vs .ipynb). NAO use para revisar, editar ou validar estrutura de notebooks existentes.
-
+description: Use ao criar, desenvolver, estruturar ou montar notebooks NOVOS do zero -- ordem fixa de celulas iniciais (DOCUMENTACAO, CARREGAR CONFIGURACOES, INICIALIZAR ANOS A PROCESSAR, IMPORTS), separacao de responsabilidades por celula, formato de arquivo (.py vs .ipynb). NAO use para documentar ou revisar o conteudo tecnico e a logica de notebooks existentes; para alteracao estrutural de notebook existente, use esta skill.
 ---
 
 # Estrutura de Notebooks
 
-**Versão:** 1.0.4 | **Data:** 2026-08-18 | **Domínio:** code-structure | **Autor:** Pedro O. Silva
+**Versão:** 1.1.0 | **Data:** 2026-08-26 | **Domínio:** code-structure | **Autor:** Pedro O. Silva
 
 ## Formato de Arquivo
 
-**REGRA OBRIGATÓRIA**: Notebooks devem ser SEMPRE criados no formato `.py` (Python Source / Databricks format).
+**REGRA OBRIGATÓRIA**: Notebooks devem ser SEMPRE criados no formato `.py` (Python Source / Databricks format), salvo solicitacao explicita do usuario por `.ipynb` ou formato Jupyter Notebook JSON.
 
 **Justificativa - Versionamento Git Limpo**:
 * **Diff legível**: Formato texto puro, linha por linha, ideal para code review em Pull Requests
@@ -24,10 +23,7 @@ description: Use ao criar, desenvolver, estruturar ou montar notebooks NOVOS do 
 * **Não aparecem no GitHub/portfólio** - audiência externa só vê o código commitado
 * Para portfólio técnico, o que importa é o histórico git (commits, PRs, evolução do código)
 
-**PROIBIDO**: Criar notebooks em formato `.ipynb` (Jupyter Notebook)
-* Diffs poluídos com metadata JSON não-relevante
-* Dificulta revisão de código (mudanças reais se perdem no noise)
-* Conflitos de merge frequentes em outputs e execution_count
+**PROIBIDO**: Criar notebooks em formato `.ipynb` (Jupyter Notebook), exceto quando houver solicitacao explicita para aquela tarefa.
 
 ---
 
@@ -74,7 +70,7 @@ description: Use ao criar, desenvolver, estruturar ou montar notebooks NOVOS do 
 * **NUNCA**: Espalhar imports pelo notebook
 * **SEM linha de comentário explicativo**: imports são autoexplicativos, não comentar o óbvio
 
-**Ordem obrigatória e fixa das células iniciais**: Documentação → Carregar Configurações → Inicializar Anos a Processar → Imports. Todo notebook segue essa sequência, sem exceção.
+**Ordem obrigatória e fixa das células iniciais**: Documentação → Carregar Configurações → Inicializar Anos a Processar → Imports, quando todas essas etapas forem aplicáveis. Não criar uma célula artificial para uma etapa que não exista no notebook.
 
 ## Demais Células
 
