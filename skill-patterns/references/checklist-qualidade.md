@@ -15,6 +15,7 @@ Validar antes de criar o arquivo:
 11. [ ] Corpo Markdown separa Principios (orientacao) de Procedimento (execucao)?
 12. [ ] Conteudo extenso movido para `references/`, mantendo o `SKILL.md` enxuto?
 13. [ ] Exemplos usam identificadores genericos, nao nomes reais de artefatos de um projeto especifico?
+14. [ ] A nova skill criada tem seu proprio checklist final de validacao (para o agente verificar que seguiu a skill completamente)?
 
 ## Metricas de Qualidade (Alvo)
 
