@@ -28,7 +28,6 @@ Essas skills nao sao editaveis pelo usuario. A documentacao nao define uma regra
 | documentation | padrao-escrita | Padroes de escrita tecnica |
 | version-control | git-workflow | Commits, staging, mensagens de commit |
 | architecture | arquitetura-medalhao | Decisoes estrategicas de pipeline |
-| architecture | escolha-sql-pyspark | Decisao entre SQL e PySpark |
 | project-management | ciclo-eda-validacao | Organizacao de EDA e validacoes |
 
 ## Principio DRY
