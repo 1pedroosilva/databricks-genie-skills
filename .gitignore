@@ -220,8 +220,12 @@ __marimo__/
 # Project internal documentation (não versionado)
 .project/
 
+# Skills descontinuadas (histórico de remoções)
+.old/
+
+# Pastas com underscore
+_*/
 
 # Backups locais - histórico fica no Git
-_backup*/
 .backups/
 *.BASELINE_*
