@@ -2,6 +2,18 @@
 
 User Skills de engenharia de dados para o Databricks Genie Code. Coleção de padrões práticos cobrindo arquitetura, qualidade de código, workflow Git e documentação técnica.
 
+## Conteúdo
+
+* [O Que São Estas Skills](#o-que-são-estas-skills)
+* [Skills Disponíveis](#skills-disponíveis)
+* [Instalação](#instalação)
+* [Exemplos de Uso](#exemplos-de-uso)
+* [Princípios de Design](#princípios-de-design)
+* [Notas Técnicas](#notas-técnicas--processo-de-desenvolvimento)
+* [Documentação](#documentação)
+* [Referências](#referências)
+* [Licença](#licença)
+
 ---
 
 ## O Que São Estas Skills
@@ -20,51 +32,34 @@ Este projeto opera no **nível de usuário por escolha deliberada**, focando em 
 
 Organizadas por domínio de atuação. Cada skill tem verbo de ação único e boundaries negativos explícitos para prevenir sobreposição.
 
-### architecture — Arquitetura e Decisões Técnicas
-
-* **arquitetura-medalhao**: Escolher estratégia de gravação (DELETE+APPEND vs replaceWhere vs MERGE), definir idempotência e reprocessabilidade, decidir versionamento de regras, avaliar Jobs vs Declarative Pipelines. Resolve a tensão entre dado bruto confiável (Bronze) e dado refinado útil (Gold) através de transformações determinísticas entre camadas.
-
-* **escolha-sql-pyspark**: Decidir entre SQL ou PySpark para transformações baseado em complexidade, performance e manutenibilidade. Ambas compilam para o mesmo motor Spark, mas cada uma tem casos de uso onde se destaca.
-
-### code-quality — Qualidade e Revisão de Código
-
-* **revisao-codigo-quatro-frentes**: Revisar código existente em 4 dimensões — (1) correção semântica, (2) premissas ocultas, (3) código morto, (4) custo evitável. Gera relatório estruturado + plano de mudanças proposto, nunca edita código sozinho. Orientado para pipelines de dados onde premissas não validadas podem corromper dados a jusante.
-
-* **guardrails-pipelines**: Implementar validações de qualidade, integridade estrutural, reconciliação quantitativa e resiliência operacional. Pipelines production-grade devem falhar de forma previsível, rastreável e recuperável — guardrails são contratos estruturais, não validações adicionadas no final.
-
-### code-structure — Estrutura de Código
-
-* **estrutura-notebooks**: Estrutura para notebooks novos do zero — ordem fixa de células iniciais (DOCUMENTAÇÃO, CARREGAR CONFIGURAÇÕES, INICIALIZAR ANOS A PROCESSAR, IMPORTS), separação de responsabilidades por célula, formato de arquivo (.py vs .ipynb para versionamento Git limpo).
-
-### data-modeling — Modelagem de Dados
-
-* **unity-catalog**: Organizar schemas, tabelas e volumes no Unity Catalog — padrões de nomenclatura UC, organização por camadas (bronze/silver/gold) e projetos. Numeração de tabelas (XXX formato de 3 dígitos) para rastreabilidade visual entre camadas.
-
-### naming — Nomenclatura
-
-* **nomenclaturas**: Convenções de nomenclatura para assets novos — notebooks, tabelas, DataFrames, variáveis, pastas. Numeração com rastreabilidade entre camadas (101_nome_base → 201_nome_base → 301_nome_base), princípio DRY, padrões de caixa (snake_case, PascalCase).
-
-### documentation — Documentação
-
-* **padrao-escrita**: Tom sobrio e técnico para documentação versionada (README, arquitetura, evolução, células markdown, comentários de código). Verbos no presente, sem emojis/ícones, nível de registro adequado por tipo de documento.
-
-* **protocolo-atualizacao**: Mapear quais documentações (README, arquitetura, dicionário de dados, evolução do projeto) precisam atualização após mudanças de código ou arquitetura. Matriz de impactos para sincronizar documentação com implementação.
-
-### version-control — Controle de Versão
-
-* **git-workflow**: Divisão de commits por escopo técnico (bisect/revert/review), staging parcial (git add -p), mensagens de commit neutras, quando usar amend. Critério técnico > critério estético — decisões baseadas em facilidade de bisect/revert/review, não em "como parece melhor no histórico".
-
-### project-management — Gestão de Projetos
-
-* **ciclo-eda-validacao**: Organizar ciclo de descoberta e verificação em projetos de dados — QUANDO criar EDA vs validação, ONDE colocar (estrutura de pastas dedicadas), COMO registrar fluxo completo (ACHADO → DECISÃO → CÓDIGO → VALIDAÇÃO), COMO conectar etapas no arquivo de evolução do projeto. EDA não é camada de pipeline — é superfície de investigação ortogonal às transformações.
-
-### workflow — Workflow e Meta
-
-* **skill-patterns**: Criar/editar skills seguindo padrão de qualidade — validação de description (domínio de atuação, colisão com skills nativas), checklist de qualidade, verificação DRY contra skills globais e locais, organização de conteúdo entre SKILL.md e references/. Cabecalho YAML mínimo (apenas name + description), metadados no corpo Markdown.
+| Skill | Domínio | Propósito |
+|-------|---------|----------|
+| arquitetura-medalhao | Architecture | Escolher estratégia de gravação (DELETE+APPEND vs replaceWhere vs MERGE), definir idempotência e reprocessabilidade, decidir versionamento de regras |
+| revisao-codigo-quatro-frentes | Code Quality | Revisar código em 4 dimensões: correção semântica, premissas ocultas, código morto, custo evitável |
+| guardrails-pipelines | Code Quality | Implementar validações de qualidade, integridade estrutural, reconciliação quantitativa e resiliência operacional |
+| estrutura-notebooks | Code Structure | Estrutura para notebooks novos: ordem fixa de células iniciais, separação de responsabilidades |
+| unity-catalog | Data Modeling | Organizar schemas, tabelas e volumes UC: padrões de nomenclatura, organização por camadas |
+| nomenclaturas | Naming | Convenções de nomenclatura para assets: notebooks, tabelas, DataFrames, variáveis, numeração rastreada entre camadas |
+| padrao-escrita | Documentation | Tom sobrio e técnico para documentação versionada: verbos no presente, sem emojis/ícones |
+| protocolo-atualizacao | Documentation | Mapear documentações que precisam sincronização após mudanças de código ou arquitetura |
+| documentacao-artefatos | Documentation | Documentar artefato técnico existente a partir do que existe no ambiente: coleta de fontes diretas, tratamento de divergências |
+| git-workflow | Version Control | Divisão de commits por escopo técnico, staging parcial, mensagens neutras, quando usar amend |
+| ciclo-eda-validacao | Project Management | Organizar ciclo de descoberta e verificação: QUANDO criar EDA vs validação, ONDE colocar, COMO registrar fluxo completo |
+| localizacao-assets | Project Management | Protocolo de governança para localização de assets: identificar projeto, decidir pasta, checklists obrigatórios |
+| skill-patterns | Workflow | Criar/editar skills: validação de description, checklist de qualidade, verificação DRY contra skills globais e locais |
 
 ---
 
 ## Instalação
+
+### Stack
+
+* **Databricks**: Genie Code (AI coding assistant), Databricks Git folders
+* **Formato**: Agent Skills Specification (YAML frontmatter + Markdown)
+* **Versionamento**: Git
+* **Documentação**: Markdown
+
+### Pré-requisitos
 
 Skills podem ser criadas manualmente no workspace. Este repositório usa Databricks Git folder, método recomendado pela documentação para versionamento, com as pastas de skill na raiz.
 
@@ -128,9 +123,11 @@ Estas skills seguem princípios de clareza e organização:
 
 ## Notas Técnicas — Processo de Desenvolvimento
 
+### Contexto da Investigação
+
 Durante o desenvolvimento destas skills, investigamos requisitos não documentados do sistema de triggering do Databricks Genie Code.
 
-### Investigação: Requisitos de Triggering
+### Hipóteses Testadas
 
 Skills customizadas não triggavam inicialmente. Após investigar o problema, formulei 3 hipóteses sobre requisitos não documentados do sistema de matching:
 
@@ -138,7 +135,9 @@ Skills customizadas não triggavam inicialmente. Após investigar o problema, fo
 2. **Boundaries negativos obrigatórios** — Falta de "NÃO use para..." causaria false-positives
 3. **Verbo imperativo obrigatório** — Formato específico seria necessário
 
-Antes de publicar conclusões, testei cada hipótese isoladamente:
+Antes de publicar conclusões, testei cada hipótese isoladamente.
+
+### Resultados
 
 **Teste 1 (ASCII):** Adicionei 28 caracteres acentuados na description → Skill triggou normalmente  
 **Teste 2 (Boundaries):** Removi "NÃO use para..." → Apenas skill correta triggou  
@@ -201,29 +200,6 @@ Este projeto adota o padrão de listar skills dentro do `.assistant_instructions
 * [Agent Skills Specification](https://agentskills.io/specification.md)
 * [Best Practices for Skill Creators](https://agentskills.io/skill-creation/best-practices.md)
 * [Optimizing Descriptions](https://agentskills.io/skill-creation/optimizing-descriptions.md)
-
----
-
-## Stack
-
-- **Databricks**: Genie Code (AI coding assistant), Databricks Git folders
-- **Formato**: Agent Skills Specification (YAML frontmatter + Markdown)
-- **Versionamento**: Git
-- **Documentação**: Markdown
-
----
-
-## Sobre o Projeto
-
-Projeto de portfólio demonstrando padrões práticos de engenharia de dados e rigor no processo técnico (investigação, teste de hipóteses, documentação).
-
-As skills cobrem o ciclo completo de desenvolvimento: decidir arquitetura (arquitetura-medalhao, escolha-sql-pyspark) → implementar com qualidade (guardrails-pipelines, estrutura-notebooks) → revisar (revisao-codigo-quatro-frentes) → versionar (git-workflow) → documentar (padrao-escrita, protocolo-atualizacao) → criar novas skills (skill-patterns).
-
-Este projeto foi desenvolvido com apoio do Genie Code e do Claude Code.
-
-**Autor:** Pedro Silva  
-**Contexto:** Transição - Analista de Dados → Engenheiro de Dados  
-**Ambiente:** Databricks (Genie Code, Git folders)
 
 ---
 
