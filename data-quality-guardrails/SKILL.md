@@ -1,12 +1,12 @@
 ---
-name: guardrails-pipelines
+name: data-quality-guardrails
 description: Use ao implementar, adicionar, criar, revisar ou validar guardrails em pipelines de dados em notebooks de qualquer camada (bronze, silver, gold). Cobre validacoes de qualidade, integridade estrutural, reconciliacao quantitativa e resiliencia operacional. NAO use para decisoes arquiteturais gerais ou revisao de codigo sem foco em guardrails.
 
 ---
 
 # Guardrails em Pipelines de Dados
 
-**Versão:** 1.0.1 | **Data:** 2026-08-18 | **Domínio:** code-quality | **Autor:** Pedro O. Silva
+**Versão:** 1.0.1 | **Data:** 2026-08-18 | **Domínio:** data-quality | **Autor:** Pedro O. Silva
 
 ## Princípio Fundador
 
@@ -793,7 +793,7 @@ Antes de considerar um pipeline production-grade:
 - [ ] **Relatório de falhas**: Lista explicitamente o que falhou ao final
 - [ ] **Documentação**: Guardrails aplicados documentados no notebook
 
-**NOTA**: Idempotência NÃO é um guardrail - é uma propriedade arquitetural que depende da estratégia de gravação escolhida. Ver skill `arquitetura-medalhao` para detalhes sobre como implementar idempotência em cada camada.
+**NOTA**: Idempotência NÃO é um guardrail - é uma propriedade arquitetural que depende da estratégia de gravação escolhida. Ver skill `medallion-architecture` para detalhes sobre como implementar idempotência em cada camada.
 
 ---
 

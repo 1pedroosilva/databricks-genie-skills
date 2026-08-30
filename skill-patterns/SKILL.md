@@ -5,7 +5,7 @@ description: Use ao criar, desenvolver, elaborar, estruturar, editar, revisar ou
 
 # Padroes para Criacao de Skills
 
-**Versao:** 2.3.0 | **Data:** 2026-08-26 | **Dominio:** workflow | **Autor:** Pedro O. Silva
+**Versao:** 2.3.0 | **Data:** 2026-08-26 | **Dominio:** meta | **Autor:** Pedro O. Silva
 
 ## Quando Usar Esta Skill
 

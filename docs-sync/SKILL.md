@@ -1,5 +1,5 @@
 ---
-name: protocolo-atualizacao
+name: docs-sync
 description: Use ao mapear, identificar, determinar ou sincronizar documentacoes apos mudancas de codigo ou arquitetura -- mapeia quais documentacoes (README, arquitetura, dicionario de dados, evolucao do projeto) precisam ser atualizadas em conjunto. NAO use para decidir O QUE mudar no codigo ou na arquitetura -- esta skill so mapeia quais documentos precisam refletir uma mudanca ja decidida, nao participa da decisao tecnica em si.
 
 ---
@@ -27,7 +27,7 @@ Ao final de qualquer sessão que implementou mudanças no projeto, o assistente 
 ### Processo Obrigatório:
 
 1. **PARAR** - Não assumir nada, não confiar em memória
-2. **LER** - Carregar este arquivo (`protocolo-atualizacao/SKILL.md`)
+2. **LER** - Carregar este arquivo (`docs-sync/SKILL.md`)
 3. **MAPEAR** - Aplicar matriz de impactos para CADA mudança identificada
 4. **LISTAR** - Criar checklist explícito com TODOS os arquivos mandatórios
 5. **CONFIRMAR** - Apresentar checklist ao usuário antes de executar
@@ -174,7 +174,7 @@ A documentação descreve o que está commitado no main, não o que existe no wo
 
 **Decisões arquiteturais incluem:**
 * Escolha de tecnologia (PySpark vs SQL, Delta vs Parquet, etc)
-* Padrões de nomenclatura
+* Padrões de naming-conventiona
 * Estrutura de pipelines
 * Modelagem de dados
 * Estratégias de particionamento
@@ -207,9 +207,9 @@ projeto_cvm_dados_financeiros/
 
 **Arquivos a atualizar:**
 - [ ] Arquivo de especificação relevante:
- - `nomenclaturas/SKILL.md` - mudanças em naming
- - `estrutura-notebooks/SKILL.md` - mudanças em estrutura de células
- - `unity-catalog/SKILL.md` - mudanças em schemas/tabelas
+ - `naming-conventions/SKILL.md` - mudanças em naming
+ - `notebook-structure/SKILL.md` - mudanças em estrutura de células
+ - `unity-catalog-naming/SKILL.md` - mudanças em schemas/tabelas
 - [ ] `00_documentacao/tecnica/arquitetura.md` → Seção "Padrões de Desenvolvimento" (atualizar convenções, princípios, estruturas)
 - [ ] `evolucao_projeto.md` → Justificativa da mudança de padrão (OBRIGATÓRIO - mudanças de padrão são decisões arquiteturais)
 
@@ -354,7 +354,7 @@ projeto_cvm_dados_financeiros/
 Ao final de cada sessão relevante, seguir este checklist:
 
 1. **Identificar mudanças**: O que foi criado/modificado nesta sessão?
-2. **Carregar protocolo**: Ler este arquivo (`protocolo-atualizacao/SKILL.md`)
+2. **Carregar protocolo**: Ler este arquivo (`docs-sync/SKILL.md`)
 3. **Mapear impactos**: Consultar matriz acima
 4. **Aplicar DRY**: Garantir que detalhes técnicos vão APENAS para arquitetura.md
 5. **Atualizar arquivos**: Aplicar todas as atualizações necessárias

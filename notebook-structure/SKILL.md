@@ -1,11 +1,11 @@
 ---
-name: estrutura-notebooks
+name: notebook-structure
 description: Use ao criar, desenvolver, estruturar ou montar notebooks NOVOS do zero -- ordem fixa de celulas iniciais (DOCUMENTACAO, CARREGAR CONFIGURACOES, INICIALIZAR ANOS A PROCESSAR, IMPORTS), separacao de responsabilidades por celula, formato de arquivo (.py vs .ipynb). NAO use para documentar ou revisar o conteudo tecnico e a logica de notebooks existentes; para alteracao estrutural de notebook existente, use esta skill.
 ---
 
 # Estrutura de Notebooks
 
-**Versão:** 1.1.0 | **Data:** 2026-08-26 | **Domínio:** code-structure | **Autor:** Pedro O. Silva
+**Versão:** 1.1.0 | **Data:** 2026-08-26 | **Domínio:** code-quality | **Autor:** Pedro O. Silva
 
 ## Formato de Arquivo
 
@@ -89,7 +89,7 @@ Cada célula deve:
  - Aplicar transformação
  - Gerar um novo dataframe de saída
 
-* **Nomenclatura de saída**: CARREGUE a skill nomenclaturas para regras de nomenclatura de DataFrames
+* **Nomenclatura de saída**: CARREGUE a skill naming-conventionas para regras de naming-conventiona de DataFrames
 
 ## Separação de Responsabilidades
 
@@ -111,12 +111,12 @@ Cada célula deve:
 * O loop com `try/except` que chama essas funções fica **inteiro em uma única célula de orquestração** — não se abre em uma célula e fecha em outra
 * Isso preserva a separação de responsabilidades por célula E mantém o código executável
 
-* Padrão completo e exemplo: CARREGUE a skill guardrails-pipelines, seção 3 (Resiliência Operacional).
+* Padrão completo e exemplo: CARREGUE a skill data-quality-guardrails, seção 3 (Resiliência Operacional).
 
 ## Comentários e Documentação
 
-* **Orientação sobre comentários**: CARREGUE a skill padrao-escrita para orientação sobre como escrever comentários de código (tom, estrutura, foco no porquê, exemplos)
+* **Orientação sobre comentários**: CARREGUE a skill technical-writing para orientação sobre como escrever comentários de código (tom, estrutura, foco no porquê, exemplos)
 
 ---
 
-**Ao implementar mudanças, consulte `protocolo-atualizacao/SKILL.md` para atualizar documentações afetadas.**
+**Ao implementar mudanças, consulte `docs-sync/SKILL.md` para atualizar documentações afetadas.**

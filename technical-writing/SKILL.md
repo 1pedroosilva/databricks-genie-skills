@@ -1,5 +1,5 @@
 ---
-name: padrao-escrita
+name: technical-writing
 description: Use ao escrever, redigir, elaborar, documentar, revisar, reescrever ou auditar documentacoes tecnicas versionadas, incluindo README, arquitetura, evolucao, celulas Markdown de notebooks, comentarios de codigo e mensagens de commit. Define tom, registro, idioma e uso de formatacao. NAO use para revisar codigo funcional, criar assets ou tomar decisoes arquiteturais.
 ---
 

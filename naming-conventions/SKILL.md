@@ -1,6 +1,6 @@
 ---
-name: nomenclaturas
-description: Use ao definir, nomear, escolher, estabelecer ou criar nomes para assets NOVOS -- notebooks, tabelas, DataFrames, variaveis, pastas. Convencoes de numeracao (001_, 103_), principio DRY, padroes de caixa (snake_case, PascalCase). NAO use para revisar ou validar nomenclatura de codigo existente.
+name: naming-conventions
+description: Use ao definir, nomear, escolher, estabelecer ou criar nomes para assets NOVOS -- notebooks, tabelas, DataFrames, variaveis, pastas. Convencoes de numeracao (001_, 103_), principio DRY, padroes de caixa (snake_case, PascalCase). NAO use para revisar ou validar naming-conventiona de codigo existente.
 
 ---
 
@@ -13,8 +13,8 @@ description: Use ao definir, nomear, escolher, estabelecer ou criar nomes para a
 * **Nomenclatura autocontida**: Todos os nomes (notebooks, células, dataframes, tabelas, variáveis) devem ser autoexplicativos - o nome deve descrever claramente o conteúdo ou propósito do objeto.
 
 * **Convenção de caixa**: 
- - Preferência por letras minúsculas em toda nomenclatura (pastas, arquivos, variáveis, tabelas)
- - **Títulos de células**: CARREGUE a skill estrutura-notebooks para regras de formatação de títulos de células
+ - Preferência por letras minúsculas em toda naming-conventiona (pastas, arquivos, variáveis, tabelas)
+ - **Títulos de células**: CARREGUE a skill notebook-structure para regras de formatação de títulos de células
 
 ## Notebooks
 
@@ -88,4 +88,4 @@ description: Use ao definir, nomear, escolher, estabelecer ou criar nomes para a
 
 ---
 
-**Ao implementar mudanças, consulte `protocolo-atualizacao/SKILL.md` para atualizar documentações afetadas.**
+**Ao implementar mudanças, consulte `docs-sync/SKILL.md` para atualizar documentações afetadas.**

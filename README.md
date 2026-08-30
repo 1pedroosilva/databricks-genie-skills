@@ -34,19 +34,19 @@ Organizadas por domínio de atuação. Cada skill tem verbo de ação único e b
 
 | Skill | Domínio | Propósito |
 |-------|---------|----------|
-| arquitetura-medalhao | Architecture | Escolher estratégia de gravação (DELETE+APPEND vs replaceWhere vs MERGE), definir idempotência e reprocessabilidade, decidir versionamento de regras |
-| revisao-codigo-quatro-frentes | Code Quality | Revisar código em 4 dimensões: correção semântica, premissas ocultas, código morto, custo evitável |
-| guardrails-pipelines | Code Quality | Implementar validações de qualidade, integridade estrutural, reconciliação quantitativa e resiliência operacional |
-| estrutura-notebooks | Code Structure | Estrutura para notebooks novos: ordem fixa de células iniciais, separação de responsabilidades |
-| unity-catalog | Data Modeling | Organizar schemas, tabelas e volumes UC: padrões de nomenclatura, organização por camadas |
-| nomenclaturas | Naming | Convenções de nomenclatura para assets: notebooks, tabelas, DataFrames, variáveis, numeração rastreada entre camadas |
-| padrao-escrita | Documentation | Tom sobrio e técnico para documentação versionada: verbos no presente, sem emojis/ícones |
-| protocolo-atualizacao | Documentation | Mapear documentações que precisam sincronização após mudanças de código ou arquitetura |
-| documentacao-artefatos | Documentation | Documentar artefato técnico existente a partir do que existe no ambiente: coleta de fontes diretas, tratamento de divergências |
+| medallion-architecture | Architecture | Escolher estratégia de gravação (DELETE+APPEND vs replaceWhere vs MERGE), definir idempotência e reprocessabilidade, decidir versionamento de regras |
+| code-review | Code Quality | Revisar código em 4 dimensões: correção semântica, premissas ocultas, código morto, custo evitável |
+| notebook-structure | Code Quality | Estrutura para notebooks novos: ordem fixa de células iniciais, separação de responsabilidades |
+| data-quality-guardrails | Data Quality | Implementar validações de qualidade, integridade estrutural, reconciliação quantitativa e resiliência operacional |
+| eda-and-validation | Data Quality | Organizar ciclo de descoberta e verificação: QUANDO criar EDA vs validação, ONDE colocar, COMO registrar fluxo completo |
+| naming-conventions | Naming | Convenções de nomenclatura para assets: notebooks, tabelas, DataFrames, variáveis, numeração rastreada entre camadas |
+| unity-catalog-naming | Naming | Organizar schemas, tabelas e volumes UC: padrões de nomenclatura, organização por camadas |
+| artifact-documentation | Documentation | Documentar artefato técnico existente a partir do que existe no ambiente: coleta de fontes diretas, tratamento de divergências |
+| docs-sync | Documentation | Mapear documentações que precisam sincronização após mudanças de código ou arquitetura |
+| technical-writing | Documentation | Tom sobrio e técnico para documentação versionada: verbos no presente, sem emojis/ícones |
 | git-workflow | Version Control | Divisão de commits por escopo técnico, staging parcial, mensagens neutras, quando usar amend |
-| ciclo-eda-validacao | Project Management | Organizar ciclo de descoberta e verificação: QUANDO criar EDA vs validação, ONDE colocar, COMO registrar fluxo completo |
-| localizacao-assets | Project Management | Protocolo de governança para localização de assets: identificar projeto, decidir pasta, checklists obrigatórios |
-| skill-patterns | Workflow | Criar/editar skills: validação de description, checklist de qualidade, verificação DRY contra skills globais e locais |
+| asset-placement | Project Management | Protocolo de governança para localização de assets: identificar projeto, decidir pasta, checklists obrigatórios |
+| skill-patterns | Meta | Criar/editar skills: validação de description, checklist de qualidade, verificação DRY contra skills globais e locais |
 
 ---
 
@@ -76,8 +76,8 @@ O caminho `/Users/<seu-email>/.assistant/skills/` pode não existir antes da ins
 
 2. As pastas de skill ficam na raiz do repositório, então os caminhos resolvem como:
    ```
-   /Users/<seu-email>/.assistant/skills/nomenclaturas/SKILL.md
-   /Users/<seu-email>/.assistant/skills/estrutura-notebooks/SKILL.md
+   /Users/<seu-email>/.assistant/skills/naming-conventions/SKILL.md
+   /Users/<seu-email>/.assistant/skills/notebook-structure/SKILL.md
    ...
    ```
 
@@ -85,9 +85,9 @@ O caminho `/Users/<seu-email>/.assistant/skills/` pode não existir antes da ins
 
 4. Teste o triggering em uma nova conversa:
    ```
-   "revisar este notebook"          -> triggera revisao-codigo-quatro-frentes
-   "criar um notebook novo"         -> triggera estrutura-notebooks
-   "nomear esta tabela"             -> triggera nomenclaturas
+   "revisar este notebook"          -> triggera code-review
+   "criar um notebook novo"         -> triggera notebook-structure
+   "nomear esta tabela"             -> triggera naming-conventions
    "commitar estas mudanças"        -> triggera git-workflow
    ```
 
@@ -98,14 +98,14 @@ O caminho `/Users/<seu-email>/.assistant/skills/` pode não existir antes da ins
 ### Revisão de Código
 ```
 Usuário: "revisar este notebook antes de produção"
-Genie: [carrega revisao-codigo-quatro-frentes]
+Genie: [carrega code-review]
        Revisa em 4 dimensões: correção, premissas ocultas, código morto, custo
 ```
 
 ### Convenção de Nomenclatura
 ```
 Usuário: "nomear este notebook bronze de dados CVM"
-Genie: [carrega nomenclaturas]
+Genie: [carrega naming-conventions]
        Sugere: 001_ingestao_cvm (segue numeração + DRY + snake_case)
 ```
 

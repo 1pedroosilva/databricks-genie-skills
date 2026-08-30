@@ -14,7 +14,7 @@ Resultado possivel: a skill global cobre o formato YAML + Markdown de skills em 
 
 Listar as pastas em `.assistant/skills/`.
 
-Resultado possivel: ja existe uma pasta `estrutura-notebooks/` → a decisao correta e EDITAR a skill existente, nao criar uma nova.
+Resultado possivel: ja existe uma pasta `notebook-structure/` → a decisao correta e EDITAR a skill existente, nao criar uma nova.
 
 ## Passo C — Documentacao Oficial
 
@@ -22,7 +22,7 @@ Consultar a documentacao oficial da Databricks sobre boas praticas de notebooks,
 
 ## Decisao Final
 
-Editar `estrutura-notebooks/SKILL.md` em vez de criar uma skill nova — evita duplicidade de escopo e mantem uma unica fonte de verdade para o topico.
+Editar `notebook-structure/SKILL.md` em vez de criar uma skill nova — evita duplicidade de escopo e mantem uma unica fonte de verdade para o topico.
 
 ## Exemplo de Description Validada
 

@@ -1,5 +1,5 @@
 ---
-name: documentacao-artefatos
+name: artifact-documentation
 description: Use ao documentar, registrar, descrever, especificar, revisar ou auditar artefato tecnico existente (notebook, tabela, pipeline, regra de negocio) a partir do que existe no ambiente. Cobre coleta de fontes diretas (codigo, schema, tabela, comentario UC, git), classificacao de material, criterio de admissao de afirmacoes, tratamento de divergencias e lacunas. Nao cobre README, revisao de logica de codigo, logs, historico de investigacao ou decisoes (sao narrativos).
 ---
 
@@ -15,11 +15,11 @@ description: Use ao documentar, registrar, descrever, especificar, revisar ou au
  
 ## Dependencia
 
-Carregar `padrao-escrita` antes de criar, revisar, reescrever ou auditar a documentacao. Esta skill define procedencia, admissao, lacunas e divergencias; `padrao-escrita` define tom, registro e formatacao.
+Carregar `technical-writing` antes de criar, revisar, reescrever ou auditar a documentacao. Esta skill define procedencia, admissao, lacunas e divergencias; `technical-writing` define tom, registro e formatacao.
 
 **NAO USAR** para:
-- Revisar logica de codigo → revisao-codigo-quatro-frentes cobre
-- Mapear quais documentos atualizar apos mudancas → protocolo-atualizacao cobre
+- Revisar logica de codigo → code-review cobre
+- Mapear quais documentos atualizar apos mudancas → docs-sync cobre
 - Documentar logs, historico de investigacao ou evolucao do projeto → material narrativo nao entra
 
 ## Principios (Orientacao)

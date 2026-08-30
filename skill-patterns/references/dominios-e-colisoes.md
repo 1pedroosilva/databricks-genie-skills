@@ -18,17 +18,19 @@ Essas skills nao sao editaveis pelo usuario. A documentacao nao define uma regra
 
 | Dominio | Skill | Escopo |
 |---------|-------|--------|
-| naming | nomenclaturas | Convencoes de nomenclatura para assets novos |
-| code-structure | estrutura-notebooks | Estrutura e organizacao de notebooks novos |
-| data-modeling | unity-catalog | Schemas, tabelas, volumes no Unity Catalog |
-| workflow | skill-patterns | Criacao e manutencao de skills do Genie Code |
-| code-quality | revisao-codigo-quatro-frentes | Revisao de corretude de codigo existente |
-| code-quality | guardrails-pipelines | Implementacao de validacoes em pipelines |
-| documentation | protocolo-atualizacao | Mapeamento de docs apos mudancas |
-| documentation | padrao-escrita | Padroes de escrita tecnica |
+| naming | naming-conventions | Convencoes de nomenclatura para assets novos |
+| naming | unity-catalog-naming | Schemas, tabelas, volumes no Unity Catalog |
+| code-quality | notebook-structure | Estrutura e organizacao de notebooks novos |
+| code-quality | code-review | Revisao de corretude de codigo existente |
+| data-quality | data-quality-guardrails | Implementacao de validacoes em pipelines |
+| data-quality | eda-and-validation | Organizacao de EDA e validacoes |
+| documentation | artifact-documentation | Documentar artefatos tecnicos existentes |
+| documentation | docs-sync | Mapeamento de docs apos mudancas |
+| documentation | technical-writing | Padroes de escrita tecnica |
 | version-control | git-workflow | Commits, staging, mensagens de commit |
-| architecture | arquitetura-medalhao | Decisoes estrategicas de pipeline |
-| project-management | ciclo-eda-validacao | Organizacao de EDA e validacoes |
+| architecture | medallion-architecture | Decisoes estrategicas de pipeline |
+| project-management | asset-placement | Controle de localizacao de assets |
+| meta | skill-patterns | Criacao e manutencao de skills do Genie Code |
 
 ## Principio DRY
 

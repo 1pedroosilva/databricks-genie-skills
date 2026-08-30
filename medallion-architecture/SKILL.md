@@ -1,5 +1,5 @@
 ---
-name: arquitetura-medalhao
+name: medallion-architecture
 description: Use ao decidir, escolher, definir, avaliar ou planejar estrategia arquitetural para pipelines NOVOS -- escolher entre DELETE+APPEND vs replaceWhere vs MERGE, definir estrategia de reprocessamento e idempotencia, decidir versionamento de regras, avaliar Jobs vs Declarative Pipelines. NAO use para revisar ou validar implementacoes Bronze/Silver/Gold existentes.
 
 ---
