@@ -1,6 +1,6 @@
 ---
 name: unity-catalog-naming
-description: Use ao criar, definir, estruturar ou organizar schemas, tabelas ou volumes no Unity Catalog -- padroes de naming-conventiona UC, organizacao por camadas e projetos. NAO use para revisar schemas/tabelas existentes, nem para definir GRANTs, ownership ou controle de acesso -- esta skill cobre apenas naming-conventiona e organizacao de assets NOVOS.
+description: Use ao criar, definir, estruturar ou organizar schemas, tabelas ou volumes no Unity Catalog -- padroes de nomenclatura UC, organizacao por camadas e projetos. NAO use para revisar schemas/tabelas existentes, nem para definir GRANTs, ownership ou controle de acesso -- esta skill cobre apenas nomenclatura e organizacao de assets NOVOS.
 
 ---
 
@@ -11,7 +11,7 @@ description: Use ao criar, definir, estruturar ou organizar schemas, tabelas ou 
 ## Organização por Camadas
 
 * Schemas e tabelas organizados seguindo camadas bronze/silver/gold
-* Numeração de tabelas: formato XXX (3 dígitos). CARREGUE a skill naming-conventionas para detalhes do sistema de numeração e rastreabilidade entre camadas
+* Numeração de tabelas: formato XXX (3 dígitos). CARREGUE a skill naming-conventions para detalhes do sistema de numeração e rastreabilidade entre camadas
 
 ## Nomenclatura de Schemas
 

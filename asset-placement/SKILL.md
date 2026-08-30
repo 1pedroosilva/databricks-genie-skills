@@ -1,6 +1,6 @@
 ---
 name: asset-placement
-description: Use ao criar, desenvolver, adicionar, gravar ou estruturar notebooks, arquivos MD, scripts Python, arquivos de configuracao ou qualquer outro asset no workspace -- cobre protocolo de governanca para ONDE criar (identificar projeto, listar estrutura, decidir pasta, nunca assumir organizacao), proibicao de criar na pasta home do usuario, proibicao de criar pastas novas sem autorizacao, checklists obrigatorios pre/pos-criacao, e protocolo de remediacao para arquivos orfaos. NAO use para definir naming-conventiona de assets (naming-conventions cobre), estrutura interna de notebooks (notebook-structure cobre), organizacao de schemas/tabelas UC (unity-catalog-naming cobre), ou decisoes arquiteturais de pipeline (medallion-architecture cobre).
+description: Use ao criar, desenvolver, adicionar, gravar ou estruturar notebooks, arquivos MD, scripts Python, arquivos de configuracao ou qualquer outro asset no workspace -- cobre protocolo de governanca para ONDE criar (identificar projeto, listar estrutura, decidir pasta, nunca assumir organizacao), proibicao de criar na pasta home do usuario, proibicao de criar pastas novas sem autorizacao, checklists obrigatorios pre/pos-criacao, e protocolo de remediacao para arquivos orfaos. NAO use para definir nomenclatura de assets (naming-conventions cobre), estrutura interna de notebooks (notebook-structure cobre), organizacao de schemas/tabelas UC (unity-catalog-naming cobre), ou decisoes arquiteturais de pipeline (medallion-architecture cobre).
 ---
 
 # Localizacao de Assets no Workspace
@@ -12,7 +12,7 @@ description: Use ao criar, desenvolver, adicionar, gravar ou estruturar notebook
 **USAR** ao criar, desenvolver, adicionar ou gravar qualquer asset no workspace (notebook, arquivo MD, script Python, arquivo de configuracao, etc.) -- para garantir que o asset seja criado no local correto dentro da estrutura do projeto.
 
 **NAO USAR** para:
-- Definir naming-conventiona de assets → usar `naming-conventions`
+- Definir nomenclatura de assets → usar `naming-conventions`
 - Estruturar conteudo interno de notebooks → usar `notebook-structure`
 - Organizar schemas/tabelas no Unity Catalog → usar `unity-catalog-naming`
 - Decisoes arquiteturais de pipeline → usar `medallion-architecture`
@@ -49,7 +49,7 @@ Antes de criar qualquer asset, SEMPRE:
    - Considerar:
      * Qual a funcao do asset (ingestao, transformacao, validacao, apoio, documentacao)?
      * Qual pasta existente melhor se alinha com essa funcao?
-     * Ha convencoes de naming-conventiona visiveis (numeracao, prefixos)?
+     * Ha convencoes de nomenclatura visiveis (numeracao, prefixos)?
 
 3. **Decidir a pasta de destino:**
    - Se houver certeza absoluta sobre onde criar → Seguir para Passo 2

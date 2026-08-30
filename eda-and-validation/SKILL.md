@@ -1,6 +1,6 @@
 ---
 name: eda-and-validation
-description: Use ao organizar, estruturar, planejar ou definir o ciclo de descoberta e verificacao em projetos de dados -- QUANDO criar EDA vs validacao, ONDE colocar (estrutura de pastas dedicadas para investigacoes vs validacoes), COMO registrar o fluxo completo (ACHADO -> DECISAO -> CODIGO -> VALIDACAO), COMO conectar etapas no arquivo de evolucao do projeto, COMO lidar com investigacoes inconclusivas. Time Travel e mecanismo auxiliar de auditoria, NAO evidencia principal (que e o output do notebook commitado). NAO use para definir naming-conventiona de notebooks EDA/validacao (naming-conventions cobre), implementar codigo de guardrails (data-quality-guardrails cobre), definir estrutura interna de notebooks (notebook-structure cobre), ou escrever documentacao (technical-writing cobre).
+description: Use ao organizar, estruturar, planejar ou definir o ciclo de descoberta e verificacao em projetos de dados -- QUANDO criar EDA vs validacao, ONDE colocar (estrutura de pastas dedicadas para investigacoes vs validacoes), COMO registrar o fluxo completo (ACHADO -> DECISAO -> CODIGO -> VALIDACAO), COMO conectar etapas no arquivo de evolucao do projeto, COMO lidar com investigacoes inconclusivas. Time Travel e mecanismo auxiliar de auditoria, NAO evidencia principal (que e o output do notebook commitado). NAO use para definir nomenclatura de notebooks EDA/validacao (naming-conventions cobre), implementar codigo de guardrails (data-quality-guardrails cobre), definir estrutura interna de notebooks (notebook-structure cobre), ou escrever documentacao (technical-writing cobre).
 
 ---
 
@@ -18,7 +18,7 @@ description: Use ao organizar, estruturar, planejar ou definir o ciclo de descob
 - Usuario precisa decidir quando criar notebook de EDA vs validacao
 
 **NAO USAR** para:
-- Definir naming-conventiona de notebooks EDA/validacao (usar `naming-conventions`)
+- Definir nomenclatura de notebooks EDA/validacao (usar `naming-conventions`)
 - Implementar codigo de guardrails ou validacoes (usar `data-quality-guardrails`)
 - Definir estrutura interna de notebooks (usar `notebook-structure`)
 - Escrever documentacao tecnica (usar `technical-writing`)
@@ -108,7 +108,7 @@ VAL_002_deduplicacao_dre.py
 
 ### Etapa 1: ACHADO (EDA)
 
-**Onde**: Pasta dedicada para investigacoes (ex: `investigacoes/`, `eda/`, `analises_exploratorias/`), naming-conventiona tipo `EDA_nnn_descricao`
+**Onde**: Pasta dedicada para investigacoes (ex: `investigacoes/`, `eda/`, `analises_exploratorias/`), nomenclatura tipo `EDA_nnn_descricao`
 
 **O que registrar no notebook**:
 ```markdown
@@ -538,7 +538,7 @@ df = spark.sql("SELECT * FROM catalog.schema.table VERSION AS OF 17")
 
 ## Nomenclatura
 
-Para convencoes de naming-conventiona de notebooks EDA/validacao, consultar skill `naming-conventions`.
+Para convencoes de nomenclatura de notebooks EDA/validacao, consultar skill `naming-conventions`.
 
 **Padroes gerais**:
 - Prefixo: `EDA_` ou `VAL_`
@@ -611,7 +611,7 @@ Ao receber solicitacao relacionada ao ciclo EDA-validacao:
 
 ## Integracao com Outras Skills
 
-- **naming-conventionas**: Convencoes de naming-conventiona EDA_nnn vs VAL_nnn
+- **naming-conventions**: Convencoes de nomenclatura EDA_nnn vs VAL_nnn
 - **notebook-structure**: Ordem de celulas e organizacao interna
 - **data-quality-guardrails**: Progressao de validacao para guardrail automatico
 - **technical-writing**: Tom e formato de documentacao em notebooks e evolucao_projeto.md

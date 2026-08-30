@@ -89,7 +89,7 @@ Cada célula deve:
  - Aplicar transformação
  - Gerar um novo dataframe de saída
 
-* **Nomenclatura de saída**: CARREGUE a skill naming-conventionas para regras de naming-conventiona de DataFrames
+* **Nomenclatura de saída**: CARREGUE a skill naming-conventions para regras de nomenclatura de DataFrames
 
 ## Separação de Responsabilidades
 

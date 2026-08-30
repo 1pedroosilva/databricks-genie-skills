@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Use ao revisar, validar, auditar, avaliar ou checar corretude de codigo existente em 4 frentes -- (1) CORRECAO SEMANTICA - bugs de logica, alucinacao de API, divergencia comentario/codigo; (2) PREMISSAS OCULTAS - unicidade nao validada, cardinalidade de join assumida, nulos nao tratados, nao-determinismo, atomicidade nao garantida; (3) CODIGO MORTO - passos redundantes, abstractions prematuras; (4) CUSTO EVITAVEL - quebra de lazy evaluation, UDFs evitaveis, shuffles desnecessarios. NAO use para definir naming-conventiona, estrutura de celulas, implementar padroes ou decisoes arquiteturais -- use outras skills para isso.
+description: Use ao revisar, validar, auditar, avaliar ou checar corretude de codigo existente em 4 frentes -- (1) CORRECAO SEMANTICA - bugs de logica, alucinacao de API, divergencia comentario/codigo; (2) PREMISSAS OCULTAS - unicidade nao validada, cardinalidade de join assumida, nulos nao tratados, nao-determinismo, atomicidade nao garantida; (3) CODIGO MORTO - passos redundantes, abstractions prematuras; (4) CUSTO EVITAVEL - quebra de lazy evaluation, UDFs evitaveis, shuffles desnecessarios. NAO use para definir nomenclatura, estrutura de celulas, implementar padroes ou decisoes arquiteturais -- use outras skills para isso.
 
 ---
 
@@ -13,7 +13,7 @@ description: Use ao revisar, validar, auditar, avaliar ou checar corretude de co
 Esta skill é acionada sempre que a Genie Code for chamada para **revisar ou validar
 notebook/código** — antes de um commit, antes de promover um notebook para produção,
 ou quando explicitamente pedido "revisa esse notebook". Ela não é sobre estrutura de
-célula, documentação, naming-conventiona nem guardrails de schema — se o projeto tiver
+célula, documentação, nomenclatura nem guardrails de schema — se o projeto tiver
 instruções próprias sobre esses assuntos, elas têm prioridade e esta skill não as
 sobrepõe. Esta skill é sobre se o código **faz o que deveria, com as premissas que ele
 realmente pode sustentar, sem peso morto e sem custo evitável**.

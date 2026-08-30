@@ -174,7 +174,7 @@ A documentação descreve o que está commitado no main, não o que existe no wo
 
 **Decisões arquiteturais incluem:**
 * Escolha de tecnologia (PySpark vs SQL, Delta vs Parquet, etc)
-* Padrões de naming-conventiona
+* Padrões de nomenclatura
 * Estrutura de pipelines
 * Modelagem de dados
 * Estratégias de particionamento
