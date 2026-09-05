@@ -6,7 +6,11 @@ description: Use ao revisar, validar, auditar, avaliar ou checar corretude de co
 
 # Revisão de Código — Quatro Frentes
 
-**Versão:** 1.1.4 | **Data:** 2026-08-19 | **Domínio:** code-quality | **Autor:** Pedro O. Silva
+**Versão:** 1.2.0 | **Data:** 2026-09-05 | **Domínio:** code-quality | **Autor:** Pedro O. Silva
+
+## Principio Orientador
+
+**Os itens abaixo sao o minimo obrigatorio, nao a lista completa. Identifique as verificacoes especificas do dominio dos dados em questao e inclua-as junto com as obrigatorias, seguindo a mesma estrutura de registro.**
 
 ## Propósito
 
@@ -55,16 +59,71 @@ seguir esta hierarquia.
 
 ## Metodologia — antes de reportar um achado
 
-Uma suspeita não é um achado. Antes de listar algo como problema:
+Uma suspeita não é um achado. Antes de listar algo como problema, siga **este
+procedimento obrigatório**:
 
-- **Se há dado real disponível (tabela, workspace, execução anterior), verifique contra
- ele.** Uma hipótese de bug baseada só em leitura de código pode estar errada — o
- jeito de descobrir é consultar o estado real (`SELECT` na tabela, `DESCRIBE`,
- histórico de execuções), não presumir. Uma hipótese descartada por evidência real vale
- tanto quanto um achado confirmado: registre as duas coisas separadamente ("o que
- verifiquei e estava correto" vs. "o que confirmei que está quebrado").
-- **Prefira o workspace/tabela ao vivo a qualquer cópia local ou memória de sessões
- anteriores.** Notebooks Databricks mudam rápido; código exportado ontem pode já estar
+### PASSO 1 — Verificar contra fonte real (OBRIGATÓRIO)
+
+**Toda hipótese de problema deve ser verificada contra o estado real antes de ser
+reportada.** Consulte:
+
+- Tabelas existentes: `SELECT` para verificar volume, distribuição, nulos, duplicatas
+- Schemas: `DESCRIBE TABLE` ou `SHOW COLUMNS` para validar estrutura
+- Histórico de execuções: logs, tabelas de controle, métricas Delta
+- Arquivos no workspace: abrir e ler o código, não apenas a documentação
+
+Uma hipótese baseada só em leitura de código pode estar errada. **Não reporte um achado
+sem evidência real.** Uma hipótese descartada por evidência vale tanto quanto um achado
+confirmado: registre as duas coisas separadamente ("o que verifiquei e estava correto"
+vs. "o que confirmei que está quebrado").
+
+### PASSO 2 — Tratamento de ausência de evidência (OBRIGATÓRIO)
+
+**Não encontrar algo em um lugar não autoriza afirmar que não existe.** Antes de
+concluir que algo está ausente:
+
+- Para código/funções: abrir os arquivos de código referenciados, não apenas a
+ documentação
+- Para tabelas: verificar catálogos alternativos, schemas relacionados
+- Para configurações: verificar arquivos de config, variáveis de ambiente, widgets
+- Para definições: verificar imports, %run, módulos carregados
+
+**Regra de ouro:** esgotar as fontes antes de afirmar ausência. Liste explicitamente
+onde você procurou. "Não encontrei X em Y" é válido; "X não existe" sem listar onde
+procurou não é.
+
+### PASSO 3 — Verificação de irmãos estruturais (OBRIGATÓRIO)
+
+**Verificar contra irmãos estruturais tem o mesmo peso de verificar contra dado real.**
+Antes de aceitar um notebook como correto, determine se ele possui um "irmão"
+estruturalmente similar (mesma estrutura lógica, aplicada a uma fonte/tabela diferente —
+o caso clássico é um notebook novo criado copiando um existente).
+
+**Procedimento:**
+
+1. **Identificar irmãos potenciais**: busque notebooks no mesmo projeto que sigam a mesma
+ estrutura ou cujo nome sugira paralelismo (ex.: `103_bronze_fonte_X.py` e
+ `103_bronze_fonte_Y.py`).
+
+2. **Se um irmão existir**: faça diff entre o notebook em revisão e o irmão estrutural.
+ Verifique especialmente:
+ - Constantes e nomes que deveriam ter sido renomeados durante a cópia e não foram
+ - Referências a tabelas, schemas ou colunas que pertencem ao contexto do irmão
+ - Valores hardcoded que deveriam variar entre os notebooks
+
+3. **Se nenhum irmão existir**: registre explicitamente que a verificação de irmãos foi
+ realizada e nenhum foi encontrado. Esta constatação precisa aparecer no relatório de
+ revisão.
+
+**Por que isso é obrigatório**: é assim que nasce o bug mais comum de 1.3 (alucinação de
+API / nome nunca definido): uma constante ou nome que deveria ter sido criado/renomeado
+durante a cópia e não foi. Revisar o notebook novo isolado, sem comparar contra o
+irmão, deixa esse tipo de erro passar despercebido.
+
+### PASSO 4 — Estrutura do achado
+
+- **Prefira o workspace/tabela ao vivo** a qualquer cópia local ou memória de sessões
+ anteriores. Notebooks Databricks mudam rápido; código exportado ontem pode já estar
  desatualizado.
 - **Para cada achado, aponte o trecho exato, a frente, o que está errado e por quê** —
  não basta dizer "isso pode ser um problema", diga qual é a premissa, o dado ou a
@@ -72,12 +131,6 @@ Uma suspeita não é um achado. Antes de listar algo como problema:
 - **Ao revisar múltiplos notebooks do mesmo projeto**, separe explicitamente os
  problemas que se repetem em ≥2 notebooks (viram padrão) dos que aparecem uma vez só
  (viram nota, não regra geral do projeto).
-- **Se o notebook tem um "irmão"** (mesma estrutura, aplicada a uma fonte/tabela
- diferente — o caso clássico é um notebook novo criado copiando um existente), faça
- diff contra o irmão antes de aceitar o novo como correto. É assim que nasce o bug mais
- comum de 1.3: uma constante ou nome que deveria ter sido criado/renomeado durante a
- cópia e não foi — revisar o notebook novo isolado, sem comparar contra o original,
- deixa esse tipo de erro passar despercebido.
 
 ---
 
