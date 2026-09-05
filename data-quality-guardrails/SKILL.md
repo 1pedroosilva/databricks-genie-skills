@@ -8,6 +8,10 @@ description: Use ao implementar, adicionar, criar, revisar ou validar guardrails
 
 **Versão:** 1.0.1 | **Data:** 2026-08-18 | **Domínio:** data-quality | **Autor:** Pedro O. Silva
 
+## Principio Orientador
+
+**Os itens abaixo sao o minimo obrigatorio, nao a lista completa. Identifique as verificacoes especificas do dominio dos dados em questao e inclua-as junto com as obrigatorias, seguindo a mesma estrutura de registro.**
+
 ## Princípio Fundador
 
 Guardrails não são "validações adicionadas no final" — são **contratos estruturais** que definem o comportamento esperado do pipeline em condições normais e de falha. Um pipeline production-grade deve falhar de forma **previsível, rastreável e recuperável**.

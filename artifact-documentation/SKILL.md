@@ -7,6 +7,10 @@ description: Use ao documentar, registrar, descrever, especificar, revisar ou au
 
 **Versao:** 1.1.0 | **Data:** 2026-08-26 | **Dominio:** documentation | **Autor:** Pedro O. Silva
 
+## Principio Orientador
+
+**Os itens abaixo sao o minimo obrigatorio, nao a lista completa. Identifique as verificacoes especificas do dominio dos dados em questao e inclua-as junto com as obrigatorias, seguindo a mesma estrutura de registro.**
+
 ## Quando Usar Esta Skill
 
 **USAR** ao:
