@@ -5,7 +5,7 @@ description: Use ao iniciar, criar, planejar, continuar, retomar ou fechar um pr
 
 # Contexto de Projeto
 
-**Versão:** 2.0.0 | **Data:** 2026-08-30 | **Domínio:** project-management | **Autor:** Pedro O. Silva
+**Versão:** 2.2.0 | **Data:** 2026-09-05 | **Domínio:** project-management | **Autor:** Pedro O. Silva
 
 ## Quando Usar Esta Skill
 
@@ -77,7 +77,7 @@ Classificar em um dos três estados:
 2. **Ler `mapa_pipeline.md` por inteiro.** É o desenho do que existe e do que falta construir.
 3. **Ler `decisoes_arquiteturais.md` por inteiro.** Contém as decisões vigentes.
 4. **Ler as últimas 40 linhas de `evolucao_projeto.md`** com `readAssetById` (usar startLine/endLine). Se o arquivo tiver 40 linhas ou menos, ler tudo. Justificativa: 40 linhas cobrem cerca de 5 resumos de sessão, suficiente para trajetória recente e estado atual.
-5. **Declarar:** onde o projeto parou, estado atual e próximo passo.
+5. **Declarar:** onde o projeto parou, estado atual, próximo passo, e as DEC vigentes que se aplicam a esse próximo passo.
 6. **Aguardar confirmação ou correção do usuário** antes de qualquer trabalho.
 7. Aplicar a **Regra de Saída**.
 
@@ -85,11 +85,17 @@ Classificar em um dos três estados:
 
 1. **Levantar o que foi feito.** Listar ações e mudanças da sessão.
 2. **Perguntar o que ficou pendente e qual é o próximo passo.** Não inferir. Sem resposta → `[PENDENTE]`.
-3. **Verificar supersedência.** Se a sessão produziu decisão arquitetural:
-   - a. Ler as decisões vigentes em `decisoes_arquiteturais.md`.
-   - b. Avaliar se a nova invalida, contradiz ou substitui alguma.
-   - c. Se invalidar: marcar a antiga como SUPERSEDIDA (ver Templates). Sem certeza: PERGUNTAR.
-   - d. Decisão supersedida nunca é apagada nem editada no corpo.
+3. **Registrar decisão arquitetural.** A sessão produziu decisão arquitetural se
+   definiu qualquer um destes: chave de tabela, critério de deduplicação, estratégia
+   de gravação, regra de tratamento de dado ausente ou inválido, fronteira entre
+   camadas, ou escolha de catálogo e schema. Na dúvida, registrar.
+   - a. Escrever a decisão como DEC nova em `decisoes_arquiteturais.md`, usando o
+     template do Documento 3.
+   - b. Antes de escrever, ler as decisões vigentes no mesmo arquivo.
+   - c. Avaliar se a nova invalida, contradiz ou substitui alguma.
+   - d. Se invalidar: marcar a antiga como SUPERSEDIDA (ver Templates). Sem certeza:
+     registrar as duas e sinalizar o conflito no log de evolução.
+   - e. Decisão supersedida nunca é apagada nem editada no corpo.
 4. **Atualizar o mapa do pipeline** se etapas foram construídas, removidas ou renumeradas.
 5. **Escrever o resumo no log de evolução.** Usar o template do Documento 4.
 6. **Encaminhar para `@docs-sync`** se houve mudança que exija propagar para a documentação técnica.
@@ -159,6 +165,7 @@ Regras:
 - `Status` só tem dois valores. Notebook construído é fato verificável no workspace.
 - Numeração segue `@naming-conventions` (`1xx_` bronze, `2xx_` silver, `3xx_` gold).
 - Não detalhar lógica de transformação aqui — isso vive no notebook e em arquitetura.md.
+- Não detalhar decisões arquiteturais aqui — vão em `decisoes_arquiteturais.md`.
 
 ### Documento 3: Decisões Arquiteturais (`decisoes_arquiteturais.md`)
 
