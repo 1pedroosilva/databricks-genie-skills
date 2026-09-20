@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skills para o Genie Code · Pedro Oliveira</title>
+
+<meta name="robots" content="index, follow">
+<meta name="author" content="Pedro Oliveira">
+<meta name="description" content="Catorze skills de engenharia de dados para o Databricks Genie Code, o agente de IA da plataforma: o que são, a lacuna que preenchem, como uma description decide o acionamento e como o conjunto foi construído.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="canonical" href="https://1pedroosilva.github.io/projeto-databricks-skills/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://1pedroosilva.github.io/projeto-databricks-skills/">
+<meta property="og:title" content="Skills para o Genie Code">
+<meta property="og:description" content="O agente de código acerta a lógica, mas erra onde salvar, como nomear e o que registrar. Dá para corrigir isso com instrução escrita? E como é que se prova que corrigiu?">
+<meta property="og:image" content="https://1pedroosilva.github.io/og.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"SoftwareSourceCode",
+  "name":"Skills para o Databricks Genie Code",
+  "description":"Catorze skills de engenharia de dados para o agente Databricks Genie Code, cobrindo arquitetura, qualidade de codigo, qualidade de dado, nomenclatura, documentacao, versionamento e gestao de projeto.",
+  "url":"https://1pedroosilva.github.io/projeto-databricks-skills/",
+  "codeRepository":"https://github.com/1pedroosilva/databricks-genie-skills",
+  "programmingLanguage":"Markdown",
+  "runtimePlatform":"Databricks Genie Code",
+  "author":{"@type":"Person","name":"Pedro Oliveira","url":"https://1pedroosilva.github.io/"}
+}
+</script>
+
+<meta name="color-scheme" content="light dark">
+<script>
+(function(){
+  var t=null;
+  try{t=localStorage.getItem('tema');}catch(e){}
+  if(!t) t = matchMedia('(prefers-color-scheme: dark)').matches ? 'escuro' : 'claro';
+  document.documentElement.dataset.tema=t;
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#E4E7E3; --panel:#EDEFEC; --panel-deep:#D9DDD8;
+  --ink:#16201C; --ink-soft:#5A6560; --rule:#BFC6C0;
+  --accent:#0F4C42; --flag:#9C4A2F;
+  --serif:"Newsreader",Georgia,serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --col:60ch; --step:220ms;
+}
+html[data-tema="escuro"]{
+  --paper:#151B19; --panel:#1C2321; --panel-deep:#111716;
+  --ink:#DCE3DE; --ink-soft:#8B9891; --rule:#2C3633;
+  --accent:#79C4B0; --flag:#D4785C;
+}
+@media (prefers-reduced-motion:reduce){
+  :root{--step:1ms}
+  *,*::before,*::after{animation-duration:1ms!important;transition-duration:1ms!important}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-size:17px;line-height:1.62;
+  font-optical-sizing:auto;-webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent);text-underline-offset:.22em;text-decoration-thickness:.055em}
+a:hover{color:var(--ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+h1,h2,h3,h4{font-weight:500;line-height:1.2;letter-spacing:-.012em;margin:0}
+h1{font-size:clamp(1.95rem,5.2vw,3rem);font-weight:400}
+h2{font-size:clamp(1.4rem,3.6vw,1.85rem)}
+h3{font-size:1.08rem}
+h4{font-family:var(--mono);font-size:.84rem;font-weight:500}
+p{margin:0 0 1em;max-width:var(--col)}
+p:last-child{margin-bottom:0}
+
+.shell{max-width:1040px;margin:0 auto;padding:0 clamp(1.15rem,4vw,3rem);display:grid;grid-template-columns:minmax(0,1fr)}
+@media (min-width:1000px){.shell{grid-template-columns:186px minmax(0,1fr);column-gap:3.6rem}}
+.index{display:none}
+@media (min-width:1000px){
+  .index{display:block;position:sticky;top:0;align-self:start;height:100vh;padding-top:7.5rem;overflow:hidden}
+  .index ol{list-style:none;margin:0;padding:0;border-left:1px solid var(--rule)}
+  .index a{
+    display:flex;gap:.5rem;padding:.3rem 0 .3rem .8rem;margin-left:-1px;border-left:1px solid transparent;
+    font-family:var(--mono);font-size:.69rem;letter-spacing:.03em;color:var(--ink-soft);
+    text-decoration:none;transition:color var(--step),border-color var(--step);
+  }
+  .index a[aria-current="true"]{color:var(--ink);border-left-color:var(--accent)}
+  .index a:hover{color:var(--ink)}
+  .index .num{color:var(--rule);font-variant-numeric:tabular-nums}
+  .index a[aria-current="true"] .num{color:var(--accent)}
+  .index .gap{height:.75rem}
+}
+.tema{
+  position:fixed;top:.5rem;right:clamp(.8rem,3vw,1.6rem);z-index:60;
+  font-family:var(--mono);font-size:.66rem;letter-spacing:.04em;
+  padding:.34rem .6rem;cursor:pointer;
+  background:color-mix(in srgb,var(--paper) 82%,transparent);backdrop-filter:blur(9px);
+  color:var(--ink-soft);border:1px solid var(--rule);border-radius:2px;
+  transition:color var(--step),border-color var(--step);
+}
+.tema:hover{color:var(--ink);border-color:var(--ink-soft)}
+
+.railbar{
+  position:sticky;top:0;z-index:40;display:flex;align-items:center;
+  padding:.55rem clamp(1.15rem,4vw,3rem);
+  background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(9px);
+  border-bottom:1px solid var(--rule);
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.05em;color:var(--ink-soft);
+}
+.railbar .bar{position:absolute;left:0;right:0;bottom:-1px;height:1px;pointer-events:none}
+.railbar .bar i{display:block;height:100%;background:var(--accent);width:0;transition:width 90ms linear}
+@media (min-width:1000px){.railbar{display:none}}
+
+main{padding-bottom:4rem;min-width:0}
+section{padding:3.6rem 0;border-top:1px solid var(--rule);min-width:0}
+section:first-of-type{border-top:0}
+.marker{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;color:var(--ink-soft);margin-bottom:.5rem}
+.marker b{color:var(--ink);font-weight:500}
+.lede{font-size:1.06rem;color:var(--ink-soft);max-width:var(--col)}
+.pstatus{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);letter-spacing:.03em;margin:.7rem 0 0}
+.pstatus b{color:var(--ink);font-weight:500}
+.hint{font-family:var(--mono);font-size:.67rem;color:var(--ink-soft);margin-top:.8rem;max-width:var(--col)}
+
+.back{
+  display:inline-flex;gap:.45rem;font-family:var(--mono);font-size:.7rem;letter-spacing:.03em;
+  text-decoration:none;color:var(--ink-soft);margin-bottom:2rem;
+}
+.back:hover{color:var(--ink)}
+.hero{padding:6.5rem 0 3.4rem}
+.hero h1{margin-bottom:.2rem;max-width:22ch}
+.reveal{opacity:0;transform:translateY(9px);animation:rise .6s cubic-bezier(.2,.7,.3,1) forwards}
+.reveal:nth-child(2){animation-delay:.06s}
+.reveal:nth-child(3){animation-delay:.13s}
+.reveal:nth-child(4){animation-delay:.2s}
+.reveal:nth-child(5){animation-delay:.27s}
+@keyframes rise{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;animation:none}}
+
+.ask{
+  margin:2rem 0 0;padding:.1rem 0 .1rem 1.15rem;border-left:2px solid var(--accent);
+  font-size:1.14rem;line-height:1.5;color:var(--ink);max-width:var(--col);
+}
+
+/* cabeçalho de etapa */
+.stage{display:flex;align-items:baseline;gap:1rem;margin-bottom:.35rem;max-width:var(--col)}
+.stage .n{
+  font-family:var(--mono);font-size:.72rem;color:var(--accent);letter-spacing:.06em;
+  flex:0 0 auto;padding-top:.1rem;
+}
+.q{margin:.7rem 0 1.4rem;max-width:var(--col);font-size:1.02rem}
+.q em{
+  display:block;font-family:var(--mono);font-style:normal;font-size:.65rem;
+  letter-spacing:.07em;color:var(--ink-soft);margin-bottom:.4rem;
+}
+
+/* cadeia das etapas */
+.chain{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:1.6rem;max-width:var(--col)}
+.chain a{
+  font-family:var(--mono);font-size:.68rem;padding:.42rem .68rem;text-decoration:none;
+  color:var(--ink-soft);border:1px solid var(--rule);border-radius:2px;
+  transition:color var(--step),border-color var(--step);
+}
+.chain a:hover{color:var(--ink);border-color:var(--ink-soft)}
+.chain a .dot{color:var(--accent)}
+.chain a.off{color:var(--rule)}
+.chain a.off .dot{color:var(--rule)}
+.chain a .ar{color:var(--rule);margin-left:.15rem;transition:transform var(--step),color var(--step);display:inline-block}
+.chain a:hover .ar{color:var(--accent);transform:translateY(2px)}
+
+/* retorno ao mapa das etapas */
+.nav{display:flex;align-items:center;gap:.1rem;margin-left:auto;flex:0 0 auto}
+.nav a,.nav span{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:2px;color:var(--ink-soft);
+  transition:color var(--step),background var(--step);
+}
+.nav a:hover{color:var(--accent);background:var(--panel)}
+.nav span{color:var(--rule);cursor:default}
+.nav svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;
+  stroke-linecap:round;stroke-linejoin:round}
+
+/* botão flutuante de topo */
+.topo{
+  position:fixed;right:clamp(.8rem,3vw,1.6rem);bottom:1.1rem;z-index:55;
+  display:flex;align-items:center;gap:.4rem;padding:.45rem .7rem;cursor:pointer;
+  font-family:var(--mono);font-size:.65rem;letter-spacing:.04em;
+  background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(9px);
+  color:var(--ink-soft);border:1px solid var(--rule);border-radius:2px;
+  opacity:0;pointer-events:none;transform:translateY(6px);
+  transition:opacity var(--step),transform var(--step),color var(--step),border-color var(--step);
+}
+.topo.on{opacity:1;pointer-events:auto;transform:none}
+.topo:hover{color:var(--ink);border-color:var(--ink-soft)}
+
+/* etiquetas de tema */
+.temas{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;margin-top:1.4rem;max-width:var(--col)}
+.temas em{
+  font-family:var(--mono);font-size:.62rem;font-style:normal;letter-spacing:.06em;
+  color:var(--rule);margin-right:.2rem;
+}
+.temas span{
+  font-family:var(--mono);font-size:.64rem;letter-spacing:.02em;color:var(--ink-soft);
+  border:1px solid var(--rule);border-radius:2px;padding:.22rem .5rem;
+}
+
+/* nota técnica */
+.tech-note{
+  font-family:var(--mono);font-size:.69rem;line-height:1.85;color:var(--ink-soft);
+  margin-top:1.1rem;padding-left:.9rem;border-left:2px solid var(--rule);max-width:var(--col);
+}
+.tech-note b{color:var(--ink);font-weight:500}
+
+/* widget: republicação */
+.widget{margin-top:1.7rem;border:1px solid var(--rule);border-radius:2px;background:var(--panel);padding:1.1rem 1.15rem;max-width:var(--col)}
+.wlabel{font-family:var(--mono);font-size:.66rem;letter-spacing:.04em;color:var(--ink-soft);margin-bottom:.9rem}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:2px;background:var(--rule);
+  border-radius:2px;outline:none;cursor:pointer;margin:.2rem 0;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:17px;height:17px;border-radius:50%;
+  background:var(--accent);border:3px solid var(--panel);cursor:grab;
+}
+input[type=range]::-moz-range-thumb{
+  width:17px;height:17px;border-radius:50%;background:var(--accent);
+  border:3px solid var(--panel);cursor:grab;
+}
+.scale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.62rem;color:var(--ink-soft);margin-top:.35rem}
+.readout{margin-top:1rem;padding-top:.9rem;border-top:1px solid var(--rule);font-family:var(--mono);font-size:.72rem;line-height:1.85}
+.readout .big{font-size:1.5rem;color:var(--ink);letter-spacing:-.01em;display:block;margin:.15rem 0 .35rem;font-variant-numeric:tabular-nums}
+.readout .meta{color:var(--ink-soft)}
+
+table{border-collapse:collapse;width:100%;margin-top:1.2rem;font-family:var(--mono);font-size:.68rem;max-width:var(--col)}
+th{text-align:left;font-weight:400;color:var(--ink-soft);letter-spacing:.04em;padding:.45rem .6rem .45rem 0;border-bottom:1px solid var(--rule)}
+td{padding:.5rem .6rem .5rem 0;border-bottom:1px solid var(--rule);color:var(--ink-soft);font-variant-numeric:tabular-nums;transition:color var(--step)}
+tr[data-on="true"] td{color:var(--ink)}
+tr[data-on="true"] td:first-child::before{content:"\25B8 ";color:var(--accent)}
+
+/* widget: comparador de escala */
+.diff{display:grid;position:relative;border:1px solid var(--rule);border-radius:2px;overflow:hidden;background:var(--panel)}
+.pane{grid-area:1/1;padding:1.1rem 1.15rem;font-family:var(--mono);font-size:.7rem;line-height:1.95}
+.pane.b{background:var(--panel-deep)}
+.pane.a{background:var(--panel);border-right:2px solid var(--accent)}
+.pane .co{color:var(--ink-soft);letter-spacing:.03em}
+.pane .vl{color:var(--ink);font-variant-numeric:tabular-nums;font-size:.86rem}
+.pane .note{display:block;margin-top:.9rem;color:var(--ink-soft);line-height:1.7}
+.pane .warn{color:var(--flag)}
+
+/* pilar em acordeão */
+.acc{margin-top:1.8rem;max-width:var(--col)}
+details{border-bottom:1px solid var(--rule)}
+details.first{border-top:1px solid var(--rule)}
+summary{cursor:pointer;list-style:none;padding:.9rem 0;display:flex;gap:.9rem;align-items:baseline}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";margin-left:auto;color:var(--ink-soft);font-family:var(--mono);font-size:.9rem}
+details[open] summary::after{content:"\2212";color:var(--accent)}
+summary:hover{color:var(--accent)}
+summary h4{font-family:var(--serif);font-size:1.02rem;font-weight:500;letter-spacing:-.01em}
+.dbody{padding:0 0 1.3rem}
+.dbody p{font-size:.95rem}
+
+/* linha do tempo */
+.tl{margin-top:1.6rem;border-left:1px solid var(--rule);padding-left:1.4rem}
+.tl li{list-style:none;position:relative;padding-bottom:1.9rem}
+.tl li:last-child{padding-bottom:0}
+.tl li::before{
+  content:"";position:absolute;left:calc(-1.4rem - 4px);top:.55rem;
+  width:7px;height:7px;border-radius:50%;background:var(--paper);border:1px solid var(--ink-soft);
+}
+.tl li[data-undo="true"]::before{background:var(--flag);border-color:var(--flag)}
+.tl ul{margin:0;padding:0}
+.tl .d{font-family:var(--mono);font-size:.66rem;color:var(--ink-soft);letter-spacing:.04em}
+.tl h4{margin:.15rem 0 .45rem;font-family:var(--serif);font-size:1.02rem;font-weight:500;letter-spacing:-.01em}
+.tl p{font-size:.95rem}
+
+.rows{margin-top:1.3rem}
+.row{display:grid;gap:.25rem 2rem;padding:.8rem 0;border-top:1px solid var(--rule)}
+@media (min-width:640px){.row{grid-template-columns:132px 1fr}}
+.row .k{font-family:var(--mono);font-size:.7rem;color:var(--ink-soft);letter-spacing:.03em;padding-top:.22em}
+.row .v{max-width:var(--col)}
+
+.go{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2.2rem}
+.go a{
+  display:inline-flex;align-items:center;gap:.45rem;
+  font-family:var(--mono);font-size:.74rem;padding:.58rem .95rem;text-decoration:none;
+  border:1px solid var(--rule);border-radius:2px;color:var(--ink-soft);
+  transition:background var(--step),color var(--step),border-color var(--step);
+}
+.go a:hover{color:var(--ink);border-color:var(--ink-soft)}
+.go a.main{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+.go a.main:hover{background:transparent;color:var(--ink);border-color:var(--ink-soft)}
+html[data-tema="escuro"] .go a.main{color:#101614}
+html[data-tema="escuro"] .go a.main:hover{color:var(--ink)}
+.go a svg{width:14px;height:14px;fill:currentColor;flex:0 0 auto}
+
+@media (max-width:520px){
+  body{font-size:16px}
+  .hero{padding:5rem 0 3rem}
+  .ask{font-size:1.04rem}
+  .stage{gap:.7rem}
+  .pane{font-size:.64rem;padding:.9rem}
+}
+
+footer{border-top:1px solid var(--rule);padding:2.2rem 0 4rem;font-family:var(--mono);font-size:.72rem;color:var(--ink-soft)}
+footer a{margin-right:1.3rem}
+
+/* ── simulações ───────────────────────────── */
+.sim{margin-top:1.5rem;border:1px solid var(--rule);border-radius:2px;background:var(--panel);max-width:var(--col);overflow:hidden}
+.simhead{
+  display:flex;align-items:center;gap:.6rem;padding:.6rem .95rem;border-bottom:1px solid var(--rule);
+  font-family:var(--mono);font-size:.65rem;letter-spacing:.04em;color:var(--ink-soft);
+}
+.tag{
+  margin-left:auto;font-size:.58rem;letter-spacing:.07em;padding:.12rem .38rem;
+  border:1px solid var(--rule);border-radius:2px;color:var(--ink-soft);
+}
+.btns{display:flex;flex-wrap:wrap;gap:.35rem;padding:.8rem .95rem 0}
+.btns button{
+  font-family:var(--mono);font-size:.65rem;padding:.36rem .6rem;cursor:pointer;
+  background:transparent;color:var(--ink-soft);border:1px solid var(--rule);border-radius:2px;
+  transition:background var(--step),color var(--step),border-color var(--step);
+}
+.btns button:hover{color:var(--ink);border-color:var(--ink-soft)}
+.btns button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+html[data-tema="escuro"] .btns button[aria-pressed="true"]{color:#101614}
+.log{padding:.9rem .95rem 1.05rem;font-family:var(--mono);font-size:.67rem;line-height:1.95}
+.log .ln{display:flex;gap:.7rem;opacity:0;animation:slidein .3s ease-out forwards}
+.log .ln .y{color:var(--ink-soft);flex:0 0 3.4em;font-variant-numeric:tabular-nums}
+.log .ln .s{color:var(--ink)}
+.log .ln.mut .s{color:var(--ink-soft)}
+.log .ln.hit .s{color:var(--accent)}
+.log .ln.bad .s{color:var(--flag)}
+.log .sum{
+  display:block;margin-top:.75rem;padding-top:.6rem;border-top:1px solid var(--rule);
+  color:var(--ink-soft);opacity:0;animation:slidein .3s .18s ease-out forwards;
+}
+.log .sum b{color:var(--ink);font-weight:500}
+@keyframes slidein{from{opacity:0;transform:translateX(-4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.log .ln,.log .sum{animation:none;opacity:1}}
+
+/* trecho de código */
+.code{
+  margin-top:1.2rem;border:1px solid var(--rule);border-radius:2px;
+  background:var(--panel-deep);overflow:hidden;
+}
+.code .file{
+  display:flex;align-items:center;gap:.5rem;padding:.5rem .85rem;border-bottom:1px solid var(--rule);
+  font-family:var(--mono);font-size:.62rem;letter-spacing:.03em;color:var(--ink-soft);
+}
+.code .file b{color:var(--ink);font-weight:500}
+.code pre{
+  margin:0;padding:.85rem .85rem .95rem;overflow-x:auto;
+  font-family:var(--mono);font-size:.66rem;line-height:1.85;color:var(--ink);
+}
+.code .cm{color:var(--ink-soft)}
+.code .kw{color:var(--accent)}
+.code .st{color:var(--ink-soft)}
+
+/* abas dos pilares */
+.tabs{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:1.7rem;max-width:var(--col)}
+.tabs button{
+  font-family:var(--mono);font-size:.68rem;padding:.45rem .75rem;cursor:pointer;
+  background:transparent;color:var(--ink-soft);border:1px solid var(--rule);border-radius:2px;
+  transition:background var(--step),color var(--step),border-color var(--step);
+}
+.tabs button:hover{color:var(--ink);border-color:var(--ink-soft)}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+html[data-tema="escuro"] .tabs button[aria-selected="true"]{color:#101614}
+.tabbody{
+  margin-top:.75rem;max-width:var(--col);border:1px solid var(--rule);border-radius:2px;
+  background:var(--panel);padding:1.2rem 1.25rem;
+}
+.tabbody h4{font-family:var(--serif);font-size:1.06rem;font-weight:500;letter-spacing:-.01em}
+.tabbody .one{font-family:var(--mono);font-size:.7rem;color:var(--ink-soft);margin:.3rem 0 .9rem}
+.tabbody p{font-size:.95rem}
+.tabpanel[hidden]{display:none}
+.tabpanel{animation:fadein var(--step) ease-out}
+@keyframes fadein{from{opacity:.35}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.tabpanel{animation:none}}
+
+/* mapa dos três problemas */
+.probs{margin-top:1.5rem;max-width:var(--col)}
+.prob{
+  display:grid;gap:.15rem .9rem;padding:.85rem 0;border-top:1px solid var(--rule);
+  text-decoration:none;color:inherit;transition:border-color var(--step);
+}
+.prob:last-child{border-bottom:1px solid var(--rule)}
+@media (min-width:560px){.prob{grid-template-columns:1fr auto;align-items:baseline}}
+.prob .t{font-size:1rem}
+.prob .g{font-family:var(--mono);font-size:.64rem;color:var(--ink-soft);letter-spacing:.03em;white-space:nowrap}
+.prob:hover{border-color:var(--accent)}
+.prob:hover .t{color:var(--accent)}
+.prob:hover .g{color:var(--ink)}
+
+
+/* rede de abertura */
+.rede{margin-top:2.4rem}
+.rede svg{width:100%;height:auto;display:block;overflow:visible}
+.rede .ed{stroke:var(--rule);stroke-width:1;transition:stroke var(--step),stroke-width var(--step)}
+.rede .nd{cursor:pointer;outline:none}
+.rede .nd .hit,.rede .nd .hitxt{fill:transparent;stroke:none;pointer-events:all}
+.rede .nd .dot{fill:var(--accent);opacity:.85;pointer-events:none;transition:opacity var(--step)}
+.rede .nd text{font-family:var(--mono);font-size:16px;fill:var(--ink-soft);
+  transition:fill var(--step);pointer-events:none;user-select:none}
+.rede .nd.iso .dot{fill:var(--paper);stroke:var(--ink-soft);stroke-width:1.4;opacity:.8}
+.rede.ativa .nd .dot{opacity:.18}
+.rede.ativa .nd.iso .dot{opacity:.25}
+.rede.ativa .nd text{fill:var(--rule)}
+.rede.ativa .ed{stroke:color-mix(in srgb,var(--rule) 40%,transparent)}
+.rede .nd.on .dot{opacity:1}
+.rede .nd.on.iso .dot{opacity:1;stroke:var(--accent)}
+.rede .nd.on text{fill:var(--ink)}
+.rede .nd .halo{fill:none;stroke:var(--accent);stroke-width:1.6;opacity:0;pointer-events:none;
+  transition:opacity var(--step)}
+.rede .nd.sel .halo{opacity:1}
+.rede .nd.sel .dot{fill:var(--ink)}
+html[data-tema="escuro"] .rede .nd.sel .dot{fill:var(--ink)}
+.rede .nd.sel.iso .dot{fill:var(--ink);stroke:var(--ink)}
+.rede .nd.sel text{font-weight:500;fill:var(--ink)}
+.rede .ed.on{stroke:var(--accent);stroke-width:1.7}
+.redecard{
+  margin-top:1.4rem;max-width:var(--col);min-height:118px;
+  border-left:2px solid var(--accent);padding:.2rem 0 .2rem 1.15rem;
+}
+.rcdom{font-family:var(--mono);font-size:.64rem;letter-spacing:.05em;color:var(--ink-soft);margin-bottom:.25rem}
+.redecard h3{font-family:var(--mono);font-size:.88rem;font-weight:500;margin-bottom:.5rem}
+.redecard #rcTxt{font-size:.97rem;color:var(--ink)}
+.rcdica{
+  font-family:var(--mono);font-size:.67rem;letter-spacing:.03em;color:var(--ink-soft);
+  margin-top:.9rem;padding-top:.65rem;border-top:1px solid var(--rule);
+}
+.rcdica[hidden]{display:none}
+@media (max-width:620px){.rede .nd text{font-size:24px}.redecard{min-height:160px}}
+
+/* níveis de skill */
+.niveis{margin-top:1.5rem;max-width:var(--col)}
+.niv{padding:.95rem 0 .95rem 1.1rem;border-top:1px solid var(--rule);border-left:2px solid transparent}
+.niv:last-child{border-bottom:1px solid var(--rule)}
+.niv.on{border-left-color:var(--accent);background:var(--panel)}
+.nk{font-family:var(--mono);font-size:.66rem;letter-spacing:.05em;color:var(--ink-soft);margin-bottom:.3rem}
+.niv.on .nk{color:var(--ink)}
+.nk .here{margin-left:.5rem;font-size:.58rem;letter-spacing:.06em;padding:.1rem .35rem;
+  border:1px solid var(--accent);border-radius:2px;color:var(--accent)}
+.nv{font-size:.95rem;color:var(--ink-soft)}
+.niv.on .nv{color:var(--ink)}
+
+/* catálogo em chips */
+.chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:1.4rem;max-width:var(--col)}
+.chips button{font-family:var(--mono);font-size:.66rem;padding:.36rem .6rem;cursor:pointer;
+  background:transparent;color:var(--ink-soft);border:1px solid var(--rule);border-radius:2px;
+  transition:background var(--step),color var(--step),border-color var(--step)}
+.chips button:hover{color:var(--ink);border-color:var(--ink-soft)}
+.chips button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--panel)}
+html[data-tema="escuro"] .chips button[aria-pressed="true"]{color:#101614}
+.chipbody{margin-top:.75rem;max-width:var(--col);min-height:132px;
+  border:1px solid var(--rule);border-radius:2px;background:var(--panel);padding:1.1rem 1.15rem}
+.chipbody .dom{font-family:var(--mono);font-size:.64rem;letter-spacing:.05em;color:var(--ink-soft);margin-bottom:.2rem}
+.chipbody h3{font-family:var(--mono);font-size:.82rem;font-weight:500}
+.chipbody p{margin:.4rem 0 0;font-size:.95rem}
+.panel[hidden]{display:none}
+.panel{animation:fadein var(--step) ease-out}
+@keyframes fadein{from{opacity:.35}to{opacity:1}}
+
+.code .hl{color:var(--accent)}
+code{font-family:var(--mono);font-size:.85em;color:var(--ink)}
+</style>
+</head>
+
+<body>
+
+<button class="tema" id="tema" type="button" aria-label="Alternar tema"></button>
+<button class="topo" id="topo" type="button"><span>&#8593;</span> topo</button>
+
+<div class="railbar">
+  <span id="railLabel">o projeto</span>
+  <span class="bar"><i id="railFill"></i></span>
+</div>
+
+<div class="shell">
+  <nav class="index" aria-label="Seções">
+    <ol>
+      <li><a href="#skill"><span class="num">··</span> o que é</a></li>
+      <li><a href="#lacuna"><span class="num">··</span> a lacuna</a></li>
+      <li><a href="#anatomia"><span class="num">··</span> anatomia</a></li>
+      <li class="gap"></li>
+      <li><a href="#origem"><span class="num">··</span> como nasceram</a></li>
+      <li><a href="#avaliacao"><span class="num">··</span> a avaliação</a></li>
+      <li><a href="#estado"><span class="num">··</span> estado</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <section class="hero" id="topo-sec">
+      <a class="back reveal" href="/">&#8592; pedro oliveira</a>
+      <p class="marker reveal"><b>2.01</b> &nbsp;projeto</p>
+      <h1 class="reveal">Skills para o Genie Code</h1>
+      <p class="sub reveal">o agente de IA para engenharia de dados da Databricks</p>
+      <p class="pstatus reveal">&#9679; <b>em curso</b> &nbsp;·&nbsp; catorze skills em uso</p>
+      <p class="ask reveal">
+        O agente de código acerta a lógica, mas erra onde salvar, como nomear e o que registrar.
+        Dá para corrigir isso com instrução escrita? E como é que se prova que corrigiu?
+      </p>
+
+      <div class="rede reveal" id="rede">
+        <svg viewBox="0 0 1040 640" role="img" aria-label="Rede das catorze skills e as fronteiras declaradas entre elas">
+          <g class="eds">
+        <line class="ed" data-a="artifact-documentation" data-b="code-review" x1="637.8" y1="150.0" x2="790.0" y2="285.3"/>
+        <line class="ed" data-a="artifact-documentation" data-b="docs-sync" x1="637.8" y1="150.0" x2="520.4" y2="241.9"/>
+        <line class="ed" data-a="artifact-documentation" data-b="project-context" x1="637.8" y1="150.0" x2="542.3" y2="310.2"/>
+        <line class="ed" data-a="artifact-documentation" data-b="technical-writing" x1="637.8" y1="150.0" x2="442.3" y2="158.7"/>
+        <line class="ed" data-a="asset-placement" data-b="code-review" x1="603.1" y1="446.7" x2="790.0" y2="285.3"/>
+        <line class="ed" data-a="asset-placement" data-b="medallion-architecture" x1="603.1" y1="446.7" x2="412.1" y2="509.9"/>
+        <line class="ed" data-a="asset-placement" data-b="naming-conventions" x1="603.1" y1="446.7" x2="519.4" y2="403.9"/>
+        <line class="ed" data-a="asset-placement" data-b="notebook-structure" x1="603.1" y1="446.7" x2="423.9" y2="349.6"/>
+        <line class="ed" data-a="asset-placement" data-b="project-context" x1="603.1" y1="446.7" x2="542.3" y2="310.2"/>
+        <line class="ed" data-a="asset-placement" data-b="unity-catalog-naming" x1="603.1" y1="446.7" x2="670.2" y2="363.6"/>
+        <line class="ed" data-a="data-quality-guardrails" data-b="eda-and-validation" x1="232.5" y1="456.5" x2="336.1" y2="296.2"/>
+        <line class="ed" data-a="data-quality-guardrails" data-b="medallion-architecture" x1="232.5" y1="456.5" x2="412.1" y2="509.9"/>
+        <line class="ed" data-a="data-quality-guardrails" data-b="notebook-structure" x1="232.5" y1="456.5" x2="423.9" y2="349.6"/>
+        <line class="ed" data-a="docs-sync" data-b="eda-and-validation" x1="520.4" y1="241.9" x2="336.1" y2="296.2"/>
+        <line class="ed" data-a="docs-sync" data-b="naming-conventions" x1="520.4" y1="241.9" x2="519.4" y2="403.9"/>
+        <line class="ed" data-a="docs-sync" data-b="notebook-structure" x1="520.4" y1="241.9" x2="423.9" y2="349.6"/>
+        <line class="ed" data-a="docs-sync" data-b="project-context" x1="520.4" y1="241.9" x2="542.3" y2="310.2"/>
+        <line class="ed" data-a="docs-sync" data-b="unity-catalog-naming" x1="520.4" y1="241.9" x2="670.2" y2="363.6"/>
+        <line class="ed" data-a="eda-and-validation" data-b="medallion-architecture" x1="336.1" y1="296.2" x2="412.1" y2="509.9"/>
+        <line class="ed" data-a="eda-and-validation" data-b="naming-conventions" x1="336.1" y1="296.2" x2="519.4" y2="403.9"/>
+        <line class="ed" data-a="eda-and-validation" data-b="notebook-structure" x1="336.1" y1="296.2" x2="423.9" y2="349.6"/>
+        <line class="ed" data-a="eda-and-validation" data-b="technical-writing" x1="336.1" y1="296.2" x2="442.3" y2="158.7"/>
+        <line class="ed" data-a="medallion-architecture" data-b="project-context" x1="412.1" y1="509.9" x2="542.3" y2="310.2"/>
+        <line class="ed" data-a="naming-conventions" data-b="notebook-structure" x1="519.4" y1="403.9" x2="423.9" y2="349.6"/>
+        <line class="ed" data-a="naming-conventions" data-b="project-context" x1="519.4" y1="403.9" x2="542.3" y2="310.2"/>
+        <line class="ed" data-a="naming-conventions" data-b="unity-catalog-naming" x1="519.4" y1="403.9" x2="670.2" y2="363.6"/>
+        <line class="ed" data-a="notebook-structure" data-b="project-context" x1="423.9" y1="349.6" x2="542.3" y2="310.2"/>
+        <line class="ed" data-a="notebook-structure" data-b="technical-writing" x1="423.9" y1="349.6" x2="442.3" y2="158.7"/>
+        <line class="ed" data-a="project-context" data-b="technical-writing" x1="542.3" y1="310.2" x2="442.3" y2="158.7"/>
+        <line class="ed" data-a="project-context" data-b="unity-catalog-naming" x1="542.3" y1="310.2" x2="670.2" y2="363.6"/>
+          </g>
+        <g class="nd" data-sk="artifact-documentation" tabindex="0" role="button" aria-label="artifact-documentation">
+          <circle class="hit" cx="637.8" cy="150.0" r="27.6"/>
+          <circle class="halo" cx="637.8" cy="150.0" r="18.6"/>
+          <circle class="dot" cx="637.8" cy="150.0" r="11.6"/>
+          <rect class="hitxt" x="654.4" y="139.5" width="227.0" height="24.0"/>
+          <text x="661.4" y="155.0" text-anchor="start">artifact-documentation</text>
+        </g>
+        <g class="nd" data-sk="asset-placement" tabindex="0" role="button" aria-label="asset-placement">
+          <circle class="hit" cx="603.1" cy="446.7" r="29.9"/>
+          <circle class="halo" cx="603.1" cy="446.7" r="20.9"/>
+          <circle class="dot" cx="603.1" cy="446.7" r="13.9"/>
+          <rect class="hitxt" x="622.0" y="436.2" width="159.2" height="24.0"/>
+          <text x="629.0" y="451.7" text-anchor="start">asset-placement</text>
+        </g>
+        <g class="nd" data-sk="code-review" tabindex="0" role="button" aria-label="code-review">
+          <circle class="hit" cx="790.0" cy="285.3" r="25.3"/>
+          <circle class="halo" cx="790.0" cy="285.3" r="16.3"/>
+          <circle class="dot" cx="790.0" cy="285.3" r="9.3"/>
+          <rect class="hitxt" x="804.3" y="274.8" width="120.5" height="24.0"/>
+          <text x="811.3" y="290.3" text-anchor="start">code-review</text>
+        </g>
+        <g class="nd" data-sk="data-quality-guardrails" tabindex="0" role="button" aria-label="data-quality-guardrails">
+          <circle class="hit" cx="232.5" cy="456.5" r="26.4"/>
+          <circle class="halo" cx="232.5" cy="456.5" r="17.4"/>
+          <circle class="dot" cx="232.5" cy="456.5" r="10.4"/>
+          <rect class="hitxt" x="247.9" y="446.0" width="236.6" height="24.0"/>
+          <text x="254.9" y="461.5" text-anchor="start">data-quality-guardrails</text>
+        </g>
+        <g class="nd" data-sk="docs-sync" tabindex="0" role="button" aria-label="docs-sync">
+          <circle class="hit" cx="520.4" cy="241.9" r="29.9"/>
+          <circle class="halo" cx="520.4" cy="241.9" r="20.9"/>
+          <circle class="dot" cx="520.4" cy="241.9" r="13.9"/>
+          <rect class="hitxt" x="539.3" y="231.4" width="101.1" height="24.0"/>
+          <text x="546.3" y="246.9" text-anchor="start">docs-sync</text>
+        </g>
+        <g class="nd" data-sk="eda-and-validation" tabindex="0" role="button" aria-label="eda-and-validation">
+          <circle class="hit" cx="336.1" cy="296.2" r="29.9"/>
+          <circle class="halo" cx="336.1" cy="296.2" r="20.9"/>
+          <circle class="dot" cx="336.1" cy="296.2" r="13.9"/>
+          <rect class="hitxt" x="129.0" y="285.7" width="188.2" height="24.0"/>
+          <text x="310.2" y="301.2" text-anchor="end">eda-and-validation</text>
+        </g>
+        <g class="nd iso" data-sk="git-workflow" tabindex="0" role="button" aria-label="git-workflow">
+          <circle class="hit" cx="520.0" cy="590.0" r="23.0"/>
+          <circle class="halo" cx="520.0" cy="590.0" r="14.0"/>
+          <circle class="dot" cx="520.0" cy="590.0" r="7.0"/>
+          <rect class="hitxt" x="454.9" y="607.5" width="130.2" height="24.0"/>
+          <text x="520.0" y="623.0" text-anchor="middle">git-workflow</text>
+        </g>
+        <g class="nd" data-sk="medallion-architecture" tabindex="0" role="button" aria-label="medallion-architecture">
+          <circle class="hit" cx="412.1" cy="509.9" r="27.6"/>
+          <circle class="halo" cx="412.1" cy="509.9" r="18.6"/>
+          <circle class="dot" cx="412.1" cy="509.9" r="11.6"/>
+          <rect class="hitxt" x="168.5" y="499.4" width="227.0" height="24.0"/>
+          <text x="388.5" y="514.9" text-anchor="end">medallion-architecture</text>
+        </g>
+        <g class="nd" data-sk="naming-conventions" tabindex="0" role="button" aria-label="naming-conventions">
+          <circle class="hit" cx="519.4" cy="403.9" r="29.9"/>
+          <circle class="halo" cx="519.4" cy="403.9" r="20.9"/>
+          <circle class="dot" cx="519.4" cy="403.9" r="13.9"/>
+          <rect class="hitxt" x="312.3" y="393.4" width="188.2" height="24.0"/>
+          <text x="493.5" y="408.9" text-anchor="end">naming-conventions</text>
+        </g>
+        <g class="nd" data-sk="notebook-structure" tabindex="0" role="button" aria-label="notebook-structure">
+          <circle class="hit" cx="423.9" cy="349.6" r="31.0"/>
+          <circle class="halo" cx="423.9" cy="349.6" r="22.0"/>
+          <circle class="dot" cx="423.9" cy="349.6" r="15.0"/>
+          <rect class="hitxt" x="215.7" y="339.1" width="188.2" height="24.0"/>
+          <text x="396.9" y="354.6" text-anchor="end">notebook-structure</text>
+        </g>
+        <g class="nd" data-sk="project-context" tabindex="0" role="button" aria-label="project-context">
+          <circle class="hit" cx="542.3" cy="310.2" r="32.2"/>
+          <circle class="halo" cx="542.3" cy="310.2" r="23.2"/>
+          <circle class="dot" cx="542.3" cy="310.2" r="16.2"/>
+          <rect class="hitxt" x="563.5" y="299.7" width="159.2" height="24.0"/>
+          <text x="570.5" y="315.2" text-anchor="start">project-context</text>
+        </g>
+        <g class="nd iso" data-sk="skill-patterns" tabindex="0" role="button" aria-label="skill-patterns">
+          <circle class="hit" cx="520.0" cy="56.0" r="23.0"/>
+          <circle class="halo" cx="520.0" cy="56.0" r="14.0"/>
+          <circle class="dot" cx="520.0" cy="56.0" r="7.0"/>
+          <rect class="hitxt" x="445.2" y="17.5" width="149.5" height="24.0"/>
+          <text x="520.0" y="33.0" text-anchor="middle">skill-patterns</text>
+        </g>
+        <g class="nd" data-sk="technical-writing" tabindex="0" role="button" aria-label="technical-writing">
+          <circle class="hit" cx="442.3" cy="158.7" r="27.6"/>
+          <circle class="halo" cx="442.3" cy="158.7" r="18.6"/>
+          <circle class="dot" cx="442.3" cy="158.7" r="11.6"/>
+          <rect class="hitxt" x="247.1" y="148.2" width="178.6" height="24.0"/>
+          <text x="418.7" y="163.7" text-anchor="end">technical-writing</text>
+        </g>
+        <g class="nd" data-sk="unity-catalog-naming" tabindex="0" role="button" aria-label="unity-catalog-naming">
+          <circle class="hit" cx="670.2" cy="363.6" r="27.6"/>
+          <circle class="halo" cx="670.2" cy="363.6" r="18.6"/>
+          <circle class="dot" cx="670.2" cy="363.6" r="11.6"/>
+          <rect class="hitxt" x="686.8" y="353.1" width="207.6" height="24.0"/>
+          <text x="693.8" y="368.6" text-anchor="start">unity-catalog-naming</text>
+        </g>
+        </svg>
+        <div class="redecard" id="redeCard">
+          <p class="rcdom" id="rcDom">catorze skills</p>
+          <h3 id="rcName">trinta fronteiras declaradas entre elas</h3>
+          <p id="rcTxt">Cada linha existe porque uma skill cita a outra pelo nome dentro do próprio arquivo, no trecho em que delimita o que não faz.</p>
+          <p class="rcdica" id="rcDica">clique num nó para ler &nbsp;·&nbsp; clique de novo para soltar</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skill">
+      <p class="marker">o que é</p>
+      <h2>O que é uma skill</h2>
+      <p class="lede" style="margin-top:.8rem">
+        Uma skill é um arquivo de texto com uma regra dentro. O cabeçalho diz em que situações
+        aquela regra vale, e em quais não vale. O corpo diz o que fazer quando a situação aparece.
+        Um arquivo, um assunto.
+      </p>
+      <p style="margin-top:1.1rem">
+        Quem lê esses arquivos é o Genie Code, o assistente de programação do Databricks. Antes
+        de responder, ele confere a tarefa contra o cabeçalho de cada arquivo disponível e carrega
+        os que combinam, sem ninguém indicar qual usar.
+      </p>
+      <p>
+        Os arquivos existem em três níveis, e o nível define quem manda na regra.
+      </p>
+
+      <div class="niveis">
+        <div class="niv">
+          <p class="nk">plataforma</p>
+          <p class="nv">Skills que a Databricks mantém, iguais para todo mundo. Cobrem notebooks,
+          Unity Catalog, dashboards, pipelines e MLflow.</p>
+        </div>
+        <div class="niv">
+          <p class="nk">workspace</p>
+          <p class="nv">Skills compartilhadas por um time em pasta comum. A regra vale para todos
+          que trabalham naquele workspace.</p>
+        </div>
+        <div class="niv on">
+          <p class="nk">usuário <span class="here">este projeto</span></p>
+          <p class="nv">Skills que moram no diretório pessoal e acompanham só quem as escreveu.
+          Escolhi este nível para conseguir mudar uma regra sem depender de acordo com outras pessoas
+          e sem afetar o trabalho de quem usa o mesmo workspace.</p>
+        </div>
+      </div>
+
+      <div class="temas"><em>termos</em><span>Agent Skills</span><span>SKILL.md</span><span>frontmatter YAML</span><span>carregamento por contexto</span></div>
+    </section>
+
+    <section id="lacuna">
+      <p class="marker">a lacuna</p>
+      <h2>A lacuna que elas preenchem</h2>
+      <p class="lede" style="margin-top:.8rem">
+        As skills da plataforma ensinam o agente a operar as ferramentas do Databricks. Elas não
+        dizem qual estratégia de gravação escolher, que nome dar a uma tabela, o que olhar numa
+        revisão de código, nem em que pasta um arquivo novo deve nascer. Essas decisões são de
+        engenharia, variam de time para time, e o agente resolve por conta própria quando ninguém
+        escreve nada.
+      </p>
+      <p style="margin-top:1.1rem">
+        Quem decide qual skill entra em cada tarefa é uma linha só dentro do arquivo, a
+        <b>description</b>. Ela lista as situações em que aquela skill deve ser acionada e as
+        situações em que não deve. Escolha uma tarefa abaixo.
+      </p>
+
+      <div class="sim">
+        <div class="simhead">quais skills entram nesta tarefa <span class="tag">descriptions reais</span></div>
+        <div class="btns" id="trBtns">
+          <button type="button" data-tr="0" aria-pressed="true">notebook novo</button>
+          <button type="button" data-tr="1" aria-pressed="false">revisar código</button>
+          <button type="button" data-tr="2" aria-pressed="false">como gravar</button>
+          <button type="button" data-tr="3" aria-pressed="false">commitar</button>
+        </div>
+        <div class="log" id="trLog"></div>
+      </div>
+
+      <div class="temas"><em>termos</em><span>roteamento por description</span><span>fronteira negativa</span><span>colisão de escopo</span></div>
+    </section>
+
+    <section id="anatomia">
+      <p class="marker">anatomia</p>
+      <h2>Como uma skill é escrita</h2>
+      <p class="lede" style="margin-top:.8rem">
+        O arquivo tem duas partes. Um cabeçalho em YAML com nome e description, que é o que o
+        agente lê para decidir se carrega. E o corpo em Markdown, que é o que ele lê depois de
+        decidir que sim.
+      </p>
+
+      <div class="code">
+        <div class="file">naming-conventions/<b>SKILL.md</b></div>
+<pre><span class="cm">---</span>
+<span class="kw">name</span>: naming-conventions
+<span class="kw">description</span>: Use ao definir, nomear, escolher, estabelecer ou criar
+  nomes para assets NOVOS -- notebooks, tabelas, DataFrames, variaveis,
+  pastas. Convencoes de numeracao (001_, 103_), principio DRY, padroes
+  de caixa (snake_case, PascalCase). <span class="hl">NAO use para revisar ou validar
+  nomenclatura de codigo existente.</span>
+<span class="cm">---</span>
+
+<span class="cm"># Nomenclatura e Convenções</span>
+<span class="cm">## Princípios Gerais</span>
+<span class="cm">## Notebooks</span>
+<span class="cm">## DataFrames</span>
+<span class="cm">## Princípio DRY</span>
+<span class="cm">## Pastas</span></pre>
+      </div>
+      <p class="hint">o trecho destacado é a fronteira negativa: sem ela, esta skill disputaria toda revisão de código com a code-review</p>
+
+      <p style="margin-top:1.9rem">Três critérios governam a escrita de todas elas.</p>
+      <div class="acc">
+        <details class="first">
+          <summary><h4>Verbo de ação distinto</h4></summary>
+          <div class="dbody"><p>Cada skill responde por um verbo só: definir, criar, implementar,
+          revisar, atualizar, commitar, decidir, organizar. Quando duas compartilham o mesmo verbo,
+          as duas são acionadas na mesma tarefa e o agente carrega instrução demais.</p></div>
+        </details>
+        <details>
+          <summary><h4>Fronteira negativa explícita</h4></summary>
+          <div class="dbody"><p>Toda description declara o que a skill não faz, e para onde
+          mandar quando o caso é de outra. É o que impede o agente de carregar meia dúzia de
+          arquivos a cada pedido.</p></div>
+        </details>
+        <details>
+          <summary><h4>Especificidade máxima</h4></summary>
+          <div class="dbody"><p>A description precisa deixar claro quando acionar e quando não
+          acionar. Se ela for vaga, a skill é carregada em qualquer pedido, inclusive nos que não
+          têm nada a ver com ela.</p></div>
+        </details>
+      </div>
+
+      <div class="temas"><em>termos</em><span>Agent Skills Specification</span><span>separação de responsabilidades</span><span>DRY</span></div>
+    </section>
+
+
+    <section id="origem">
+      <p class="marker">processo</p>
+      <h2>Como nasceram</h2>
+      <p class="lede" style="margin-top:.8rem">
+        Cada uma apareceu depois que o agente errou a mesma coisa duas vezes. Corrigir na conversa
+        funcionava até o fim da sessão, e na sessão seguinte o erro voltava, porque nada tinha
+        ficado escrito.
+      </p>
+      <p style="margin-top:1.1rem">
+        Elas começaram dentro do projeto da CVM, como instruções soltas para aquele pipeline. Em
+        agosto ficou evidente que serviam para qualquer projeto e evoluíam em outro ritmo, e
+        passaram a viver em repositório próprio.
+      </p>
+      <div class="acc">
+        <details class="first">
+          <summary><h4>O que eu publiquei antes de testar</h4></summary>
+          <div class="dbody">
+            <p>No começo as skills não eram acionadas, e eu formulei três hipóteses sobre o
+            que o sistema de acionamento exigiria: caracteres sem acento, fronteira negativa
+            obrigatória e verbo imperativo em formato fixo.</p>
+            <p>Testei uma de cada vez, isolando a variável. As três foram refutadas: o
+            acionamento aceita acento, entende intenção sem estrutura rígida e funciona sem a
+            fronteira negativa. Os três critérios continuam valendo, mas como prática de clareza,
+            não como exigência técnica.</p>
+            <p class="tech-note">Protocolo com os três testes isolados, evidências e tempos está
+            em <b>docs/protocolo_teste_empirico.md</b> no repositório.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="avaliacao">
+      <p class="marker">a pergunta em aberto</p>
+      <h2>A avaliação</h2>
+      <p class="lede" style="margin-top:.8rem">
+        A avaliação existe porque eu não tinha como saber se as skills mudavam mesmo o resultado do
+        trabalho, ou se o agente já fazia aquilo sozinho.
+      </p>
+      <p style="margin-top:1.1rem">
+        O desenho é o mesmo trabalho feito duas vezes, com os mesmos pedidos na mesma ordem, uma
+        vez com as skills ativas e outra com elas desligadas.
+      </p>
+      <p class="go">
+        <a class="main" href="/genie-skills-eval/">ler a avaliação</a>
+      </p>
+      <p class="hint">vinte e quatro sessões registradas, com transcrição completa e o raciocínio do agente</p>
+    </section>
+
+    <section id="estado">
+      <p class="marker">estado</p>
+      <h2>Onde isso está hoje</h2>
+      <div class="rows">
+        <div class="row"><div class="k">em uso</div><div class="v">As catorze rodam no meu workspace, carregadas pelo agente durante o desenvolvimento dos projetos deste portfólio</div></div>
+        <div class="row"><div class="k">em avaliação</div><div class="v">Treze delas entram no teste. A <code>skill-patterns</code> fica fora porque trata de escrever skills, e não de engenharia de dados</div></div>
+        <div class="row"><div class="k">o que vem</div><div class="v">Refatoração profunda quando os testes fecharem, com base no que a avaliação mostrar sobre cada uma</div></div>
+      </div>
+
+      <p class="go">
+        <a class="main" href="https://github.com/1pedroosilva/databricks-genie-skills" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+          repositório
+        </a>
+        <a href="/">voltar para a home</a>
+      </p>
+    </section>
+
+    <footer>
+      <p><a href="/">pedro oliveira</a><a href="https://www.linkedin.com/in/1pedroosilva/" target="_blank" rel="noopener noreferrer">linkedin</a><a href="https://github.com/1pedroosilva" target="_blank" rel="noopener noreferrer">github</a></p>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+const TAR = [{"p": "Vou criar um notebook novo do zero", "sim": [["notebook-structure", "ordem das células e separação de responsabilidades"], ["naming-conventions", "nome do notebook e das variáveis"], ["asset-placement", "em que pasta o arquivo vai nascer"]], "nao": [["code-review", "a description diz: use ao revisar código existente"], ["artifact-documentation", "a description diz: use ao documentar artefato que já existe"]]}, {"p": "Vou revisar um código que já existe", "sim": [["code-review", "correção semântica, premissa oculta, código morto, custo evitável"]], "nao": [["notebook-structure", "a description diz: use ao criar notebooks NOVOS"], ["naming-conventions", "a description diz: NÃO use para revisar nomenclatura existente"]]}, {"p": "Preciso decidir como gravar a camada silver", "sim": [["medallion-architecture", "estratégia de gravação, idempotência, versionamento de regra"]], "nao": [["data-quality-guardrails", "a description diz: NÃO use para decisões arquiteturais"], ["unity-catalog-naming", "cobre nome e organização, não estratégia de escrita"]]}, {"p": "Terminei, vou commitar as mudanças", "sim": [["git-workflow", "divisão dos commits por escopo e a mensagem de cada um"], ["docs-sync", "que documentos precisam acompanhar essa mudança"]], "nao": [["technical-writing", "define o tom do texto, não o que precisa ser atualizado"]]}];
+const trLog=document.getElementById('trLog'),trBtns=[...document.querySelectorAll('#trBtns button')];
+function pintaTr(i){
+  const d=TAR[i];let h='<div class="ln mut" style="animation-delay:0ms"><span class="s">'+d.p+'</span></div>';
+  let k=1;
+  d.sim.forEach(x=>{h+='<div class="ln hit" style="animation-delay:'+(k++*60)+'ms"><span class="y">entra</span><span class="s"><b>'+x[0]+'</b> · '+x[1]+'</span></div>';});
+  d.nao.forEach(x=>{h+='<div class="ln mut" style="animation-delay:'+(k++*60)+'ms"><span class="y">fica</span><span class="s">'+x[0]+' · '+x[1]+'</span></div>';});
+  h+='<span class="sum">o agente escolhe lendo as <b>descriptions</b>, sem ninguém indicar qual usar</span>';
+  trLog.innerHTML=h;
+  trBtns.forEach((b,n)=>b.setAttribute('aria-pressed',String(n===i)));
+}
+trBtns.forEach((b,n)=>b.addEventListener('click',()=>pintaTr(n)));
+pintaTr(0);
+
+/* rede de abertura */
+const SK = {"artifact-documentation": {"dom": "documentação", "txt": "Documentar artefato que já existe a partir do que está no ambiente, tratando divergência entre fontes.", "grau": 4}, "asset-placement": {"dom": "projeto", "txt": "Antes de criar um arquivo: a que projeto pertence, em que pasta vai, e o que conferir antes de gravar.", "grau": 6}, "code-review": {"dom": "qualidade de código", "txt": "Revisar código existente em quatro frentes: correção semântica, premissa oculta, trecho morto e custo evitável de processamento.", "grau": 2}, "data-quality-guardrails": {"dom": "qualidade de dado", "txt": "Que validações colocar em cada camada: integridade estrutural, reconciliação quantitativa e resiliência operacional.", "grau": 3}, "docs-sync": {"dom": "documentação", "txt": "Depois de mudar código ou arquitetura, mapear quais documentos ficaram desatualizados.", "grau": 6}, "eda-and-validation": {"dom": "qualidade de dado", "txt": "Quando investigar e quando apenas verificar, onde guardar cada coisa, e como registrar o caminho do achado até a validação.", "grau": 6}, "git-workflow": {"dom": "versionamento", "txt": "Dividir uma alteração em commits coerentes, staging parcial, mensagem neutra, e quando usar amend.", "grau": 0}, "medallion-architecture": {"dom": "arquitetura", "txt": "Escolher a estratégia de gravação de cada camada, definir idempotência e reprocessabilidade, decidir como versionar mudança de regra de negócio.", "grau": 4}, "naming-conventions": {"dom": "nomenclatura", "txt": "Nomear asset novo, de notebook a variável, com numeração que se rastreia entre camadas.", "grau": 6}, "notebook-structure": {"dom": "qualidade de código", "txt": "Ordem fixa das células iniciais de um notebook novo e separação de responsabilidades entre elas.", "grau": 7}, "project-context": {"dom": "projeto", "txt": "Iniciar, retomar ou fechar um projeto de dados: classificar o estado, desenhar o mapa do pipeline, criar estrutura e documentos, declarar o próximo passo.", "grau": 8}, "skill-patterns": {"dom": "meta", "txt": "Escrever e revisar as próprias skills: validar a description, checar colisão com as nativas e passar pelo checklist de qualidade.", "grau": 0}, "technical-writing": {"dom": "documentação", "txt": "Tom da documentação versionada: verbo no presente, sem emoji, sem adjetivo de venda.", "grau": 4}, "unity-catalog-naming": {"dom": "nomenclatura", "txt": "Onde cada schema, tabela e volume fica dentro do Unity Catalog, por camada e por projeto.", "grau": 4}};
+const rede=document.getElementById('rede');
+const nds=[...rede.querySelectorAll('.nd')];
+const eds=[...rede.querySelectorAll('.ed')];
+const rcDom=document.getElementById('rcDom'),rcName=document.getElementById('rcName'),rcTxt=document.getElementById('rcTxt'),rcDica=document.getElementById('rcDica');
+const inicial={d:rcDom.textContent,n:rcName.textContent,t:rcTxt.textContent};
+let sel=null;
+
+function realca(sk){
+  const viz=new Set([sk]);
+  eds.forEach(e=>{
+    const on=e.dataset.a===sk||e.dataset.b===sk;
+    e.classList.toggle('on',on);
+    if(on){viz.add(e.dataset.a);viz.add(e.dataset.b);}
+  });
+  nds.forEach(n=>{
+    n.classList.toggle('on',viz.has(n.dataset.sk));
+    n.classList.toggle('sel',n.dataset.sk===sk);
+  });
+  rede.classList.add('ativa');
+}
+function limpa(){
+  eds.forEach(e=>e.classList.remove('on'));
+  nds.forEach(n=>n.classList.remove('on','sel'));
+  rede.classList.remove('ativa');
+}
+function escreve(sk){
+  if(!sk){rcDom.textContent=inicial.d;rcName.textContent=inicial.n;rcTxt.textContent=inicial.t;rcDica.hidden=false;return;}
+  rcDica.hidden=true;
+  const d=SK[sk];
+  rcDom.textContent = d.dom + ' \u00b7 ' + (d.grau
+    ? d.grau + (d.grau>1 ? ' fronteiras declaradas' : ' fronteira declarada')
+    : 'sem fronteira declarada');
+  rcName.textContent = sk;
+  rcTxt.textContent = d.txt;
+}
+function seleciona(sk){
+  sel = (sel===sk) ? null : sk;
+  if(sel){realca(sel);} else {limpa();}
+  escreve(sel);
+}
+nds.forEach(n=>{
+  const sk=n.dataset.sk;
+  // o mouse apenas ilumina a vizinhança; a descrição só muda no clique
+  n.addEventListener('mouseenter',()=>{if(!sel) realca(sk);});
+  n.addEventListener('mouseleave',()=>{if(!sel) limpa(); else realca(sel);});
+  n.addEventListener('click',()=>seleciona(sk));
+  n.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();seleciona(sk);}});
+});
+
+const btema=document.getElementById('tema');
+function pintaTema(t){
+  document.documentElement.dataset.tema=t;
+  btema.textContent = t==='escuro' ? 'claro' : 'escuro';
+  btema.setAttribute('aria-pressed', String(t==='escuro'));
+  try{localStorage.setItem('tema',t);}catch(e){}
+}
+pintaTema(document.documentElement.dataset.tema||'claro');
+btema.addEventListener('click',()=>pintaTema(document.documentElement.dataset.tema==='escuro'?'claro':'escuro'));
+
+const btopo=document.getElementById('topo');
+btopo.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+
+const links=[...document.querySelectorAll('.index a')];
+const label=document.getElementById('railLabel'),fill=document.getElementById('railFill');
+const obs=new IntersectionObserver(es=>{
+  es.forEach(en=>{
+    if(!en.isIntersecting)return;
+    const id=en.target.id;
+    links.forEach(a=>a.setAttribute('aria-current',String(a.getAttribute('href')==='#'+id)));
+    const hit=links.find(a=>a.getAttribute('href')==='#'+id);
+    label.textContent=hit?hit.textContent.trim().replace(/^\S+\s/,''):'o projeto';
+  });
+},{rootMargin:'-40% 0px -50% 0px'});
+[...document.querySelectorAll('main section')].forEach(s=>obs.observe(s));
+addEventListener('scroll',()=>{
+  const max=document.body.scrollHeight-innerHeight;
+  fill.style.width=(max>0?(scrollY/max)*100:0)+'%';
+  btopo.classList.toggle('on', scrollY>700);
+},{passive:true});
+</script>
+</body>
+</html>
