@@ -1,0 +1,27 @@
+# Configuracao do Dependabot - databricks-genie-skills
+# Monitora atualizacoes de dependencias para GitHub Actions.
+#
+# Ecossistema detectado a partir dos arquivos do projeto:
+#   - github-actions: este workflow e futuras actions versionadas
+#
+# Nota: o repositorio contem apenas arquivos Markdown (skills).
+# Nenhum ecossistema de codigo (pip, npm, etc.) foi detectado.
+# Quando arquivos de dependencia forem adicionados, incluir a entrada
+# correspondente neste arquivo.
+#
+# Frequencia: semanal (segunda-feira)
+# Diretorio: raiz do projeto ("/")
+
+version: 2
+
+updates:
+  # GitHub Actions - monitora as actions usadas nos workflows
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"

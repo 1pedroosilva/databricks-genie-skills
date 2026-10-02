@@ -1,0 +1,47 @@
+# GitHub Actions Workflow - CodeQL Code Scanning
+# Analise estatica de seguranca para o repositorio databricks-genie-skills.
+#
+# Linguagens detectadas a partir do codigo do projeto: nenhuma
+#   - O repositorio contem apenas arquivos Markdown (skills) e HTML.
+#   - CodeQL usa auto-deteccao: quando codigo suportado (Python, JS, etc.)
+#     for adicionado, a analise o incluira automaticamente.
+#
+# Triggers:
+#   - push na branch main
+#   - pull requests na branch main
+#   - agendamento semanal (segunda-feira 01:30 UTC)
+
+name: "CodeQL"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Segunda-feira as 01:30 UTC
+    - cron: "30 1 * * 1"
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
