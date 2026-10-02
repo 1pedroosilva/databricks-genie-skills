@@ -203,6 +203,17 @@ Este projeto adota o padrão de listar skills dentro do `.assistant_instructions
 
 ---
 
+## Segurança
+
+O repositório segue as quatro práticas de segurança recomendadas pelo GitHub:
+
+* **Branch protection** — branch `main` com regras de proteção configuradas
+* **Vulnerability reporting** — alertas de segurança do GitHub habilitados
+* **Dependabot** — `.github/dependabot.yml` monitora `github-actions`, frequência semanal
+* **CodeQL** — `.github/workflows/codeql.yml` executa code scanning a cada push, PR e semanalmente (auto-deteccao de linguagem)
+
+---
+
 ## Licença
 
 Licença MIT - Veja arquivo LICENSE para detalhes
